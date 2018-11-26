@@ -1,0 +1,44 @@
+/*
+ * Copyright 2018 Karlsruhe Institute of Technology.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+StringBuilder sb = new StringBuilder();
+Iterator parameterIterator = parameters.iterator();
+boolean content = false;
+ArrayList listOfValidParameters = new ArrayList();
+// Test for any content
+for (; parameterIterator.hasNext();) {
+  String param = parameterIterator.next().trim();
+  if (param.length() > 0) {
+    listOfValidParameters.add(param);	
+   }
+}
+parameterIterator = listOfValidParameters.iterator();
+if (parameterIterator.hasNext()) {
+  flag = flag.trim();
+  // test for long name
+  if (flag.length() > 1) {
+    sb.append("-");
+  }
+  sb.append("-").append(flag).append(" ");
+  for (; parameterIterator.hasNext();) {
+  String item = (String) parameterIterator.next();
+  sb.append(item);
+  if (parameterIterator.hasNext()) {
+    sb.append(",");
+  }
+}
+	
+}
+cli_output = sb.toString();
