@@ -61,6 +61,6 @@ echo Now you have to adapt the "$INSTALLATION_DIRECTORY"/Dockerfile.
 echo To start workflow please configure "$INSTALLATION_DIRECTORY"/dockerfiles/workflow/workflow_configuration.txt
 echo and "$INSTALLATION_DIRECTORY"/dockerfiles/workflow/parameters.txt.
 echo Make sure that all modules used by the workflow are installed.
-echo Then build an image. ('sudo docker build -t taverna:ocrd .')
-echo At the end start workflow by executing 'sudo docker run -v "$(pwd)"/output:/workspace taverna:ocrd' 
+echo Then build an image. \('sudo docker build -t taverna:ocrd .'\)
+echo At the end start workflow by executing 'sudo docker run -v "$(pwd)"/dockerfiles:/workspace taverna:ocrd' 
 

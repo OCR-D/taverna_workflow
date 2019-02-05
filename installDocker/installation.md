@@ -42,7 +42,7 @@ Files to edit:
 ## Execute Workflow
 If workflow is configured it can be started.
 ```bash=bash
-user@localhost:/path/to/docker/$sudo docker run taverna:ocrdbash /path/to/workflow/workflow/startWorkflow.sh
+user@localhost:/path/to/docker/$sudo docker run -v "$(pwd)"/dockerfiles:/workspace taverna:ocrd
 [...]
 ```
 
