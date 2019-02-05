@@ -1,0 +1,1 @@
+3311b223a6a1d75c578500030b6a2c75a7413cf8  taverna-commandline-core-2.5.0-standalone.zip

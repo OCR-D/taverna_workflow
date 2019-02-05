@@ -1,0 +1,18 @@
+########################################################################
+# Configuration file defining parameters for workflow
+########################################################################
+# METS: URL of mets file. 
+#       Default: file:///workspace/mets.xml
+# WORKING_DIR: Directory of the workspace. The workspace contains all 
+#              (generated) files.
+#       Default: /workspace
+# WORKFLOW_CONFIG_FILE: URL of workflow configuration file.  
+#       Default: file:///workspace/workflow/workflow_configuration.txt
+# PREFIX_PROV: unique prefix for provenance  
+#       Default: prov
+########################################################################
+METS:file:///workspace/mets.xml
+WORKING_DIR:/workspace
+WORKFLOW_CONFIG_FILE:file:///workspace/workflow/workflow_configuration.txt
+PREFIX_PROV:prov
+
