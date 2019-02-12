@@ -39,6 +39,11 @@ Files to edit:
 
 :information_source: Make sure that all modules used by the workflow are installed.
 
+## Make Document accessible for Docker
+All files located in 'dockerfiles' are available inside the docker container
+via the path /workspace. To make the document 'visible' for the workflow the
+mets.xml and the referenced files have to be copied to /path/to/docker/dockerfiles.
+
 ## Execute Workflow
 If workflow is configured it can be started.
 ```bash=bash

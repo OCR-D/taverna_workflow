@@ -54,7 +54,7 @@ cp "$ACTUAL_DIR"/workflow/* "$INSTALLATION_DIRECTORY"
 cp "$ACTUAL_DIR"/workflow/workflow/* "$INSTALLATION_DIRECTORY"/dockerfiles/workflow
 
 # Copy workflow to installation directory
-cp "$ACTUAL_DIR"/../../taverna/Execute_OCR-D_workflow.t2flow "$INSTALLATION_DIRECTORY"/dockerfiles/workflow/taverna
+cp "$ACTUAL_DIR"/../taverna/Execute_OCR-D_workflow.t2flow "$INSTALLATION_DIRECTORY"/dockerfiles/workflow/taverna
 
 echo SUCCESS
 echo Now you have to adapt the "$INSTALLATION_DIRECTORY"/Dockerfile.
