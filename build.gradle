@@ -1,0 +1,17 @@
+apply plugin: 'java'
+
+repositories {
+  mavenCentral()
+}
+
+sourceCompatibility = 1.8
+
+dependencies {
+  compile("org.openprovenance.prov:prov-model:0.7.3")
+  compile("org.openprovenance.prov:prov-interop:0.7.3")                                            
+}
+
+task copyDependencies(type: Copy) {
+   from configurations.compile   
+   into 'installDocker/workflow/externalLibs'
+}
