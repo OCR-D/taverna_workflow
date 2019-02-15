@@ -1,0 +1,323 @@
+/*
+ * Copyright 2019 Karlsruhe Institute of Technology.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+/**************************************************************************
+ * Description:
+ *     Generating provenance for executed module in PROV-XML
+ **************************************************************************
+ * Input parameter(s):
+ * - String moduleDesc 
+ *            Label of the module should contain module name and version.
+ * - String provenancePath 
+ *            Path of the file holding the provenance.
+ * - String parameterPath 
+ *            Path of the parameter file (may be null)
+ * - String ppn 
+ *            ID of the processed document.
+ * - String startTimeWorkflow 
+ *            DateTime of begin of workflow in ms since 1970 
+ * - String endTimeWorkflow 
+ *            DateTime of end of workflow in ms since 1970 
+ * - String startTimeModule 
+ *            DateTime of begin of module in ms since 1970 
+ * - String endTimeModule 
+ *            DateTime of end of module in ms since 1970 
+ * - List<String> inputFile
+ *            List of IDs of all files used as input.
+ * - List<String> outputFile
+ *            List of IDs of all files used as output.
+ * ------------------------------------------------------------------------
+ * Output parameter(s):
+ * - String pathToProv 
+ *            Path of the file holding the provenance.
+ **************************************************************************/
+ 
+import java.io.IOException;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
+import org.openprovenance.prov.interop.InteropFramework;
+import org.openprovenance.prov.interop.InteropFramework.ProvFormat;
+import org.openprovenance.prov.model.Activity;
+import org.openprovenance.prov.xml.Agent;
+import org.openprovenance.prov.model.Document;
+import org.openprovenance.prov.model.Entity;
+import org.openprovenance.prov.model.IndexedDocument;
+import org.openprovenance.prov.model.Namespace;
+import org.openprovenance.prov.model.QualifiedName;
+import org.openprovenance.prov.model.ProvFactory;
+import org.openprovenance.prov.model.StatementOrBundle;
+import org.openprovenance.prov.model.WasAssociatedWith;
+import org.openprovenance.prov.model.WasDerivedFrom;
+import org.openprovenance.prov.model.WasGeneratedBy;
+import org.openprovenance.prov.model.WasStartedBy;
+import org.openprovenance.prov.xml.InternationalizedString;
+import org.openprovenance.prov.xml.Type;
+import org.openprovenance.prov.xml.Used;
+import org.openprovenance.prov.xml.Value;
+
+// Transform input variables (if neccessary)
+String[] inputFileArray    = inputFile.toArray(new String[inputFile.size()]);
+String[] outputFileArray   = outputFile.toArray(new String[outputFile.size()]);
+Date startTimeWorkflowDate = new Date(Long.parseLong(startTimeWorkflow));
+Date endTimeWorkflowDate   = new Date(Long.parseLong(endTimeWorkflow));
+Date startTimeModuleDate   = new Date(Long.parseLong(startTimeModule));
+Date endTimeModuleDate     = new Date(Long.parseLong(endTimeModule));
+// List of remaining variables that don't need to be transformed
+//String ppn
+//String moduleDesc
+//String pathParameterFile
+//String pathProvFile
+
+// Define namespace for OCR-D
+String OCRD_PREFIX = "ocrd";
+String OCRD_NS = "http://www.ocr-d.de";
+
+//*****************************************************************************************
+// Define variables
+// Manage all namespaces
+ns=new Namespace();
+ns.addKnownNamespaces();
+ns.register(OCRD_PREFIX, OCRD_NS);
+
+// Generate Factory for building provenance
+ProvFactory pFactory = InteropFramework.newXMLProvFactory();
+
+DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH-mm-ss");
+//*****************************************************************************************
+//Generate QualifiedName with OCR-D prefix.
+QualifiedName qn(String n) {
+	return qn(OCRD_PREFIX, n);
+}
+//*****************************************************************************************
+//Generate QualifiedName with given prefix.
+QualifiedName qn(String prefix, String n) {
+	return ns.qualifiedName(prefix, n, pFactory);
+}
+//*****************************************************************************************
+// Tramsform date to string.
+// date - date time 
+String transformDateToString(Date date) {
+    return dateFormat.format(date);
+  }
+//*****************************************************************************************
+// Make entity of type 'ocrd:parameter-file'
+// ppn - PPN of document
+// startTime - begin of activity
+// filePath - Path to parameter file (optional)
+Entity makeParameterfile(String ppn, Date startTime, Path filePath) {
+    Type parameterFileType = new Type();
+    parameterFileType.setValue(qn(OCRD_PREFIX, "parameter-file"));
+    String id = "parameterFile-" + ppn + "-" + transformDateToString(startTime);
+    Entity parameterFile = pFactory.newEntity(qn(OCRD_PREFIX, id));
+    parameterFile.getType().add(parameterFileType);
+    Value value = new Value();
+    String content = "no Content";
+    try {
+      content = new String(Files.readAllBytes(filePath), "UTF-8");
+    } catch (IOException ex) {
+      Logger.getLogger("ocrd.GenerateProvenance").log(Level.SEVERE, null, ex);
+    }
+    value.setValue(content);
+    value.setType(pFactory.getName().XSD_STRING);
+    parameterFile.setValue(value);
+    return parameterFile;
+  }
+//*****************************************************************************************
+// Create entity of type 'ocrd:mets-file'
+// ppn - PPN of document
+// fileId - fileIds of file.
+Entity makeMetsFile(String ppn, String fileId) {
+    Type metsFileType = new Type();
+    String id = ppn + "-" + fileId;
+    metsFileType.setValue(qn(OCRD_PREFIX, "mets-file"));
+    Entity metsFile = pFactory.newEntity(qn(OCRD_PREFIX, id));
+    metsFile.getType().add(metsFileType);
+    metsFile.setValue(pFactory.newValue(id,
+            pFactory.getName().XSD_STRING));
+    return metsFile;
+  }
+
+//*****************************************************************************************
+// Create activity of given type.
+// type - type of activity
+// ppn - PPN of document
+// fileId - fileIds of file.
+// startTime - begin of activity
+// endTime - end of activity
+// value - label of activity
+Activity makeActivity(String type, String ppn, Date startTime, Date endTime, String value) {
+    Type activityType = new Type();
+    activityType.setValue(qn(OCRD_PREFIX, type));
+    String id = type + "-" + ppn + "-" + transformDateToString(startTime);
+    Activity activity = pFactory.newActivity(qn(OCRD_PREFIX, id));
+    GregorianCalendar calendar = new GregorianCalendar();
+    if (startTime != null) {
+      calendar.setTime(startTime);
+      activity.setStartTime(new XMLGregorianCalendarImpl(calendar));
+    }
+    if (endTime != null) {
+      calendar.setTime(endTime);
+      activity.setEndTime(new XMLGregorianCalendarImpl(calendar));
+    }
+    activity.getType().add(activityType);
+    if (langValue != null) {
+      org.openprovenance.prov.xml.InternationalizedString langValue = new InternationalizedString();
+      langValue.setValue(value);
+      activity.getLabel().add(langValue);
+    }
+    return activity;
+  }
+//*****************************************************************************************
+// Create activity of type 'ocrd:module'
+// ppn - PPN of document
+// startTime - begin of activity
+// endTime - end of activity
+// value - label of activity
+Activity makeModule(String ppn, Date startTime, Date endTime, String value) {
+    return makeActivity("module", ppn, startTime, endTime, value);
+  }
+//*****************************************************************************************
+// Create activity of type 'ocrd:workflow'.
+// ppn - PPN of document
+// startTime - begin of activity
+// endTime - end of activity
+Activity makeWorkflow(String ppn, Date startTime, Date endTime) {
+    String type = "workflow";
+    String value = type + "-" + ppn + "-" + transformDateToString(startTime);
+    return makeActivity(type, ppn, startTime, endTime, value);
+  }
+//*****************************************************************************************
+// Create provenance document
+// ppn - PPN of document
+// moduleLabel - Label of the module called (should contain version e.g. ocrd-kraken-bin-version1.0)
+// inputFileId - fileIds of all input files. (Array of arrays containing all fileIds of one groupID)
+// outputFileId - fileIds of all output files. (Array of arrays containing all fileIds of one groupID)
+// parameterFilePath - Path to parameter file (optional)
+// startWorkflow - start time of workflow
+// endWorkflow - end time of (optional)
+// startModule - start time of module
+// endModule - end time of module (optional)
+Document makeDocument(String ppn, String moduleLabel, String[][] inputFileId, String[][] outputFileId, Path parameterFilePath, Date startWorkflow, Date endWorkflow, Date startModule, Date endModule) {
+    Document document = pFactory.newDocument();
+    List statementOrBundle;
+    statementOrBundle = document.getStatementOrBundle();
+
+    Activity module = makeModule(ppn, startModule, endModule, moduleLabel);
+    statementOrBundle.add(module);
+    int numberOfFiles = inputFileId[0].length;
+    boolean correctDimensions = true;
+    // Test dimensions
+    for (int ifIndex = 0; ifIndex < inputFileId.length; ifIndex++) {
+      if (inputFileId[ifIndex].length != numberOfFiles) {
+        correctDimensions = false;
+      }
+    }
+    for (int ofIndex = 0; ofIndex < outputFileId.length; ofIndex++) {
+      if (outputFileId[ofIndex].length != numberOfFiles) {
+        correctDimensions = false;
+      }
+    }
+    if (correctDimensions) {
+      for (int ifIndex = 0; ifIndex < inputFileId.length; ifIndex++) {
+        for (int index = 0; index < numberOfFiles; index++) {
+          Entity inputFile = makeMetsFile(ppn, inputFileId[ifIndex][index]);
+          statementOrBundle.add(inputFile);
+          Used used = new Used();
+          used.setActivity(module.getId());
+          used.setEntity(inputFile.getId());
+          statementOrBundle.add(used);
+          for (int ofIndex = 0; ofIndex < outputFileId.length; ofIndex++) {
+            Entity outputFile = makeMetsFile(ppn, outputFileId[ofIndex][index]);
+            statementOrBundle.add(outputFile);
+            WasDerivedFrom derived = pFactory.newWasDerivedFrom(outputFile.getId(), inputFile.getId());
+            statementOrBundle.add(derived);
+
+            WasGeneratedBy wasGeneratedBy = pFactory.newWasGeneratedBy(outputFile, qn(OCRD_PREFIX, "module-" + ppn + "-" + transformDateToString(endModule)).toString(), module);
+            statementOrBundle.add(wasGeneratedBy);
+          }
+        }
+      }
+    } else {
+      for (int ifIndex = 0; ifIndex < inputFileId.length; ifIndex++) {
+        for (int index = 0; index < inputFileId[ifIndex].length; index++) {
+          Entity inputFile = makeMetsFile(ppn, inputFileId[ifIndex][index]);
+          statementOrBundle.add(inputFile);
+
+          Used used = new Used();
+          used.setActivity(module.getId());
+          used.setEntity(inputFile.getId());
+          statementOrBundle.add(used);
+        }
+      }
+      for (int ofIndex = 0; ofIndex < outputFileId.length; ofIndex++) {
+        for (int index = 0; index < outputFileId[ofIndex].length; index++) {
+          Entity outputFile = makeMetsFile(ppn, outputFileId[ofIndex][index]);
+          statementOrBundle.add(outputFile);
+
+          WasGeneratedBy wasGeneratedBy = pFactory.newWasGeneratedBy(outputFile, qn(OCRD_PREFIX, "module-" + ppn + "-" + transformDateToString(endModule)).toString(), module);
+          statementOrBundle.add(wasGeneratedBy);
+        }
+
+      }
+    }
+
+    if (parameterFilePath != null) {
+      Entity parameterFile = makeParameterfile(ppn, startModule, parameterFilePath);
+
+      Used used2 = new Used();
+      used2.setActivity(module.getId());
+      used2.setEntity(parameterFile.getId());
+      statementOrBundle.add(parameterFile);
+      statementOrBundle.add(used2);
+
+    }
+    Activity workflow = makeWorkflow(ppn, startWorkflow, endWorkflow);
+    statementOrBundle.add(workflow);
+
+    Agent agent = new Agent();
+    agent.setId(qn(OCRD_PREFIX, "Execute_Taverna_OCR-D_Workflow"));
+
+    statementOrBundle.add(agent);
+
+    WasAssociatedWith associatedWith = pFactory.newWasAssociatedWith(qn(OCRD_PREFIX, "agent-" + workflow.getId().getLocalPart()), workflow.getId(), agent.getId());
+    statementOrBundle.add(associatedWith);
+
+    WasStartedBy newWasStartedBy = pFactory.newWasStartedBy(qn(OCRD_PREFIX, "taverna-" + workflow.getId().getLocalPart()), workflow.getId(), module.getId());
+    statementOrBundle.add(newWasStartedBy);
+
+    document.setNamespace(ns);
+    return document;
+  }
+Path parameterFilePath = null;
+if (pathParameterFile.trim().length() > 0) {
+	parameterFilePath = new File(pathParameterFile).toPath();
+}
+Document document = makeDocument(ppn, moduleDesc, new String[][]{inputFileArray}, new String[][]{outputFileArray}, parameterFilePath, startTimeWorkflowDate, endTimeWorkflowDate, 
+startTimeModuleDate, endTimeModuleDate);
+InteropFramework intF = new InteropFramework();
+intF.writeDocument(pathProvFile, document);
+pathToProv = pathProvFile;

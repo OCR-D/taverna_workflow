@@ -13,6 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**************************************************************************
+ * Description:
+ *     Read file content from local or remote file.
+ **************************************************************************
+ * Input parameter(s):
+ * - String url 
+ *            URL of the file.
+ * ------------------------------------------------------------------------
+ * Output parameter(s):
+ * - String content 
+ *            Content of the file.
+ **************************************************************************/
 import java.net.*;
 import java.io.*;
 

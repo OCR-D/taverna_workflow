@@ -1,8 +1,62 @@
+/*
+ * Copyright 2018 Karlsruhe Institute of Technology.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+/**************************************************************************
+ * Description:
+ *     Extract all parameters for executing module
+ **************************************************************************
+ * Input parameter(s):
+ * - String moduleCall 
+ *            String holding all parameters of the worfklow step. Format 
+ *            described in conf/workflow_configuration.txt.
+ * - String metsFile 
+ *            Mets file holding all files related to the document.
+ * - String working_dir 
+ *            Path of the working directory. 
+ * ------------------------------------------------------------------------
+ * Output parameter(s):
+ * - String command 
+ *            Command of the module.
+ * - String[] id 
+ *            The mets:div[@TYPE='page']/@ID that contains the pointers to 
+ *            files representing a page. Effectively, only those files in the 
+ *            input file group that are referenced in these 
+ *            mets:div[@TYPE="page"] will be processed.
+ * - String[] input_file_grp 
+ *            Input file group(s).
+ * - String[] output_file_grp 
+ *            Output file group(s).
+ * - String[] log_level 
+ *            Set the global maximum verbosity level.
+ * - String[] mets_file_url
+ *            URL of the mets file.
+ * - String[] parameter 
+ *            URL of parameter file.
+ * - String[] working_dir_url
+ *            URL of the working directory.
+ **************************************************************************/
 String[] parameters = module_call.split("\\|");
+String[] parameter = new String[1];
+String[] log_level = new String[1];
+String[] mets_file_url = new String[1];
+String[] working_dir_url = new String[1];
 command = parameters[0];
 input_file_grp = parameters[1].split(",");
 output_file_grp = parameters[2].split(",");
 id = parameters[3].split(",");
-parameter = parameters[4];
-log_level = parameters[5];
-Thread.sleep(5);
+parameter[0] = parameters[4];
+log_level[0] = parameters[5];
+mets_file_url[0] = mets_file;
+working_dir_url[0] = working_dir;
