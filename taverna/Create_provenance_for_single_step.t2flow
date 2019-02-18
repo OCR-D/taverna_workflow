@@ -1,7 +1,239 @@
-<workflow xmlns="http://taverna.sf.net/2008/xml/t2flow" version="1" producedBy="taverna-core-2.5.0"><dataflow id="33731e8d-a068-4245-8f56-009423e2d33f" role="top"><name>Create_provenance_fo</name><inputPorts><port><name>input_file_id</name><depth>1</depth><granularDepth>1</granularDepth><annotations /></port><port><name>output_file_id</name><depth>0</depth><granularDepth>0</granularDepth><annotations /></port><port><name>working_dir</name><depth>0</depth><granularDepth>0</granularDepth><annotations /></port><port><name>unique_postfix</name><depth>0</depth><granularDepth>0</granularDepth><annotations /></port><port><name>parameter</name><depth>0</depth><granularDepth>0</granularDepth><annotations /></port><port><name>start_time</name><depth>0</depth><granularDepth>0</granularDepth><annotations /></port><port><name>end_time</name><depth>0</depth><granularDepth>0</granularDepth><annotations /></port></inputPorts><outputPorts /><processors><processor><name>Beanshell</name><inputPorts><port><name>end_time</name><depth>0</depth></port><port><name>start_time</name><depth>0</depth></port><port><name>parameter</name><depth>0</depth></port><port><name>unique_postfix</name><depth>0</depth></port><port><name>working_dir</name><depth>0</depth></port><port><name>output_file_id</name><depth>0</depth></port><port><name>input_file_id</name><depth>0</depth></port></inputPorts><outputPorts /><annotations /><activities><activity><raven><group>net.sf.taverna.t2.activities</group><artifact>beanshell-activity</artifact><version>1.5</version></raven><class>net.sf.taverna.t2.activities.beanshell.BeanshellActivity</class><inputMap><map from="parameter" to="parameter" /><map from="end_time" to="end_time" /><map from="start_time" to="start_time" /><map from="working_dir" to="working_dir" /><map from="output_file_id" to="output_file_id" /><map from="input_file_id" to="input_file_id" /><map from="unique_postfix" to="unique_postfix" /></inputMap><outputMap /><configBean encoding="xstream"><net.sf.taverna.t2.activities.beanshell.BeanshellActivityConfigurationBean xmlns="">
+<workflow xmlns="http://taverna.sf.net/2008/xml/t2flow" version="1" producedBy="taverna-core-2.5.0"><dataflow id="c608c8fd-a538-4eca-bfc1-63eda21b482f" role="top"><name>Generate_Provenance</name><inputPorts><port><name>inputFile</name><depth>1</depth><granularDepth>1</granularDepth><annotations><annotation_chain encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.ExampleValue">
+        <text>image_0001
+image_0002</text>
+      </annotationBean>
+      <date>2019-02-13 13:15:15.492 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain><annotation_chain encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.FreeTextDescription">
+        <text>List of IDs of all files used as input.
+</text>
+      </annotationBean>
+      <date>2019-02-18 09:19:44.537 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain></annotations></port><port><name>outputFile</name><depth>1</depth><granularDepth>1</granularDepth><annotations><annotation_chain encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.FreeTextDescription">
+        <text>List of IDs of all files used as output.</text>
+      </annotationBean>
+      <date>2019-02-18 09:19:35.137 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain><annotation_chain encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.ExampleValue">
+        <text>image_bin_0001
+image_bin_0002</text>
+      </annotationBean>
+      <date>2019-02-13 13:15:39.675 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain></annotations></port><port><name>endTimeModule</name><depth>0</depth><granularDepth>0</granularDepth><annotations><annotation_chain encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.FreeTextDescription">
+        <text>DateTime of end of module in ms since 1970</text>
+      </annotationBean>
+      <date>2019-02-18 09:19:13.210 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain><annotation_chain encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.ExampleValue">
+        <text>2048434600000</text>
+      </annotationBean>
+      <date>2019-02-13 13:14:39.916 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain></annotations></port><port><name>startTimeModule</name><depth>0</depth><granularDepth>0</granularDepth><annotations><annotation_chain encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.FreeTextDescription">
+        <text>DateTime of begin of module in ms since 1970</text>
+      </annotationBean>
+      <date>2019-02-18 09:19:03.424 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain><annotation_chain encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.ExampleValue">
+        <text>2048434561000</text>
+      </annotationBean>
+      <date>2019-02-13 13:14:24.996 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain></annotations></port><port><name>startTimeWorkflow</name><depth>0</depth><granularDepth>0</granularDepth><annotations><annotation_chain encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.FreeTextDescription">
+        <text>DateTime of begin of workflow in ms since 1970 </text>
+      </annotationBean>
+      <date>2019-02-18 09:18:49.836 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain><annotation_chain encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.ExampleValue">
+        <text>2048434560000</text>
+      </annotationBean>
+      <date>2019-02-13 13:13:42.781 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain></annotations></port><port><name>endTimeWorkflow</name><depth>0</depth><granularDepth>0</granularDepth><annotations><annotation_chain encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.ExampleValue">
+        <text>2048434620000</text>
+      </annotationBean>
+      <date>2019-02-13 13:14:04.726 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain></annotations></port><port><name>ppn</name><depth>0</depth><granularDepth>0</granularDepth><annotations><annotation_chain encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.ExampleValue">
+        <text>ppnOfMets</text>
+      </annotationBean>
+      <date>2019-02-13 13:16:52.27 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain><annotation_chain encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.FreeTextDescription">
+        <text>ID of the processed document.</text>
+      </annotationBean>
+      <date>2019-02-18 09:18:31.498 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain></annotations></port><port><name>parameterPath</name><depth>0</depth><granularDepth>0</granularDepth><annotations><annotation_chain encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.FreeTextDescription">
+        <text>Path of the parameter file (may be null)</text>
+      </annotationBean>
+      <date>2019-02-18 09:18:22.175 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain><annotation_chain encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.ExampleValue">
+        <text>/tmp/parameter.json</text>
+      </annotationBean>
+      <date>2019-02-13 13:18:12.561 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain></annotations></port><port><name>provenancePath</name><depth>0</depth><granularDepth>0</granularDepth><annotations><annotation_chain encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.FreeTextDescription">
+        <text>Path of the file holding the provenance.</text>
+      </annotationBean>
+      <date>2019-02-18 09:18:08.6 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain><annotation_chain encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.ExampleValue">
+        <text>/tmp/prov1.xml</text>
+      </annotationBean>
+      <date>2019-02-13 13:18:38.665 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain></annotations></port><port><name>moduleDesc</name><depth>0</depth><granularDepth>0</granularDepth><annotations><annotation_chain encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.FreeTextDescription">
+        <text>Label of the module should contain module name and version.</text>
+      </annotationBean>
+      <date>2019-02-18 09:17:55.532 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain><annotation_chain encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.ExampleValue">
+        <text>ocrd-kraken-bin-version1.0</text>
+      </annotationBean>
+      <date>2019-02-13 13:55:55.527 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain></annotations></port></inputPorts><outputPorts><port><name>result</name><lastPredictedDepth>0</lastPredictedDepth><annotations /></port></outputPorts><processors><processor><name>Beanshell</name><inputPorts><port><name>inputFile</name><depth>1</depth></port><port><name>endTimeWorkflow</name><depth>0</depth></port><port><name>startTimeWorkflow</name><depth>0</depth></port><port><name>startTimeModule</name><depth>0</depth></port><port><name>endTimeModule</name><depth>0</depth></port><port><name>ppn</name><depth>0</depth></port><port><name>pathParameterFile</name><depth>0</depth></port><port><name>moduleDesc</name><depth>0</depth></port><port><name>pathProvFile</name><depth>0</depth></port><port><name>outputFile</name><depth>1</depth></port></inputPorts><outputPorts><port><name>pathToProv</name><depth>0</depth><granularDepth>0</granularDepth></port></outputPorts><annotations /><activities><activity><raven><group>net.sf.taverna.t2.activities</group><artifact>beanshell-activity</artifact><version>1.5</version></raven><class>net.sf.taverna.t2.activities.beanshell.BeanshellActivity</class><inputMap><map from="endTimeWorkflow" to="endTimeWorkflow" /><map from="startTimeModule" to="startTimeModule" /><map from="endTimeModule" to="endTimeModule" /><map from="outputFile" to="outputFile" /><map from="ppn" to="ppn" /><map from="moduleDesc" to="moduleDesc" /><map from="inputFile" to="inputFile" /><map from="pathParameterFile" to="pathParameterFile" /><map from="pathProvFile" to="pathProvFile" /><map from="startTimeWorkflow" to="startTimeWorkflow" /></inputMap><outputMap><map from="pathToProv" to="pathToProv" /></outputMap><configBean encoding="xstream"><net.sf.taverna.t2.activities.beanshell.BeanshellActivityConfigurationBean xmlns="">
   <inputs>
     <net.sf.taverna.t2.workflowmodel.processor.activity.config.ActivityInputPortDefinitionBean>
-      <name>unique_postfix</name>
+      <name>inputFile</name>
+      <depth>1</depth>
+      <mimeTypes>
+        <string>text/plain</string>
+      </mimeTypes>
+      <handledReferenceSchemes />
+      <translatedElementType>java.lang.String</translatedElementType>
+      <allowsLiteralValues>true</allowsLiteralValues>
+    </net.sf.taverna.t2.workflowmodel.processor.activity.config.ActivityInputPortDefinitionBean>
+    <net.sf.taverna.t2.workflowmodel.processor.activity.config.ActivityInputPortDefinitionBean>
+      <name>outputFile</name>
+      <depth>1</depth>
+      <mimeTypes>
+        <string>text/plain</string>
+      </mimeTypes>
+      <handledReferenceSchemes />
+      <translatedElementType>java.lang.String</translatedElementType>
+      <allowsLiteralValues>true</allowsLiteralValues>
+    </net.sf.taverna.t2.workflowmodel.processor.activity.config.ActivityInputPortDefinitionBean>
+    <net.sf.taverna.t2.workflowmodel.processor.activity.config.ActivityInputPortDefinitionBean>
+      <name>startTimeWorkflow</name>
       <depth>0</depth>
       <mimeTypes>
         <string>text/plain</string>
@@ -11,7 +243,7 @@
       <allowsLiteralValues>true</allowsLiteralValues>
     </net.sf.taverna.t2.workflowmodel.processor.activity.config.ActivityInputPortDefinitionBean>
     <net.sf.taverna.t2.workflowmodel.processor.activity.config.ActivityInputPortDefinitionBean>
-      <name>working_dir</name>
+      <name>endTimeWorkflow</name>
       <depth>0</depth>
       <mimeTypes>
         <string>text/plain</string>
@@ -21,7 +253,7 @@
       <allowsLiteralValues>true</allowsLiteralValues>
     </net.sf.taverna.t2.workflowmodel.processor.activity.config.ActivityInputPortDefinitionBean>
     <net.sf.taverna.t2.workflowmodel.processor.activity.config.ActivityInputPortDefinitionBean>
-      <name>input_file_id</name>
+      <name>startTimeModule</name>
       <depth>0</depth>
       <mimeTypes>
         <string>text/plain</string>
@@ -31,7 +263,7 @@
       <allowsLiteralValues>true</allowsLiteralValues>
     </net.sf.taverna.t2.workflowmodel.processor.activity.config.ActivityInputPortDefinitionBean>
     <net.sf.taverna.t2.workflowmodel.processor.activity.config.ActivityInputPortDefinitionBean>
-      <name>output_file_id</name>
+      <name>endTimeModule</name>
       <depth>0</depth>
       <mimeTypes>
         <string>text/plain</string>
@@ -41,7 +273,7 @@
       <allowsLiteralValues>true</allowsLiteralValues>
     </net.sf.taverna.t2.workflowmodel.processor.activity.config.ActivityInputPortDefinitionBean>
     <net.sf.taverna.t2.workflowmodel.processor.activity.config.ActivityInputPortDefinitionBean>
-      <name>parameter</name>
+      <name>ppn</name>
       <depth>0</depth>
       <mimeTypes>
         <string>text/plain</string>
@@ -51,7 +283,7 @@
       <allowsLiteralValues>true</allowsLiteralValues>
     </net.sf.taverna.t2.workflowmodel.processor.activity.config.ActivityInputPortDefinitionBean>
     <net.sf.taverna.t2.workflowmodel.processor.activity.config.ActivityInputPortDefinitionBean>
-      <name>start_time</name>
+      <name>moduleDesc</name>
       <depth>0</depth>
       <mimeTypes>
         <string>text/plain</string>
@@ -61,7 +293,17 @@
       <allowsLiteralValues>true</allowsLiteralValues>
     </net.sf.taverna.t2.workflowmodel.processor.activity.config.ActivityInputPortDefinitionBean>
     <net.sf.taverna.t2.workflowmodel.processor.activity.config.ActivityInputPortDefinitionBean>
-      <name>end_time</name>
+      <name>pathParameterFile</name>
+      <depth>0</depth>
+      <mimeTypes>
+        <string>text/plain</string>
+      </mimeTypes>
+      <handledReferenceSchemes />
+      <translatedElementType>java.lang.String</translatedElementType>
+      <allowsLiteralValues>true</allowsLiteralValues>
+    </net.sf.taverna.t2.workflowmodel.processor.activity.config.ActivityInputPortDefinitionBean>
+    <net.sf.taverna.t2.workflowmodel.processor.activity.config.ActivityInputPortDefinitionBean>
+      <name>pathProvFile</name>
       <depth>0</depth>
       <mimeTypes>
         <string>text/plain</string>
@@ -71,11 +313,418 @@
       <allowsLiteralValues>true</allowsLiteralValues>
     </net.sf.taverna.t2.workflowmodel.processor.activity.config.ActivityInputPortDefinitionBean>
   </inputs>
-  <outputs />
-  <classLoaderSharing>workflow</classLoaderSharing>
-  <localDependencies />
+  <outputs>
+    <net.sf.taverna.t2.workflowmodel.processor.activity.config.ActivityOutputPortDefinitionBean>
+      <name>pathToProv</name>
+      <depth>0</depth>
+      <mimeTypes />
+      <granularDepth>0</granularDepth>
+    </net.sf.taverna.t2.workflowmodel.processor.activity.config.ActivityOutputPortDefinitionBean>
+  </outputs>
+  <classLoaderSharing>system</classLoaderSharing>
+  <localDependencies>
+    <string>antlr-2.7.7.jar</string>
+    <string>antlr-runtime-3.4.jar</string>
+    <string>commons-codec-1.9.jar</string>
+    <string>commons-collections-3.2.2.jar</string>
+    <string>commons-dbcp-1.3.jar</string>
+    <string>commons-httpclient-3.1.jar</string>
+    <string>commons-io-2.4.jar</string>
+    <string>commons-lang-2.6.jar</string>
+    <string>commons-cli-1.0.jar</string>
+    <string>commons-lang3-3.4.jar</string>
+    <string>commons-pool-1.5.4.jar</string>
+    <string>commons-logging-1.0.jar</string>
+    <string>gson-2.1.jar</string>
+    <string>guava-19.0.jar</string>
+    <string>jackson-annotations-2.7.5.jar</string>
+    <string>jackson-core-2.7.5.jar</string>
+    <string>jackson-databind-2.7.5.jar</string>
+    <string>jackson-dataformat-xml-2.7.5.jar</string>
+    <string>jackson-module-jaxb-annotations-2.7.5.jar</string>
+    <string>javapoet-1.7.0.jar</string>
+    <string>jaxb-api-2.2.12.jar</string>
+    <string>jaxb-core-2.2.11.jar</string>
+    <string>jaxb-impl-2.2.11.jar</string>
+    <string>jaxrs-api-3.0.8.Final.jar</string>
+    <string>log4j-1.2.17.jar</string>
+    <string>prov-dot-0.7.3.jar</string>
+    <string>opencsv-2.0.jar</string>
+    <string>prov-generator-0.7.3.jar</string>
+    <string>prov-interop-0.7.3.jar</string>
+    <string>prov-json-0.7.3.jar</string>
+    <string>prov-model-0.7.3.jar</string>
+    <string>prov-n-0.7.3.jar</string>
+    <string>prov-rdf-0.7.3.jar</string>
+    <string>prov-template-0.7.3.jar</string>
+    <string>prov-xml-0.7.3.jar</string>
+    <string>sesame-http-client-2.6.10.jar</string>
+    <string>sesame-http-protocol-2.6.10.jar</string>
+    <string>sesame-model-2.6.10.jar</string>
+    <string>sesame-query-2.6.10.jar</string>
+    <string>sesame-queryalgebra-evaluation-2.6.10.jar</string>
+    <string>sesame-queryalgebra-model-2.6.10.jar</string>
+    <string>sesame-queryparser-api-2.6.10.jar</string>
+    <string>sesame-queryparser-serql-2.6.10.jar</string>
+    <string>sesame-queryparser-sparql-2.6.10.jar</string>
+    <string>sesame-queryresultio-binary-2.6.10.jar</string>
+    <string>sesame-queryresultio-api-2.6.10.jar</string>
+    <string>sesame-queryresultio-sparqljson-2.6.10.jar</string>
+    <string>sesame-queryresultio-sparqlxml-2.6.10.jar</string>
+    <string>sesame-queryresultio-text-2.6.10.jar</string>
+    <string>sesame-repository-api-2.6.10.jar</string>
+    <string>sesame-repository-contextaware-2.6.10.jar</string>
+    <string>sesame-repository-dataset-2.6.10.jar</string>
+    <string>sesame-repository-event-2.6.10.jar</string>
+    <string>sesame-repository-http-2.6.10.jar</string>
+    <string>sesame-repository-manager-2.6.10.jar</string>
+    <string>sesame-repository-sail-2.6.10.jar</string>
+    <string>sesame-repository-sparql-2.6.10.jar</string>
+    <string>sesame-rio-api-2.6.10.jar</string>
+    <string>sesame-rio-binary-2.6.10.jar</string>
+    <string>sesame-rio-n3-2.6.10.jar</string>
+    <string>sesame-rio-ntriples-2.6.10.jar</string>
+    <string>sesame-rio-rdfxml-2.6.10.jar</string>
+    <string>sesame-rio-trig-2.6.10.jar</string>
+    <string>sesame-rio-trix-2.6.10.jar</string>
+    <string>sesame-rio-turtle-2.6.10.jar</string>
+    <string>sesame-runtime-2.6.10.jar</string>
+    <string>sesame-sail-api-2.6.10.jar</string>
+    <string>sesame-sail-inferencer-2.6.10.jar</string>
+    <string>sesame-sail-memory-2.6.10.jar</string>
+    <string>sesame-sail-nativerdf-2.6.10.jar</string>
+    <string>sesame-sail-rdbms-2.6.10.jar</string>
+    <string>sesame-util-2.6.10.jar</string>
+    <string>slf4j-api-1.6.1.jar</string>
+    <string>stax2-api-3.1.4.jar</string>
+    <string>stringtemplate-4.0.2.jar</string>
+    <string>xercesImpl-2.11.0.jar</string>
+    <string>xml-apis-1.4.01.jar</string>
+  </localDependencies>
   <artifactDependencies />
-  <script>// Do some fancy stuff to store provenance metadata.</script>
+  <script>/*
+ * Copyright 2019 Karlsruhe Institute of Technology.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+/**************************************************************************
+ * Description:
+ *     Generating provenance for executed module in PROV-XML
+ **************************************************************************
+ * Input parameter(s):
+ * - String moduleDesc 
+ *            Label of the module should contain module name and version.
+ * - String provenancePath 
+ *            Path of the file holding the provenance.
+ * - String parameterPath 
+ *            Path of the parameter file (may be null)
+ * - String ppn 
+ *            ID of the processed document.
+ * - String startTimeWorkflow 
+ *            DateTime of begin of workflow in ms since 1970 
+ * - String endTimeWorkflow 
+ *            DateTime of end of workflow in ms since 1970 
+ * - String startTimeModule 
+ *            DateTime of begin of module in ms since 1970 
+ * - String endTimeModule 
+ *            DateTime of end of module in ms since 1970 
+ * - List&lt;String&gt; inputFile
+ *            List of IDs of all files used as input.
+ * - List&lt;String&gt; outputFile
+ *            List of IDs of all files used as output.
+ * ------------------------------------------------------------------------
+ * Output parameter(s):
+ * - String pathToProv 
+ *            Path of the file holding the provenance.
+ **************************************************************************/
+ 
+import java.io.IOException;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
+import org.openprovenance.prov.interop.InteropFramework;
+import org.openprovenance.prov.interop.InteropFramework.ProvFormat;
+import org.openprovenance.prov.model.Activity;
+import org.openprovenance.prov.xml.Agent;
+import org.openprovenance.prov.model.Document;
+import org.openprovenance.prov.model.Entity;
+import org.openprovenance.prov.model.IndexedDocument;
+import org.openprovenance.prov.model.Namespace;
+import org.openprovenance.prov.model.QualifiedName;
+import org.openprovenance.prov.model.ProvFactory;
+import org.openprovenance.prov.model.StatementOrBundle;
+import org.openprovenance.prov.model.WasAssociatedWith;
+import org.openprovenance.prov.model.WasDerivedFrom;
+import org.openprovenance.prov.model.WasGeneratedBy;
+import org.openprovenance.prov.model.WasStartedBy;
+import org.openprovenance.prov.xml.InternationalizedString;
+import org.openprovenance.prov.xml.Type;
+import org.openprovenance.prov.xml.Used;
+import org.openprovenance.prov.xml.Value;
+
+// Transform input variables (if neccessary)
+String[] inputFileArray    = inputFile.toArray(new String[inputFile.size()]);
+String[] outputFileArray   = outputFile.toArray(new String[outputFile.size()]);
+Date startTimeWorkflowDate = new Date(Long.parseLong(startTimeWorkflow));
+Date endTimeWorkflowDate   = new Date(Long.parseLong(endTimeWorkflow));
+Date startTimeModuleDate   = new Date(Long.parseLong(startTimeModule));
+Date endTimeModuleDate     = new Date(Long.parseLong(endTimeModule));
+// List of remaining variables that don't need to be transformed
+//String ppn
+//String moduleDesc
+//String pathParameterFile
+//String pathProvFile
+
+// Define namespace for OCR-D
+String OCRD_PREFIX = "ocrd";
+String OCRD_NS = "http://www.ocr-d.de";
+
+//*****************************************************************************************
+// Define variables
+// Manage all namespaces
+ns=new Namespace();
+ns.addKnownNamespaces();
+ns.register(OCRD_PREFIX, OCRD_NS);
+
+// Generate Factory for building provenance
+ProvFactory pFactory = InteropFramework.newXMLProvFactory();
+
+DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH-mm-ss");
+//*****************************************************************************************
+//Generate QualifiedName with OCR-D prefix.
+QualifiedName qn(String n) {
+	return qn(OCRD_PREFIX, n);
+}
+//*****************************************************************************************
+//Generate QualifiedName with given prefix.
+QualifiedName qn(String prefix, String n) {
+	return ns.qualifiedName(prefix, n, pFactory);
+}
+//*****************************************************************************************
+// Tramsform date to string.
+// date - date time 
+String transformDateToString(Date date) {
+    return dateFormat.format(date);
+  }
+//*****************************************************************************************
+// Make entity of type 'ocrd:parameter-file'
+// ppn - PPN of document
+// startTime - begin of activity
+// filePath - Path to parameter file (optional)
+Entity makeParameterfile(String ppn, Date startTime, Path filePath) {
+    Type parameterFileType = new Type();
+    parameterFileType.setValue(qn(OCRD_PREFIX, "parameter-file"));
+    String id = "parameterFile-" + ppn + "-" + transformDateToString(startTime);
+    Entity parameterFile = pFactory.newEntity(qn(OCRD_PREFIX, id));
+    parameterFile.getType().add(parameterFileType);
+    Value value = new Value();
+    String content = "no Content";
+    try {
+      content = new String(Files.readAllBytes(filePath), "UTF-8");
+    } catch (IOException ex) {
+      Logger.getLogger("ocrd.GenerateProvenance").log(Level.SEVERE, null, ex);
+    }
+    value.setValue(content);
+    value.setType(pFactory.getName().XSD_STRING);
+    parameterFile.setValue(value);
+    return parameterFile;
+  }
+//*****************************************************************************************
+// Create entity of type 'ocrd:mets-file'
+// ppn - PPN of document
+// fileId - fileIds of file.
+Entity makeMetsFile(String ppn, String fileId) {
+    Type metsFileType = new Type();
+    String id = ppn + "-" + fileId;
+    metsFileType.setValue(qn(OCRD_PREFIX, "mets-file"));
+    Entity metsFile = pFactory.newEntity(qn(OCRD_PREFIX, id));
+    metsFile.getType().add(metsFileType);
+    metsFile.setValue(pFactory.newValue(id,
+            pFactory.getName().XSD_STRING));
+    return metsFile;
+  }
+
+//*****************************************************************************************
+// Create activity of given type.
+// type - type of activity
+// ppn - PPN of document
+// fileId - fileIds of file.
+// startTime - begin of activity
+// endTime - end of activity
+// value - label of activity
+Activity makeActivity(String type, String ppn, Date startTime, Date endTime, String value) {
+    Type activityType = new Type();
+    activityType.setValue(qn(OCRD_PREFIX, type));
+    String id = type + "-" + ppn + "-" + transformDateToString(startTime);
+    Activity activity = pFactory.newActivity(qn(OCRD_PREFIX, id));
+    GregorianCalendar calendar = new GregorianCalendar();
+    if (startTime != null) {
+      calendar.setTime(startTime);
+      activity.setStartTime(new XMLGregorianCalendarImpl(calendar));
+    }
+    if (endTime != null) {
+      calendar.setTime(endTime);
+      activity.setEndTime(new XMLGregorianCalendarImpl(calendar));
+    }
+    activity.getType().add(activityType);
+    if (langValue != null) {
+      org.openprovenance.prov.xml.InternationalizedString langValue = new InternationalizedString();
+      langValue.setValue(value);
+      activity.getLabel().add(langValue);
+    }
+    return activity;
+  }
+//*****************************************************************************************
+// Create activity of type 'ocrd:module'
+// ppn - PPN of document
+// startTime - begin of activity
+// endTime - end of activity
+// value - label of activity
+Activity makeModule(String ppn, Date startTime, Date endTime, String value) {
+    return makeActivity("module", ppn, startTime, endTime, value);
+  }
+//*****************************************************************************************
+// Create activity of type 'ocrd:workflow'.
+// ppn - PPN of document
+// startTime - begin of activity
+// endTime - end of activity
+Activity makeWorkflow(String ppn, Date startTime, Date endTime) {
+    String type = "workflow";
+    String value = type + "-" + ppn + "-" + transformDateToString(startTime);
+    return makeActivity(type, ppn, startTime, endTime, value);
+  }
+//*****************************************************************************************
+// Create provenance document
+// ppn - PPN of document
+// moduleLabel - Label of the module called (should contain version e.g. ocrd-kraken-bin-version1.0)
+// inputFileId - fileIds of all input files. (Array of arrays containing all fileIds of one groupID)
+// outputFileId - fileIds of all output files. (Array of arrays containing all fileIds of one groupID)
+// parameterFilePath - Path to parameter file (optional)
+// startWorkflow - start time of workflow
+// endWorkflow - end time of (optional)
+// startModule - start time of module
+// endModule - end time of module (optional)
+Document makeDocument(String ppn, String moduleLabel, String[][] inputFileId, String[][] outputFileId, Path parameterFilePath, Date startWorkflow, Date endWorkflow, Date startModule, Date endModule) {
+    Document document = pFactory.newDocument();
+    List statementOrBundle;
+    statementOrBundle = document.getStatementOrBundle();
+
+    Activity module = makeModule(ppn, startModule, endModule, moduleLabel);
+    statementOrBundle.add(module);
+    int numberOfFiles = inputFileId[0].length;
+    boolean correctDimensions = true;
+    // Test dimensions
+    for (int ifIndex = 0; ifIndex &lt; inputFileId.length; ifIndex++) {
+      if (inputFileId[ifIndex].length != numberOfFiles) {
+        correctDimensions = false;
+      }
+    }
+    for (int ofIndex = 0; ofIndex &lt; outputFileId.length; ofIndex++) {
+      if (outputFileId[ofIndex].length != numberOfFiles) {
+        correctDimensions = false;
+      }
+    }
+    if (correctDimensions) {
+      for (int ifIndex = 0; ifIndex &lt; inputFileId.length; ifIndex++) {
+        for (int index = 0; index &lt; numberOfFiles; index++) {
+          Entity inputFile = makeMetsFile(ppn, inputFileId[ifIndex][index]);
+          statementOrBundle.add(inputFile);
+          Used used = new Used();
+          used.setActivity(module.getId());
+          used.setEntity(inputFile.getId());
+          statementOrBundle.add(used);
+          for (int ofIndex = 0; ofIndex &lt; outputFileId.length; ofIndex++) {
+            Entity outputFile = makeMetsFile(ppn, outputFileId[ofIndex][index]);
+            statementOrBundle.add(outputFile);
+            WasDerivedFrom derived = pFactory.newWasDerivedFrom(outputFile.getId(), inputFile.getId());
+            statementOrBundle.add(derived);
+
+            WasGeneratedBy wasGeneratedBy = pFactory.newWasGeneratedBy(outputFile, qn(OCRD_PREFIX, "module-" + ppn + "-" + transformDateToString(endModule)).toString(), module);
+            statementOrBundle.add(wasGeneratedBy);
+          }
+        }
+      }
+    } else {
+      for (int ifIndex = 0; ifIndex &lt; inputFileId.length; ifIndex++) {
+        for (int index = 0; index &lt; inputFileId[ifIndex].length; index++) {
+          Entity inputFile = makeMetsFile(ppn, inputFileId[ifIndex][index]);
+          statementOrBundle.add(inputFile);
+
+          Used used = new Used();
+          used.setActivity(module.getId());
+          used.setEntity(inputFile.getId());
+          statementOrBundle.add(used);
+        }
+      }
+      for (int ofIndex = 0; ofIndex &lt; outputFileId.length; ofIndex++) {
+        for (int index = 0; index &lt; outputFileId[ofIndex].length; index++) {
+          Entity outputFile = makeMetsFile(ppn, outputFileId[ofIndex][index]);
+          statementOrBundle.add(outputFile);
+
+          WasGeneratedBy wasGeneratedBy = pFactory.newWasGeneratedBy(outputFile, qn(OCRD_PREFIX, "module-" + ppn + "-" + transformDateToString(endModule)).toString(), module);
+          statementOrBundle.add(wasGeneratedBy);
+        }
+
+      }
+    }
+
+    if (parameterFilePath != null) {
+      Entity parameterFile = makeParameterfile(ppn, startModule, parameterFilePath);
+
+      Used used2 = new Used();
+      used2.setActivity(module.getId());
+      used2.setEntity(parameterFile.getId());
+      statementOrBundle.add(parameterFile);
+      statementOrBundle.add(used2);
+
+    }
+    Activity workflow = makeWorkflow(ppn, startWorkflow, endWorkflow);
+    statementOrBundle.add(workflow);
+
+    Agent agent = new Agent();
+    agent.setId(qn(OCRD_PREFIX, "Execute_Taverna_OCR-D_Workflow"));
+
+    statementOrBundle.add(agent);
+
+    WasAssociatedWith associatedWith = pFactory.newWasAssociatedWith(qn(OCRD_PREFIX, "agent-" + workflow.getId().getLocalPart()), workflow.getId(), agent.getId());
+    statementOrBundle.add(associatedWith);
+
+    WasStartedBy newWasStartedBy = pFactory.newWasStartedBy(qn(OCRD_PREFIX, "taverna-" + workflow.getId().getLocalPart()), workflow.getId(), module.getId());
+    statementOrBundle.add(newWasStartedBy);
+
+    document.setNamespace(ns);
+    return document;
+  }
+Path parameterFilePath = null;
+if (pathParameterFile.trim().length() &gt; 0) {
+	parameterFilePath = new File(pathParameterFile).toPath();
+}
+Document document = makeDocument(ppn, moduleDesc, new String[][]{inputFileArray}, new String[][]{outputFileArray}, parameterFilePath, startTimeWorkflowDate, endTimeWorkflowDate, 
+startTimeModuleDate, endTimeModuleDate);
+InteropFramework intF = new InteropFramework();
+intF.writeDocument(pathProvFile, document);
+pathToProv = pathProvFile;</script>
   <dependencies />
 </net.sf.taverna.t2.activities.beanshell.BeanshellActivityConfigurationBean></configBean><annotations /></activity></activities><dispatchStack><dispatchLayer><raven><group>net.sf.taverna.t2.core</group><artifact>workflowmodel-impl</artifact><version>1.5</version></raven><class>net.sf.taverna.t2.workflowmodel.processor.dispatch.layers.Parallelize</class><configBean encoding="xstream"><net.sf.taverna.t2.workflowmodel.processor.dispatch.layers.ParallelizeConfig xmlns="">
   <maxJobs>1</maxJobs>
@@ -84,35 +733,72 @@
   <initialDelay>1000</initialDelay>
   <maxDelay>5000</maxDelay>
   <maxRetries>0</maxRetries>
-</net.sf.taverna.t2.workflowmodel.processor.dispatch.layers.RetryConfig></configBean></dispatchLayer><dispatchLayer><raven><group>net.sf.taverna.t2.core</group><artifact>workflowmodel-impl</artifact><version>1.5</version></raven><class>net.sf.taverna.t2.workflowmodel.processor.dispatch.layers.Invoke</class><configBean encoding="xstream"><null xmlns="" /></configBean></dispatchLayer></dispatchStack><iterationStrategyStack><iteration><strategy><cross><port name="end_time" depth="0" /><port name="start_time" depth="0" /><port name="parameter" depth="0" /><port name="unique_postfix" depth="0" /><port name="working_dir" depth="0" /><port name="output_file_id" depth="0" /><port name="input_file_id" depth="0" /></cross></strategy></iteration></iterationStrategyStack></processor></processors><conditions /><datalinks><datalink><sink type="processor"><processor>Beanshell</processor><port>end_time</port></sink><source type="dataflow"><port>end_time</port></source></datalink><datalink><sink type="processor"><processor>Beanshell</processor><port>start_time</port></sink><source type="dataflow"><port>start_time</port></source></datalink><datalink><sink type="processor"><processor>Beanshell</processor><port>parameter</port></sink><source type="dataflow"><port>parameter</port></source></datalink><datalink><sink type="processor"><processor>Beanshell</processor><port>unique_postfix</port></sink><source type="dataflow"><port>unique_postfix</port></source></datalink><datalink><sink type="processor"><processor>Beanshell</processor><port>working_dir</port></sink><source type="dataflow"><port>working_dir</port></source></datalink><datalink><sink type="processor"><processor>Beanshell</processor><port>output_file_id</port></sink><source type="dataflow"><port>output_file_id</port></source></datalink><datalink><sink type="processor"><processor>Beanshell</processor><port>input_file_id</port></sink><source type="dataflow"><port>input_file_id</port></source></datalink></datalinks><annotations><annotation_chain encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
-  <annotationAssertions>
-    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
-      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.DescriptiveTitle">
-        <text>Create provenance for OCR-D workflow step</text>
-      </annotationBean>
-      <date>2018-12-05 12:44:00.268 UTC</date>
-      <creators />
-      <curationEventList />
-    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
-  </annotationAssertions>
-</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain><annotation_chain encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
-  <annotationAssertions>
-    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
-      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.Author">
-        <text>Volker Hartmann</text>
-      </annotationBean>
-      <date>2018-12-05 12:44:18.93 UTC</date>
-      <creators />
-      <curationEventList />
-    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
-  </annotationAssertions>
-</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain><annotation_chain_2_2 encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+</net.sf.taverna.t2.workflowmodel.processor.dispatch.layers.RetryConfig></configBean></dispatchLayer><dispatchLayer><raven><group>net.sf.taverna.t2.core</group><artifact>workflowmodel-impl</artifact><version>1.5</version></raven><class>net.sf.taverna.t2.workflowmodel.processor.dispatch.layers.Invoke</class><configBean encoding="xstream"><null xmlns="" /></configBean></dispatchLayer></dispatchStack><iterationStrategyStack><iteration><strategy><cross><port name="inputFile" depth="1" /><port name="endTimeWorkflow" depth="0" /><port name="startTimeWorkflow" depth="0" /><port name="startTimeModule" depth="0" /><port name="endTimeModule" depth="0" /><port name="ppn" depth="0" /><port name="pathParameterFile" depth="0" /><port name="moduleDesc" depth="0" /><port name="pathProvFile" depth="0" /><port name="outputFile" depth="1" /></cross></strategy></iteration></iterationStrategyStack></processor><processor><name>String_List_Difference</name><inputPorts><port><name>list2</name><depth>1</depth></port><port><name>list1</name><depth>1</depth></port></inputPorts><outputPorts><port><name>difference</name><depth>1</depth><granularDepth>1</granularDepth></port></outputPorts><annotations /><activities><activity><raven><group>net.sf.taverna.t2.activities</group><artifact>localworker-activity</artifact><version>1.5</version></raven><class>net.sf.taverna.t2.activities.localworker.LocalworkerActivity</class><inputMap><map from="list2" to="list2" /><map from="list1" to="list1" /></inputMap><outputMap><map from="difference" to="difference" /></outputMap><configBean encoding="xstream"><net.sf.taverna.t2.activities.localworker.LocalworkerActivityConfigurationBean xmlns="">
+  <inputs>
+    <net.sf.taverna.t2.workflowmodel.processor.activity.config.ActivityInputPortDefinitionBean>
+      <name>list1</name>
+      <depth>1</depth>
+      <mimeTypes>
+        <string>l('text/plain')</string>
+      </mimeTypes>
+      <handledReferenceSchemes />
+      <translatedElementType>java.lang.String</translatedElementType>
+      <allowsLiteralValues>true</allowsLiteralValues>
+    </net.sf.taverna.t2.workflowmodel.processor.activity.config.ActivityInputPortDefinitionBean>
+    <net.sf.taverna.t2.workflowmodel.processor.activity.config.ActivityInputPortDefinitionBean>
+      <name>list2</name>
+      <depth>1</depth>
+      <mimeTypes>
+        <string>l('text/plain')</string>
+      </mimeTypes>
+      <handledReferenceSchemes />
+      <translatedElementType>java.lang.String</translatedElementType>
+      <allowsLiteralValues>true</allowsLiteralValues>
+    </net.sf.taverna.t2.workflowmodel.processor.activity.config.ActivityInputPortDefinitionBean>
+  </inputs>
+  <outputs>
+    <net.sf.taverna.t2.workflowmodel.processor.activity.config.ActivityOutputPortDefinitionBean>
+      <name>difference</name>
+      <depth>1</depth>
+      <mimeTypes>
+        <string>l('text/plain')</string>
+      </mimeTypes>
+      <granularDepth>1</granularDepth>
+    </net.sf.taverna.t2.workflowmodel.processor.activity.config.ActivityOutputPortDefinitionBean>
+  </outputs>
+  <classLoaderSharing>workflow</classLoaderSharing>
+  <localDependencies />
+  <artifactDependencies />
+  <script>List difference = new ArrayList();
+for (Iterator i = list1.iterator(); i.hasNext();) {
+	Object o = i.next();
+	if (!list2.contains(o)) {
+		difference.add(o);
+	}
+}
+for (Iterator i = list2.iterator(); i.hasNext();) {
+	Object o = i.next();
+	if (!list1.contains(o)) {
+		difference.add(o);
+	}
+}
+</script>
+  <dependencies />
+  <localworkerName>org.embl.ebi.escience.scuflworkers.java.StringSetDifference</localworkerName>
+</net.sf.taverna.t2.activities.localworker.LocalworkerActivityConfigurationBean></configBean><annotations /></activity></activities><dispatchStack><dispatchLayer><raven><group>net.sf.taverna.t2.core</group><artifact>workflowmodel-impl</artifact><version>1.5</version></raven><class>net.sf.taverna.t2.workflowmodel.processor.dispatch.layers.Parallelize</class><configBean encoding="xstream"><net.sf.taverna.t2.workflowmodel.processor.dispatch.layers.ParallelizeConfig xmlns="">
+  <maxJobs>1</maxJobs>
+</net.sf.taverna.t2.workflowmodel.processor.dispatch.layers.ParallelizeConfig></configBean></dispatchLayer><dispatchLayer><raven><group>net.sf.taverna.t2.core</group><artifact>workflowmodel-impl</artifact><version>1.5</version></raven><class>net.sf.taverna.t2.workflowmodel.processor.dispatch.layers.ErrorBounce</class><configBean encoding="xstream"><null xmlns="" /></configBean></dispatchLayer><dispatchLayer><raven><group>net.sf.taverna.t2.core</group><artifact>workflowmodel-impl</artifact><version>1.5</version></raven><class>net.sf.taverna.t2.workflowmodel.processor.dispatch.layers.Failover</class><configBean encoding="xstream"><null xmlns="" /></configBean></dispatchLayer><dispatchLayer><raven><group>net.sf.taverna.t2.core</group><artifact>workflowmodel-impl</artifact><version>1.5</version></raven><class>net.sf.taverna.t2.workflowmodel.processor.dispatch.layers.Retry</class><configBean encoding="xstream"><net.sf.taverna.t2.workflowmodel.processor.dispatch.layers.RetryConfig xmlns="">
+  <backoffFactor>1.0</backoffFactor>
+  <initialDelay>1000</initialDelay>
+  <maxDelay>5000</maxDelay>
+  <maxRetries>0</maxRetries>
+</net.sf.taverna.t2.workflowmodel.processor.dispatch.layers.RetryConfig></configBean></dispatchLayer><dispatchLayer><raven><group>net.sf.taverna.t2.core</group><artifact>workflowmodel-impl</artifact><version>1.5</version></raven><class>net.sf.taverna.t2.workflowmodel.processor.dispatch.layers.Invoke</class><configBean encoding="xstream"><null xmlns="" /></configBean></dispatchLayer></dispatchStack><iterationStrategyStack><iteration><strategy><cross><port name="list2" depth="1" /><port name="list1" depth="1" /></cross></strategy></iteration></iterationStrategyStack></processor></processors><conditions /><datalinks><datalink><sink type="processor"><processor>Beanshell</processor><port>inputFile</port></sink><source type="dataflow"><port>inputFile</port></source></datalink><datalink><sink type="processor"><processor>Beanshell</processor><port>endTimeWorkflow</port></sink><source type="dataflow"><port>endTimeWorkflow</port></source></datalink><datalink><sink type="processor"><processor>Beanshell</processor><port>startTimeWorkflow</port></sink><source type="dataflow"><port>startTimeWorkflow</port></source></datalink><datalink><sink type="processor"><processor>Beanshell</processor><port>startTimeModule</port></sink><source type="dataflow"><port>startTimeModule</port></source></datalink><datalink><sink type="processor"><processor>Beanshell</processor><port>endTimeModule</port></sink><source type="dataflow"><port>endTimeModule</port></source></datalink><datalink><sink type="processor"><processor>Beanshell</processor><port>ppn</port></sink><source type="dataflow"><port>ppn</port></source></datalink><datalink><sink type="processor"><processor>Beanshell</processor><port>pathParameterFile</port></sink><source type="dataflow"><port>parameterPath</port></source></datalink><datalink><sink type="processor"><processor>Beanshell</processor><port>moduleDesc</port></sink><source type="dataflow"><port>moduleDesc</port></source></datalink><datalink><sink type="processor"><processor>Beanshell</processor><port>pathProvFile</port></sink><source type="dataflow"><port>provenancePath</port></source></datalink><datalink><sink type="processor"><processor>Beanshell</processor><port>outputFile</port></sink><source type="processor"><processor>String_List_Difference</processor><port>difference</port></source></datalink><datalink><sink type="processor"><processor>String_List_Difference</processor><port>list2</port></sink><source type="dataflow"><port>outputFile</port></source></datalink><datalink><sink type="processor"><processor>String_List_Difference</processor><port>list1</port></sink><source type="dataflow"><port>outputFile</port></source></datalink><datalink><sink type="dataflow"><port>result</port></sink><source type="processor"><processor>Beanshell</processor><port>pathToProv</port></source></datalink></datalinks><annotations><annotation_chain_2_2 encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
   <annotationAssertions>
     <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
       <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.IdentificationAssertion">
-        <identification>fb92c66e-bce6-43a4-9ebb-8e67d3fe8a4d</identification>
+        <identification>d813c2f6-cc7d-4b3d-8579-db33b837eb11</identification>
       </annotationBean>
-      <date>2018-12-05 12:52:47.780 UTC</date>
+      <date>2019-02-13 07:59:19.171 UTC</date>
       <creators />
       <curationEventList />
     </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
@@ -121,9 +807,20 @@
   <annotationAssertions>
     <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
       <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.IdentificationAssertion">
-        <identification>33731e8d-a068-4245-8f56-009423e2d33f</identification>
+        <identification>892ce077-9664-4d57-8dcf-738aa9381e8b</identification>
       </annotationBean>
-      <date>2018-12-05 14:19:55.527 UTC</date>
+      <date>2019-02-15 07:04:27.937 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain_2_2><annotation_chain_2_2 encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.IdentificationAssertion">
+        <identification>47b5b2fa-4c5a-4865-aa7b-40e5fe26715b</identification>
+      </annotationBean>
+      <date>2019-02-12 09:43:23.925 UTC</date>
       <creators />
       <curationEventList />
     </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
@@ -131,12 +828,419 @@
 </net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain_2_2><annotation_chain encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
   <annotationAssertions>
     <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
-      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.FreeTextDescription">
-        <text>Create provenance and store it in subdir 'metadata/provenance' with unique id.</text>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.DescriptiveTitle">
+        <text>Generate Provenance</text>
       </annotationBean>
-      <date>2018-12-05 12:45:18.996 UTC</date>
+      <date>2019-02-18 11:59:42.992 UTC</date>
       <creators />
       <curationEventList />
     </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
   </annotationAssertions>
-</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain></annotations></dataflow></workflow>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain><annotation_chain_2_2 encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.IdentificationAssertion">
+        <identification>99906815-f970-44f3-91bb-1143f4a96a2a</identification>
+      </annotationBean>
+      <date>2019-02-12 08:49:35.260 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain_2_2><annotation_chain_2_2 encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.IdentificationAssertion">
+        <identification>1588ba0b-5578-484c-9de7-df394fa65c51</identification>
+      </annotationBean>
+      <date>2019-02-13 13:56:27.309 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain_2_2><annotation_chain_2_2 encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.IdentificationAssertion">
+        <identification>5a4e51b7-ce42-4518-94c1-b94c771108c9</identification>
+      </annotationBean>
+      <date>2019-02-15 06:49:55.698 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain_2_2><annotation_chain_2_2 encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.IdentificationAssertion">
+        <identification>4a54f5c4-38ed-4871-8e3a-27bfb8d94039</identification>
+      </annotationBean>
+      <date>2019-02-18 09:24:36.60 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain_2_2><annotation_chain_2_2 encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.IdentificationAssertion">
+        <identification>6debd671-b801-48e8-9770-045286157fd4</identification>
+      </annotationBean>
+      <date>2019-02-12 09:55:46.875 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain_2_2><annotation_chain_2_2 encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.IdentificationAssertion">
+        <identification>65296222-e16e-440a-b8f3-b75d17617b7c</identification>
+      </annotationBean>
+      <date>2019-02-12 08:46:57.550 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain_2_2><annotation_chain_2_2 encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.IdentificationAssertion">
+        <identification>de01d891-e103-4892-bbfe-27cf39292d10</identification>
+      </annotationBean>
+      <date>2019-02-13 14:02:30.220 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain_2_2><annotation_chain encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.Author">
+        <text>OCR-D</text>
+      </annotationBean>
+      <date>2019-02-18 11:58:39.804 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain><annotation_chain encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.FreeTextDescription">
+        <text>Generate provenance file for single workflow task.</text>
+      </annotationBean>
+      <date>2019-02-18 11:59:16.492 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain><annotation_chain_2_2 encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.IdentificationAssertion">
+        <identification>383681a7-2d3a-4d18-8c22-c8f64bceeab5</identification>
+      </annotationBean>
+      <date>2019-02-13 13:41:54.997 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain_2_2><annotation_chain_2_2 encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.IdentificationAssertion">
+        <identification>be917182-ed0c-413e-851a-1024655cc6ca</identification>
+      </annotationBean>
+      <date>2019-02-12 09:36:29.213 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain_2_2><annotation_chain_2_2 encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.IdentificationAssertion">
+        <identification>79cc370a-9acd-4a9a-881e-885431eb1b36</identification>
+      </annotationBean>
+      <date>2019-02-13 13:52:23.622 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain_2_2><annotation_chain_2_2 encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.IdentificationAssertion">
+        <identification>5b029aea-2cac-40ba-8736-11c56c98a7ee</identification>
+      </annotationBean>
+      <date>2019-02-12 10:12:22.747 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain_2_2><annotation_chain_2_2 encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.IdentificationAssertion">
+        <identification>3ddaee57-e320-4af0-ada2-87cbc90ade5f</identification>
+      </annotationBean>
+      <date>2019-02-13 13:39:01.422 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain_2_2><annotation_chain_2_2 encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.IdentificationAssertion">
+        <identification>f9af371f-9d96-44df-9c63-b21d2f6f61c5</identification>
+      </annotationBean>
+      <date>2019-02-12 09:40:49.729 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain_2_2><annotation_chain_2_2 encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.IdentificationAssertion">
+        <identification>eabbb829-a899-4a37-8c5e-1382f0c2318f</identification>
+      </annotationBean>
+      <date>2019-02-13 13:43:18.654 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain_2_2><annotation_chain_2_2 encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.IdentificationAssertion">
+        <identification>1bdc74a5-9268-4876-a5c6-44c23d172c54</identification>
+      </annotationBean>
+      <date>2019-02-13 13:24:12.321 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain_2_2><annotation_chain_2_2 encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.IdentificationAssertion">
+        <identification>1ef743b8-653c-47ed-8428-44ae25dbddad</identification>
+      </annotationBean>
+      <date>2019-02-13 13:22:58.300 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain_2_2><annotation_chain_2_2 encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.IdentificationAssertion">
+        <identification>86db6501-5b3f-43ad-bc7b-74574f586e9b</identification>
+      </annotationBean>
+      <date>2019-02-13 13:18:38.769 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain_2_2><annotation_chain_2_2 encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.IdentificationAssertion">
+        <identification>292daa48-1e89-4afa-8764-d3f87416c584</identification>
+      </annotationBean>
+      <date>2019-02-12 09:50:39.51 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain_2_2><annotation_chain_2_2 encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.IdentificationAssertion">
+        <identification>d5e7515e-085f-47a5-a47d-668afdee17e0</identification>
+      </annotationBean>
+      <date>2019-02-18 11:59:43.98 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain_2_2><annotation_chain_2_2 encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.IdentificationAssertion">
+        <identification>e7b893ff-1ff4-4e8f-998e-4509f4b93cef</identification>
+      </annotationBean>
+      <date>2019-02-15 06:45:53.278 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain_2_2><annotation_chain_2_2 encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.IdentificationAssertion">
+        <identification>97780e1b-f49f-4963-b7c1-17b5db7d94e8</identification>
+      </annotationBean>
+      <date>2019-02-12 09:33:43.704 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain_2_2><annotation_chain_2_2 encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.IdentificationAssertion">
+        <identification>bd930681-1387-4b4d-b4ca-58c676cc7330</identification>
+      </annotationBean>
+      <date>2019-02-12 09:57:02.222 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain_2_2><annotation_chain_2_2 encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.IdentificationAssertion">
+        <identification>92c02e51-6c20-4227-a351-891f089654a4</identification>
+      </annotationBean>
+      <date>2019-02-13 13:57:19.55 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain_2_2><annotation_chain_2_2 encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.IdentificationAssertion">
+        <identification>9801b792-b737-4923-aa87-c043efdab8ca</identification>
+      </annotationBean>
+      <date>2019-02-15 06:48:47.838 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain_2_2><annotation_chain_2_2 encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.IdentificationAssertion">
+        <identification>65e7d0ae-f9b7-4e74-8fdd-d58a0a20a5a2</identification>
+      </annotationBean>
+      <date>2019-02-13 13:33:00.969 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain_2_2><annotation_chain_2_2 encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.IdentificationAssertion">
+        <identification>1d74a494-85cf-4556-b261-32d2bda77ad8</identification>
+      </annotationBean>
+      <date>2019-02-15 09:27:10.804 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain_2_2><annotation_chain_2_2 encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.IdentificationAssertion">
+        <identification>eb739f9d-fcb1-44c3-ac24-442b613e6823</identification>
+      </annotationBean>
+      <date>2019-02-12 10:38:21.148 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain_2_2><annotation_chain_2_2 encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.IdentificationAssertion">
+        <identification>144e2f49-d488-4d47-92ea-9371c622c672</identification>
+      </annotationBean>
+      <date>2019-02-13 13:28:19.438 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain_2_2><annotation_chain_2_2 encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.IdentificationAssertion">
+        <identification>3fd74c68-cb51-491c-b35b-042e41b4fbe8</identification>
+      </annotationBean>
+      <date>2019-02-12 14:00:20.548 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain_2_2><annotation_chain_2_2 encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.IdentificationAssertion">
+        <identification>fc329c47-f562-404d-b17a-0e6d1e1d4868</identification>
+      </annotationBean>
+      <date>2019-02-13 13:36:54.771 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain_2_2><annotation_chain_2_2 encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.IdentificationAssertion">
+        <identification>c608c8fd-a538-4eca-bfc1-63eda21b482f</identification>
+      </annotationBean>
+      <date>2019-02-18 14:07:22.47 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain_2_2><annotation_chain_2_2 encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.IdentificationAssertion">
+        <identification>4a63ea66-9b02-4703-8e59-cf9d28b8d8b9</identification>
+      </annotationBean>
+      <date>2019-02-15 06:56:06.632 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain_2_2><annotation_chain_2_2 encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.IdentificationAssertion">
+        <identification>3dbfdc18-4217-42c9-8a55-88f5290a6f7f</identification>
+      </annotationBean>
+      <date>2019-02-12 10:10:08.2 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain_2_2><annotation_chain_2_2 encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.IdentificationAssertion">
+        <identification>850c5818-e7e2-4253-9b8e-bcec18eaf2c7</identification>
+      </annotationBean>
+      <date>2019-02-15 06:52:55.667 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain_2_2><annotation_chain_2_2 encoding="xstream"><net.sf.taverna.t2.annotation.AnnotationChainImpl xmlns="">
+  <annotationAssertions>
+    <net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+      <annotationBean class="net.sf.taverna.t2.annotation.annotationbeans.IdentificationAssertion">
+        <identification>c8f702f3-c0c8-4b48-8d59-07dff9dd8751</identification>
+      </annotationBean>
+      <date>2019-02-13 14:00:54.106 UTC</date>
+      <creators />
+      <curationEventList />
+    </net.sf.taverna.t2.annotation.AnnotationAssertionImpl>
+  </annotationAssertions>
+</net.sf.taverna.t2.annotation.AnnotationChainImpl></annotation_chain_2_2></annotations></dataflow></workflow>
