@@ -60,7 +60,6 @@ import org.xml.sax.SAXException;
     XPath xPath = XPathFactory.newInstance().newXPath();
     NamespaceContext ctx = new NamespaceContext() {
       public String getNamespaceURI(String prefix) {
-        System.out.println("getNamespaceURI: " + prefix);
         return prefix.equals("mets") ? "http://www.loc.gov/METS/" : null;
       }
 

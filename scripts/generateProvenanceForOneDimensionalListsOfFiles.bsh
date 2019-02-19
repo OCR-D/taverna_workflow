@@ -46,6 +46,7 @@
  
 import java.io.IOException;
 import java.io.File;
+import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -115,7 +116,8 @@ QualifiedName qn(String n) {
 //*****************************************************************************************
 //Generate QualifiedName with given prefix.
 QualifiedName qn(String prefix, String n) {
-	return ns.qualifiedName(prefix, n, pFactory);
+	String localName = n.replaceAll("[^\\w]", "_");
+	return ns.qualifiedName(prefix, localName, pFactory);
 }
 //*****************************************************************************************
 // Tramsform date to string.
