@@ -17,6 +17,7 @@ RUN wget https://bitbucket.org/taverna/taverna-commandline-product/downloads/tav
 RUN sha1sum -c /tmp/sha1sum.txt
 WORKDIR /usr/local/taverna
 RUN unzip /tmp/taverna-commandline-core-2.5.0-standalone.zip 
+CP workflow/externalLibs/* taverna-commandline-core-2.5.0/lib
 WORKDIR /workspace/workflow
 ENTRYPOINT ["sh", "-c", "sh /workspace/workflow/startWorkflow.sh"]
 
