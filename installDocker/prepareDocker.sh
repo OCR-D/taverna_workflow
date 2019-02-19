@@ -43,7 +43,7 @@ echo Install taverna workflow for Docker into $INSTALLATION_DIRECTORY
 ###########################################################################
 # Install jar dependencies for workflow
 ###########################################################################
-// add external libraries with gradle.
+# add external libraries with gradle.
 cd "$ACTUAL_DIR"/..
 ./gradlew copyDependencies
 

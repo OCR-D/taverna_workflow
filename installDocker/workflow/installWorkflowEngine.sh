@@ -63,10 +63,10 @@ rm taverna-commandline-core-2.5.0-standalone.zip
 ###########################################################################
 # Install jar dependencies for workflow
 ###########################################################################
-// add external libraries with gradle.
-cd "$ACTUAL_DIR"/..
+# add external libraries with gradle.
+cd "$ACTUAL_DIR"/../..
 ./gradlew copyDependencies
-cp "$ACTUAL_DIR"/workflow/externalLibs/* "$INSTALLATION_DIRECTORY"/taverna-commandline-core-2.5.0/lib
+cp "$ACTUAL_DIR"/externalLibs/* "$INSTALLATION_DIRECTORY"/taverna-commandline-core-2.5.0/lib
 cd "$INSTALLATION_DIRECTORY"
 
 ###########################################################################
