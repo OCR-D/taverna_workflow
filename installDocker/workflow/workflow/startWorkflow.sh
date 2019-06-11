@@ -24,4 +24,4 @@ fi
 done < "$ACTUAL_DIR"/parameters.txt
 
 # Start workflow
-/usr/local/taverna/taverna-commandline-core-2.5.0/executeworkflow.sh -inputvalue working_dir $WORKING_DIR -inputvalue workflow_configuration_file $WORKFLOW_CONFIG_FILE -inputvalue mets_file_url $METS -inputvalue unique_prefix_for_provenance $PREFIX_PROV $ACTUAL_DIR/taverna/Execute_OCR-D_workflow.t2flow 
+bash "/usr/local/taverna/taverna-commandline-core-2.5.0/executeworkflow.sh" -inputvalue working_dir "$WORKING_DIR" -inputvalue workflow_configuration_file "$WORKFLOW_CONFIG_FILE" -inputvalue mets_file_url "$METS" -inputvalue unique_prefix_for_provenance "$PREFIX_PROV" "$ACTUAL_DIR"/taverna/Execute_OCR-D_workflow.t2flow 
