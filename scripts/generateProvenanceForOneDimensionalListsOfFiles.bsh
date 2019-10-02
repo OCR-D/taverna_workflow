@@ -15,7 +15,8 @@
  */
 /**************************************************************************
  * Description:
- *     Generating provenance for executed module in PROV-XML
+ *     Generating provenance for executed module in PROV-XML and merge 
+ *     it in a 'global' file ('ocrd_provenance.xml')
  **************************************************************************
  * Input parameter(s):
  * - String moduleDesc 
@@ -64,6 +65,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
+import org.apache.commons.io.FilenameUtils;
 import org.openprovenance.prov.interop.InteropFramework;
 import org.openprovenance.prov.interop.InteropFramework.ProvFormat;
 import org.openprovenance.prov.model.Activity;
@@ -100,6 +102,9 @@ Date endTimeModuleDate     = new Date(Long.parseLong(endTimeModule));
 // Define namespace for OCR-D
 String OCRD_PREFIX = "ocrd";
 String OCRD_NS = "http://www.ocr-d.de";
+
+// Define filename for 'global' provenance file.
+String globalProvFile = FilenameUtils.getFullPath(pathProvFile) + "ocrd_provenance.xml";
 
 //*****************************************************************************************
 // Define variables
@@ -342,4 +347,16 @@ Document document = makeDocument(ppn, moduleDesc, new String[][]{inputFileArray}
 startTimeModuleDate, endTimeModuleDate);
 InteropFramework intF = new InteropFramework();
 intF.writeDocument(pathProvFile, document);
+
+// Merge provenance in one file
+IndexedDocument allProvDoc = new IndexedDocument(pFactory, pFactory.newDocument(), false);
+allProvDoc.merge(document);
+if (new File(globalProvFile).exists()) {
+  Document oldProvDoc = intF.readDocumentFromFile(globalProvFile);
+  allProvDoc.merge(oldProvDoc);
+}
+
+intF.writeDocument(globalProvFile, allProvDoc.toDocument()); 
+
+// Set path to provenance of actual module
 pathToProv = pathProvFile;
