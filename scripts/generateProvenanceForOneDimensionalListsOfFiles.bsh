@@ -103,6 +103,10 @@ Date endTimeModuleDate     = new Date(Long.parseLong(endTimeModule));
 String OCRD_PREFIX = "ocrd";
 String OCRD_NS = "http://www.ocr-d.de";
 
+// Sort input and outputFileArray
+Arrays.sort(inputFileArray);
+Arrays.sort(outputFileArray);
+
 // Define filename for 'global' provenance file.
 String globalProvFile = FilenameUtils.getFullPath(pathProvFile) + "ocrd_provenance.xml";
 
@@ -346,9 +350,17 @@ if (pathParameterFile.trim().length() > 0) {
 Document document = makeDocument(ppn, moduleDesc, new String[][]{inputFileArray}, new String[][]{outputFileArray}, parameterFilePath, startTimeWorkflowDate, endTimeWorkflowDate, 
 startTimeModuleDate, endTimeModuleDate);
 InteropFramework intF = new InteropFramework();
-intF.writeDocument(pathProvFile, document);
 
-// Merge provenance in one file
+// Merge current workflow in one file
+IndexedDocument workflowProvDoc = new IndexedDocument(pFactory, pFactory.newDocument(), false);
+workflowProvDoc.merge(document);
+if (new File(pathProvFile).exists()) {
+  Document oldWorkflowProvDoc = intF.readDocumentFromFile(pathProvFile);
+  workflowProvDoc.merge(oldWorkflowProvDoc);
+}
+intF.writeDocument(pathProvFile, workflowProvDoc.toDocument());
+
+// Merge all provenance in one file
 IndexedDocument allProvDoc = new IndexedDocument(pFactory, pFactory.newDocument(), false);
 allProvDoc.merge(document);
 if (new File(globalProvFile).exists()) {
