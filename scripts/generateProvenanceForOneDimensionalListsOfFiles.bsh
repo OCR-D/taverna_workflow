@@ -162,16 +162,32 @@ Entity makeParameterfile(String ppn, Date startTime, Path filePath) {
     return parameterFile;
   }
 //*****************************************************************************************
-// Create entity of type 'ocrd:mets-file'
+// Create entity of type 'ocrd:mets-referencedFile'
 // ppn - PPN of document
 // fileId - fileIds of file.
-Entity makeMetsFile(String ppn, String fileId) {
+Entity makeReferencedMetsFile(String ppn, String fileId) {
     Type metsFileType = new Type();
     String id = ppn + "-" + fileId;
-    metsFileType.setValue(qn(OCRD_PREFIX, "mets-file"));
+    metsFileType.setValue(qn(OCRD_PREFIX, "mets-referencedFile"));
+    Entity referencedMetsFile = pFactory.newEntity(qn(OCRD_PREFIX, id));
+    referencedMetsFile.getType().add(metsFileType);
+    referencedMetsFile.setValue(pFactory.newValue(fileId,
+            pFactory.getName().XSD_STRING));
+    return referencedMetsFile;
+  }
+
+//*****************************************************************************************
+// Create entity of type 'ocrd:mets'
+// ppn - PPN of document
+// filename - absolute path of METS file.
+Entity makeMetsFile(String ppn, String filename) {
+    Type metsFileType = new Type();
+    String metsFilename = FilenameUtils.getName(filename);
+    String id = ppn + "-" + metsFilename;
+    metsFileType.setValue(qn(OCRD_PREFIX, "mets"));
     Entity metsFile = pFactory.newEntity(qn(OCRD_PREFIX, id));
     metsFile.getType().add(metsFileType);
-    metsFile.setValue(pFactory.newValue(id,
+    metsFile.setValue(pFactory.newValue(metsFilename,
             pFactory.getName().XSD_STRING));
     return metsFile;
   }
@@ -259,14 +275,14 @@ Document makeDocument(String ppn, String moduleLabel, String[][] inputFileId, St
     if (correctDimensions) {
       for (int ifIndex = 0; ifIndex < inputFileId.length; ifIndex++) {
         for (int index = 0; index < numberOfFiles; index++) {
-          Entity inputFile = makeMetsFile(ppn, inputFileId[ifIndex][index]);
+          Entity inputFile = makeReferencedMetsFile(ppn, inputFileId[ifIndex][index]);
           statementOrBundle.add(inputFile);
           Used used = new Used();
           used.setActivity(module.getId());
           used.setEntity(inputFile.getId());
           statementOrBundle.add(used);
           for (int ofIndex = 0; ofIndex < outputFileId.length; ofIndex++) {
-            Entity outputFile = makeMetsFile(ppn, outputFileId[ofIndex][index]);
+            Entity outputFile = makeReferencedMetsFile(ppn, outputFileId[ofIndex][index]);
             statementOrBundle.add(outputFile);
             WasDerivedFrom derived = pFactory.newWasDerivedFrom(outputFile.getId(), inputFile.getId());
             statementOrBundle.add(derived);
@@ -279,7 +295,7 @@ Document makeDocument(String ppn, String moduleLabel, String[][] inputFileId, St
     } else {
       for (int ifIndex = 0; ifIndex < inputFileId.length; ifIndex++) {
         for (int index = 0; index < inputFileId[ifIndex].length; index++) {
-          Entity inputFile = makeMetsFile(ppn, inputFileId[ifIndex][index]);
+          Entity inputFile = makeReferencedMetsFile(ppn, inputFileId[ifIndex][index]);
           statementOrBundle.add(inputFile);
 
           Used used = new Used();
@@ -290,7 +306,7 @@ Document makeDocument(String ppn, String moduleLabel, String[][] inputFileId, St
       }
       for (int ofIndex = 0; ofIndex < outputFileId.length; ofIndex++) {
         for (int index = 0; index < outputFileId[ofIndex].length; index++) {
-          Entity outputFile = makeMetsFile(ppn, outputFileId[ofIndex][index]);
+          Entity outputFile = makeReferencedMetsFile(ppn, outputFileId[ofIndex][index]);
           statementOrBundle.add(outputFile);
 
           WasGeneratedBy wasGeneratedBy = pFactory.newWasGeneratedBy(outputFile, qn(OCRD_PREFIX, "module-" + ppn + "-" + transformDateToString(endModule)).toString(), module);
