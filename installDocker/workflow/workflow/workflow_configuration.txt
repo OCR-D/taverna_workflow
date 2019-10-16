@@ -5,6 +5,13 @@
 # The parameters are separated by '|'.
 # If a parameter consists of a list the values are separated by ','
 ########################################################################
+# Dockerization
+########################################################################
+# If the workflow will be executed inside a docker container all local files
+# have to be located in a subdirectory of /path/to/docker/dockerfiles.
+# Afterwards all paths have to be replaced by '/workspace'.
+# E.g.: file:///path/to/docker/dockerfiles/workspace1 --> file:///workspace/workspace1
+########################################################################
 # Description of the parameters:
 ########################################################################
 # 1. command - command to be executed
@@ -18,6 +25,6 @@
 # ocrd-kraken-binarize|OCR-D-IMG|OCR-D-IMG-BIN-KRAKEN| |https://host/ocr-kraken-binarize-params.json|ERROR
 ########################################################################
 ocrd-kraken-binarize|OCR-D-IMG|OCR-D-IMG-BIN-KRAKEN| | |ERROR
-ocrd-tesserocr-segment|OCR-D-IMG-BIN-KRAKEN|OCR_D_SEG_BLOCK| |https://host/tesserocr-params.json|ERROR
+ocrd-ocropy-segment|OCR-D-IMG-BIN-KRAKEN|OCR-D-OCROPY-SEG| | |ERROR
 
 
