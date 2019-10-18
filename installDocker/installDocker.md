@@ -15,7 +15,7 @@ user@localhost:/home/user/$sudo add-apt-repository \
    $(lsb_release -cs) \
    stable"
 user@localhost:/home/user/$sudo apt-get update
-user@localhost:/home/user/$apt-get install docker-ce
+user@localhost:/home/user/$sudo apt-get install docker-ce
 ```
 
 ## More Information
