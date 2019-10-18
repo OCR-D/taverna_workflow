@@ -31,6 +31,7 @@ user@localhost:/path/to/docker$
 ## Configure Workflow
 Before a workflow can be started, it must be configured first.
 Please adapt the configuration files due to your needs.
+
 Files to edit:
 * /path/to/docker/dockerfiles/workflow/parameters.txt
 * /path/to/docker/dockerfiles/workflow/workflow_configuration.txt
@@ -39,10 +40,14 @@ Files to edit:
 
 :information_source: Make sure that all modules used by the workflow are installed.
 
-## Make Document accessible for Docker
+### Make Document accessible for Docker
 All files located in 'dockerfiles' are available inside the docker container
 via the path /workspace. To make the document 'visible' for the workflow the
 mets.xml and the referenced files have to be copied to /path/to/docker/dockerfiles.
+
+:heavy_exclamation_mark: Therefor all local paths inside the configuration files have to be replaced by ***/workspace***. :heavy_exclamation_mark:
+
+E.g.: ***/path/to/docker/dockerfiles***/workspace1/mets.xml --> ***/workspace***/workspace1/mets.xml
 
 ## Execute Workflow
 If workflow is configured it can be started.

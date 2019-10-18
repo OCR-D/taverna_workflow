@@ -3,6 +3,10 @@
 # Determine directory of script. 
 ACTUAL_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
+# Set environment variable to UTF-8
+export LC_ALL=C.UTF-8
+export LANG=C.UTF-8
+
 while IFS=: read -r key value
 do
 if [ "$key" = "METS" ]; then
