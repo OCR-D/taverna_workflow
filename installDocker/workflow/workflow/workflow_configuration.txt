@@ -24,7 +24,8 @@
 # Example:
 # ocrd-kraken-binarize|OCR-D-IMG|OCR-D-IMG-BIN-KRAKEN| |https://host/ocr-kraken-binarize-params.json|ERROR
 ########################################################################
-ocrd-kraken-binarize|OCR-D-IMG|OCR-D-IMG-BIN-KRAKEN| | |ERROR
-ocrd-ocropy-segment|OCR-D-IMG-BIN-KRAKEN|OCR-D-OCROPY-SEG| | |ERROR
-
+ocrd-tesserocr-binarize|OCR-D-IMG|OCR-D-IMG-BIN-TESSEROCR| | |ERROR
+ocrd-tesserocr-segment-region|OCR-D-IMG-BIN-TESSEROCR|OCR-D-SEG-REGION| | |ERROR
+ocrd-tesserocr-segment-line|OCR-D-SEG-REGION|OCR-D-SEG-LINE| | |ERROR
+ocrd-tesserocr-recognize|OCR-D-SEG-LINE|OCR-D-OCR-TESSEROCR| | |ERROR
 

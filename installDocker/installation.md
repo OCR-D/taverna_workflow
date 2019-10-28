@@ -3,6 +3,7 @@
 ## Prerequisites
 
 In order to execute a workflow you'll need:
+- [Java](https://java.com/download) 7 or higher 
 - Docker ([Installation Docker](installDocker.md))
 
 ## Prepare Docker Environment
@@ -55,6 +56,28 @@ If workflow is configured it can be started.
 user@localhost:/path/to/docker/$sudo docker run -v "$(pwd)"/dockerfiles:/workspace taverna:ocrd
 [...]
 ```
+
+## Test workflow
+To test the workflow, follow the steps below.
+```bash=bash
+user@localhost:~$mkdir testTaverna
+user@localhost:~$cd testTaverna
+user@localhost:~/testTaverna$ wget https://github.com/OCR-D/taverna_workflow/archive/master.zip
+user@localhost:~/testTaverna$ unzip master.zip
+user@localhost:~/testTaverna$ cd taverna_workflow-master/installDocker/
+user@localhost:~/testTaverna/taverna_workflow-master/installDocker$ bash prepareDocker.sh /tmp/tavernaWorkflow
+user@localhost:~/testTaverna/taverna_workflow-master/installDocker$ cd /tmp/tavernaWorkflow
+user@localhost:/tmp/tavernaWorkflow$sudo docker build -t taverna:ocrd .
+user@localhost:/tmp/tavernaWorkflow$cd dockerfiles
+user@localhost:/tmp/tavernaWorkflow/dockerfiles$mkdir workspace1
+user@localhost:/tmp/tavernaWorkflow/dockerfiles$cd workspace1
+user@localhost:/tmp/tavernaWorkflow/dockerfiles/workspace1$wget 'https://ocr-d-repo.scc.kit.edu/api/v1/dataresources/736a2f9a-92c6-4fe3-a457-edfa3eab1fe3/data/wundt_grundriss_1896.ocrd.zip'
+user@localhost:/tmp/tavernaWorkflow/dockerfiles/workspace1$unzip wundt_grundriss_1896.ocrd.zip
+user@localhost:/tmp/tavernaWorkflow/dockerfiles/workspace1$cd ../..
+user@localhost:/tmp/tavernaWorkflow$sudo docker run -v "$(pwd)"/dockerfiles:/workspace taverna:ocrd
+[...]
+```
+As a result of the workflow a bagit-Container will be created at '/tmp/tavernaWorkflow/dockerfiles/workspace1/data'. The provenance metadata and the (error) output of the processes will be available at '/tmp/tavernaWorkflow/dockerfiles/workspace1/data/metadata'
 
 ## More Information
 
