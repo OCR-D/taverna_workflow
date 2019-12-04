@@ -22,6 +22,6 @@
 ########################################################################
 METS:file:///data/workspace/example/data/mets.xml
 WORKING_DIR:/data/workspace/example/data
-WORKFLOW_CONFIG_FILE:file:///data/workflow/workflow_configuration.txt
+WORKFLOW_CONFIG_FILE:file:///data/workflow/workflow_configuration_tesserocr_gt4histocr_best.txt
 PREFIX_PROV:prov
 

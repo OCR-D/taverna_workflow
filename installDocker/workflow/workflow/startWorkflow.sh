@@ -2,6 +2,22 @@
 
 # Determine directory of script. 
 ACTUAL_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+# Define parameter file
+if [ "$1" = "" ]; then
+  PARAMETER_FILE=parameters.txt
+else
+  PARAMETER_FILE=$1
+fi
+
+PARAMETER_FILE="$ACTUAL_DIR"/$PARAMETER_FILE
+
+# Test if parameter file exists
+if test -f "$PARAMETER_FILE"; then
+   echo Use parameter file $1
+else 
+   echo Parameter file "$1" not found
+   exit 1
+fi
 
 # Set environment variable to UTF-8
 export LC_ALL=C.UTF-8
@@ -25,7 +41,7 @@ if [ "$key" = "PREFIX_PROV" ]; then
   PREFIX_PROV=$value
   echo $key = $PREFIX_PROV
 fi
-done < "$ACTUAL_DIR"/parameters.txt
+done < "$PARAMETER_FILE"
 
 # Start workflow
 bash "/usr/local/taverna/taverna-commandline-core-2.5.0/executeworkflow.sh" -inputvalue working_dir "$WORKING_DIR" -inputvalue workflow_configuration_file "$WORKFLOW_CONFIG_FILE" -inputvalue mets_file_url "$METS" -inputvalue unique_prefix_for_provenance "$PREFIX_PROV" "$ACTUAL_DIR"/taverna/Execute_OCR-D_workflow.t2flow 
