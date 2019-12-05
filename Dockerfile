@@ -37,5 +37,6 @@ RUN git clone https://github.com/OCR-D/taverna_workflow.git
 
 RUN mv taverna_workflow /taverna/git
 
+WORKDIR /taverna/git/docker/
 ENTRYPOINT ["sh", "/taverna/git/docker/startWorkflowViaDocker.sh"]
 
