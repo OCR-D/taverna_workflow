@@ -33,10 +33,11 @@ RUN mkdir -p /data
 
 RUN mkdir -p /git
 WORKDIR /git
+
 RUN git clone https://github.com/OCR-D/taverna_workflow.git
 
 RUN mv taverna_workflow /taverna/git
 
-WORKDIR /taverna/git/docker/
+WORKDIR /taverna/git/
 ENTRYPOINT ["sh", "/taverna/git/docker/startWorkflowViaDocker.sh"]
 

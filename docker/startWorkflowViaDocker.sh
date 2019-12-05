@@ -1,7 +1,7 @@
 #!/bin/sh
 
-# Determine directory of script. 
-ACTUAL_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+# Set actual dir of script for docker manually
+ACTUAL_DIR=/taverna/git/docker/
 
 export TESSDATA_PREFIX=/data/models/tesseract/GT4HistOCR/
 
