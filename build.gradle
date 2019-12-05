@@ -13,5 +13,5 @@ dependencies {
 
 task copyDependencies(type: Copy) {
    from configurations.compile   
-   into 'installDocker/workflow/externalLibs'
+   into 'externalLibs'
 }
