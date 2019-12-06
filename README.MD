@@ -6,47 +6,161 @@ requirements). For executing workflow the taverna commandline tool is sufficient
 ## Requirements
 
 - [Java](https://java.com/download) 7 or higher 
-- [Python 3.X](https://www.python.org/downloads/)
-- [Taverna Workbench Core 2.5](http://www.taverna.org.uk/download/workbench/2-5/core/)
-- or [Taverna Commandline Tool 2.5](http://www.taverna.org.uk/download/command-line-tool/) (alternatively)
+- [Git](https://git-scm.com/downloads)
+- Processors ([check GitHub to see how they are created](https://github.com/OCR-D/ocrd_all))
+
 
 ## Installation 
 ### Installation using Docker
-The OCR-D workflow may be also exectued inside a docker container.
+The OCR-D workflow and all processors may be also exectued inside a docker container.
 Please refer to [OCR-D workflow for Taverna using Docker](installDocker/installation.md)
 
-### Install OCR-D core
-```bash=bash
-user@localhost:/home/user/$pip3 install ocrd
-```
-### Install OCR-D Workflow / Taverna Commandline Tool
-```bash=bash
-user@localhost:/home/user/$wget https://github.com/OCR-D/taverna_workflow/archive/master.zip
-user@localhost:/home/user/$unzip master.zip
-user@localhost:/home/user/$cd taverna_workflow-master/
-user@localhost:/home/user/$bash installDocker/workflow/installWorkflowEngine.sh /path/to/workflow
-```
-:information_source: The path must not contain spaces or special characters.
+### Local Installation
+#### Install Processors
+First all needed processors should be installed.
+Please refer to [GitHub](https://github.com/OCR-D/ocrd_all) 
 
-## Install Modules
-Please refer to the documentation of the modules you want to install.
+#### Checkout Taverna OCR-D Workflow via GitHub
+```bash=bash
+user@localhost:~$mkdir git
+user@localhost:~$cd git
+user@localhost:~/git$git clone https://github.com/OCR-D/taverna_workflow.git
+user@localhost:~/git$cd taverna_workflow/
+user@localhost:~/git/taverna_workflow$
+```
 
-## Configure Workflow
+## Create Directory for all configuration files and documents 
+Create a directory where you can store all documents. There should be at least 
+500 MB of free disc space left. 
+After that install taverna workflow into the created directory.
+```bash=bash
+user@localhost:~$mkdir -p ~/ocrd/taverna
+user@localhost:~$cd ~/git/taverna_workflow/
+user@localhost:~/git/taverna$bash installTaverna.sh ~/ocrd/taverna
+```
+#### First Test of OCR-D Workflow
+To check if the installation works fine you can start a first test.
+```bash=bash
+user@localhost:~$cd ~/ocrd/taverna
+user@localhost:~/ocrd/taverna$bash startWorkflow parameters_all.txt
+[...]
+Outputs will be saved to the directory: /.../Execute_OCR_D_workfl_output
+# The processed workspace should look like this:
+user@localhost:~/ocrd/taverna$ls -1 workspace/example/data/
+metadata
+mets.xml
+OCR-D-GT-SEG-BLOCK
+OCR-D-GT-SEG-PAGE
+OCR-D-IMG
+OCR-D-IMG-BIN
+OCR-D-IMG-BIN-OCROPY
+OCR-D-OCR-CALAMARI_GT4HIST
+OCR-D-OCR-TESSEROCR-BOTH
+OCR-D-OCR-TESSEROCR-FRAKTUR
+OCR-D-OCR-TESSEROCR-GT4HISTOCR
+OCR-D-SEG-LINE
+OCR-D-SEG-REGION
+```
+Each sub folder starting with 'OCR-D-OCR' should now
+contain 4 files with the detected full text.
+##### The metadata sub directory
+The subdirectory 'metadata' contains the provenance of the workflow all
+intermediate mets files and the stdout and stderr output of all executed processors.
+
+## Test your own Documents
+If you want to test this workflow with your own documents you have
+to pass the workspace directory with a mets.xml inside to the shell script.
+```bash=bash
+user@localhost:~$cd ~/ocrd/taverna
+user@localhost:~/ocrd/taverna$bash startWorkflow parameters_all.txt /path/to/workspace/containing/mets
+```
+
+## Configure your own Workflow
 Before a workflow can be started, it must be configured first.
-Please adapt the configuration files due to your needs.
-Files to edit:
-* /path/to/workflow/workflow/parameters.txt
-* /path/to/workflow/workflow/workflow_configuration.txt
-
+```bash=bash
+# Make a copy of a parameters and a workflow configuration
+user@localhost:~/ocrd/taverna$cp conf/parameters_all.txt conf/my_parameters.txt
+user@localhost:~/ocrd/taverna$cp conf/workflow_configuration_all.txt conf/my_workflow_configuration.txt
+```
+Now adapt the configuration files due to your needs.
 (See examples inside the files)
 
-:information_source: Make sure that all modules used by the workflow are installed.
+:information_source: Make sure that all processors used by the workflow are installed.
 At the end start workflow by executing 
 
-## Execute Workflow
+### Test Processors
+For a fast test if a processor is available try the following command:
+```bash=bash
+# Test if processor is installed e.g. ocrd-cis-ocropy-binarize
+user@localhost:~/ocrd/taverna$ocrd-cis-ocropy-binarize -J
+{
+ "executable": "ocrd-cis-ocropy-binarize",
+ "categories": [
+  "Image preprocessing"
+ ],
+ "steps": [
+  "preprocessing/optimization/binarization",
+  "preprocessing/optimization/grayscale_normalization",
+  "preprocessing/optimization/deskewing"
+ ],
+ "input_file_grp": [
+  "OCR-D-IMG",
+  "OCR-D-SEG-BLOCK",
+  "OCR-D-SEG-LINE"
+ ],
+ "output_file_grp": [
+  "OCR-D-IMG-BIN",
+  "OCR-D-SEG-BLOCK",
+  "OCR-D-SEG-LINE"
+ ],
+ "description": "Binarize (and optionally deskew/despeckle) pages / regions / lines with ocropy",
+ "parameters": {
+  "method": {
+   "type": "string",
+   "enum": [
+    "none",
+    "global",
+    "otsu",
+    "gauss-otsu",
+    "ocropy"
+   ],
+   "description": "binarization method to use (only ocropy will include deskewing)",
+   "default": "ocropy"
+  },
+  "grayscale": {
+   "type": "boolean",
+   "description": "for the ocropy method, produce grayscale-normalized instead of thresholded image",
+   "default": false
+  },
+  "maxskew": {
+   "type": "number",
+   "description": "modulus of maximum skewing angle to detect (larger will be slower, 0 will deactivate deskewing)",
+   "default": 0.0
+  },
+  "noise_maxsize": {
+   "type": "number",
+   "description": "maximum pixel number for connected components to regard as noise (0 will deactivate denoising)",
+   "default": 0
+  },
+  "level-of-operation": {
+   "type": "string",
+   "enum": [
+    "page",
+    "region",
+    "line"
+   ],
+   "description": "PAGE XML hierarchy level granularity to annotate images for",
+   "default": "page"
+  }
+ }
+}
+user@localhost:~/ocrd/taverna$
+```
+
+### Execute your own Workflow
 If workflow is configured it can be started.
 ```bash=bash
-user@localhost:/home/user/$bash /path/to/workflow/workflow/startWorkflow.sh
+user@localhost:~/ocrd/taverna$bash startWorkflow my_parameters.txt /path/to/workspace/containing/mets
 ```
 
 ## More Information
