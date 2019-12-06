@@ -27,6 +27,6 @@ fi
 #### Create parameter files for calamari
 ####################################################
 mkdir -p "$INSTALLATION_DIRECTORY"/models
-echo '{ "checkpoint": "$INSTALLATION_DIRECTORY/models/calamari/GT4HistOCR/*.ckpt.json" }' > "$INSTALLATION_DIRECTORY"/models/param-calamari-gt4hist.json
+echo '{ "checkpoint": "'$INSTALLATION_DIRECTORY'/models/calamari/GT4HistOCR/*.ckpt.json" }' > "$INSTALLATION_DIRECTORY"/models/param-calamari-gt4hist.json
 
 

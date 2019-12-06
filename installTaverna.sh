@@ -1,16 +1,13 @@
 #!/bin/bash
 # Directories:
-# $INSTALLATION_DIR - files for dockerizing 
-# $INSTALLATION_DIR/dockerfiles  - workspace
-#   mets.xml
-#   digitalized pages
-## $INSTALLATION_DIR/dockerfiles/workflow - configuration files and start script
-#    workflow_configuration
-#    parameters.txt
-#    startWorkflow.sh
-# $INSTALLATION_DIR/dockerfiles/workflow/taverna - taverna workflow
+# $INSTALLATION_DIR - files for executing taverna workflow
+#                  startWorkflow.sh
+# $INSTALLATION_DIR/workspace  - workspaces should be placed here
+## $INSTALLATION_DIR/conf - configuration files
+#                  workflow_configuration*.txt
+#                  parameters*.txt
+# $INSTALLATION_DIR/workflow/taverna - taverna workflow
 #    Execute_OCR-D_workflow.t2flow
-
 ###########################################################################
 # Check argument
 ###########################################################################
