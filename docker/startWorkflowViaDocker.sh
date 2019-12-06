@@ -13,15 +13,19 @@ case "${1}" in
                 else 
                   echo Initialize taverna workflow
                   bash "$ACTUAL_DIR"/../installTaverna.sh /data
-                  echo Now you can start workflow by executing 'docker run -v \`pwd\`:/data dockerimage process' 
-                  chmod -R a=rw /data
+                  echo "Now you can start workflow by executing 'docker run -v `pwd`:/data dockerimage process"
+                  chmod -R a+rwX /data
                fi
                 ;;
 
         update)
                 if test -f /data/workflow/taverna/Execute_OCR-D_workflow.t2flow; then
                   echo Update taverna or processors
-                 bash "$ACTUAL_DIR"/../scripts/updateTaverna.sh /taverna/git
+                  bash "$ACTUAL_DIR"/../scripts/updateTaverna.sh /taverna/git
+                  echo To make update persistent use the following commands:
+                  echo "docker run --name ocrd_taverna_update -v `pwd`:/data dockerimage update"
+                  echo docker commit ocrd_taverna_update dockerimage
+                  echo docker rm ocrd_taverna_update
                 else 
                   echo You should initialize environment first
 		  echo "Usage: docker run -v \`pwd\`:/data dockerimage init" >&2
@@ -44,7 +48,8 @@ case "${1}" in
 	testWorkflow)
                 echo Test workflow with all algorithms
                 echo This may take a while...
-		bash /data/workflow/startWorkflow.sh parameters_all.txt
+		bash /data/startWorkflow.sh parameters_all.txt
+                chmod -R a+rwX /data
                 ;;
 
 	cmd)
@@ -55,8 +60,8 @@ case "${1}" in
 	process)
                 if test -f /data/workflow/taverna/Execute_OCR-D_workflow.t2flow; then
                   echo Start workflow ...
-                  bash /data/workflow/startWorkflow.sh $2
-                  chmod -R a=rw /data
+                  bash /data/startWorkflow.sh $2
+                  chmod -R a+rwX /data
                 else 
                   echo You should initialize environment first
 		  echo "Usage: docker run -v \`pwd\`:/data dockerimage init" >&2
@@ -65,7 +70,7 @@ case "${1}" in
 		;;
 
 	*)
-                echo "Usage: docker run -v \`pwd\`:/data dockerimage {init|update|dump|version|testWorkflow|process}" >&2
+                echo "Usage: docker run -v `pwd`:/data dockerimage {init|update|dump|version|testWorkflow|process}" >&2
                 echo "init         - intialize environment for taverna" >&2
                 echo "update       - update environment" >&2
                 echo "dump         - dump json of given processor" >&2
