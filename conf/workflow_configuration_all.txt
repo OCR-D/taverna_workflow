@@ -27,8 +27,8 @@
 ocrd-cis-ocropy-binarize|OCR-D-IMG|OCR-D-IMG-BIN-OCROPY| | |ERROR
 ocrd-tesserocr-segment-region|OCR-D-IMG-BIN-OCROPY|OCR-D-SEG-REGION| | |ERROR
 ocrd-tesserocr-segment-line|OCR-D-SEG-REGION|OCR-D-SEG-LINE| | |ERROR
-ocrd-tesserocr-recognize|OCR-D-SEG-LINE|OCR-D-OCR-TESSEROCR-FRAKTUR|    | /data/models/param-tess-fraktur.json     |ERROR
-ocrd-tesserocr-recognize|OCR-D-SEG-LINE|OCR-D-OCR-TESSEROCR-GT4HISTOCR| | /data/models/param-tess-gt4hist.json     |ERROR
-ocrd-tesserocr-recognize|OCR-D-SEG-LINE|OCR-D-OCR-TESSEROCR-BOTH|       | /data/models/param-tess-both.json        |ERROR
-ocrd-calamari-recognize |OCR-D-SEG-LINE|OCR-D-OCR-CALAMARI_GT4HIST|     | /data/models/param-calamari-gt4hist.json |ERROR
+ocrd-tesserocr-recognize|OCR-D-SEG-LINE|OCR-D-OCR-TESSEROCR-FRAKTUR|    | {INSTALLATION_DIR}/models/param-tess-fraktur.json     |ERROR
+ocrd-tesserocr-recognize|OCR-D-SEG-LINE|OCR-D-OCR-TESSEROCR-GT4HISTOCR| | {INSTALLATION_DIR}/models/param-tess-gt4hist.json     |ERROR
+ocrd-tesserocr-recognize|OCR-D-SEG-LINE|OCR-D-OCR-TESSEROCR-BOTH|       | {INSTALLATION_DIR}/models/param-tess-both.json        |ERROR
+ocrd-calamari-recognize |OCR-D-SEG-LINE|OCR-D-OCR-CALAMARI_GT4HIST|     | {INSTALLATION_DIR}/models/param-calamari-gt4hist.json |ERROR
 

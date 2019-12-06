@@ -22,11 +22,11 @@ ACTUAL_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 if [ -z "$1" ]; then
   echo Please provide a directory where to install.
   echo USAGE:
-  echo   prepareDocker.sh /path/to/docker
+  echo   $0 /path/to/docker
   exit 1
 fi
 
-INSTALLATION_DIRECTORY=$1
+INSTALLATION_DIRECTORY=$(readlink -f $1)
 
 # Check if directory exists
 if [ ! -d "$INSTALLATION_DIRECTORY" ]; then
@@ -41,6 +41,13 @@ fi
 echo Install taverna workflow into "$INSTALLATION_DIRECTORY"
 # Copy taverna configuration files
 cp -R conf "$INSTALLATION_DIRECTORY"
+
+# Replace {INSTALLATION_DIR} by INSTALLATION_DIRECTORY. 
+REPLACE_STRING=${INSTALLATION_DIRECTORY//\//\\\/}
+for paramFile in "$INSTALLATION_DIRECTORY"/conf/*.txt; do
+  sed -i -e 's/{INSTALLATION_DIR}/'"$REPLACE_STRING"'/g' $paramFile
+done
+
 
 # Copy taverna workflow
 bash scripts/updateTavernaWorkflow.sh "$INSTALLATION_DIRECTORY"

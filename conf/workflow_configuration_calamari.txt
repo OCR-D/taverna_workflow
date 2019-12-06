@@ -27,5 +27,5 @@
 ocrd-cis-ocropy-binarize|OCR-D-IMG|OCR-D-IMG-BIN-OCROPY| | |ERROR
 ocrd-tesserocr-segment-region|OCR-D-IMG-BIN-OCROPY|OCR-D-SEG-REGION| | |ERROR
 ocrd-tesserocr-segment-line|OCR-D-SEG-REGION|OCR-D-SEG-LINE| | |ERROR
-ocrd-calamari-recognize|OCR-D-SEG-LINE|OCR-D-OCR-CALAMARI_GT4HIST| | /data/models/param-calamari-gt4hist.json |ERROR
+ocrd-calamari-recognize|OCR-D-SEG-LINE|OCR-D-OCR-CALAMARI_GT4HIST| | {INSTALLATION_DIR}/models/param-calamari-gt4hist.json |ERROR
 

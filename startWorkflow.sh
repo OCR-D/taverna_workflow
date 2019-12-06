@@ -56,7 +56,7 @@ done < "$PARAMETER_FILE"
 # Overwrite METS and WORKING_DIR if second argument is available
 if [ ! "$2" = "" ]; then
   WORKING_DIR=$(readlink -f $2)
-  METS=$WORKING_DIR/mets.xml
+  METS="file://"$WORKING_DIR/mets.xml
   echo Overwrite METS and WORKING_DIR
   echo METS = $METS
   echo WORKING_DIR = $WORKING_DIR
