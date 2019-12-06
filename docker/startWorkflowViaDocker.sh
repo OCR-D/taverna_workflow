@@ -14,6 +14,7 @@ case "${1}" in
                   echo Initialize taverna workflow
                   bash "$ACTUAL_DIR"/../installTaverna.sh /data
                   echo Now you can start workflow by executing 'docker run -v \`pwd\`:/data dockerimage process' 
+                  chmod -R a=rw /data
                fi
                 ;;
 
@@ -55,6 +56,7 @@ case "${1}" in
                 if test -f /data/workflow/taverna/Execute_OCR-D_workflow.t2flow; then
                   echo Start workflow ...
                   bash /data/workflow/startWorkflow.sh $2
+                  chmod -R a=rw /data
                 else 
                   echo You should initialize environment first
 		  echo "Usage: docker run -v \`pwd\`:/data dockerimage init" >&2
