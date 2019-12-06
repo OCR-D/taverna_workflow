@@ -60,8 +60,14 @@ case "${1}" in
 	process)
                 if test -f /data/workflow/taverna/Execute_OCR-D_workflow.t2flow; then
                   echo Start workflow ...
-                  bash /data/startWorkflow.sh $2
-                  chmod -R a+rwX /data
+                  cd /data
+                  bash startWorkflow.sh $2 $3
+                  # Make working directory accessible from outside.
+                  WORKING_DIR=/data
+                  if [ ! "$3" = "" ]; then
+                    WORKING_DIR=$(readlink -f $3)
+                  fi
+                  chmod -R a+rwX $WORKING_DIR
                 else 
                   echo You should initialize environment first
 		  echo "Usage: docker run -v \`pwd\`:/data dockerimage init" >&2
