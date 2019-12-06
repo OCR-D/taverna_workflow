@@ -63,21 +63,6 @@ bash scripts/updateTesseractModels.sh "$INSTALLATION_DIRECTORY"
 # Create tesseract parameter files
 bash scripts/updateTesseractParameterfiles.sh "$INSTALLATION_DIRECTORY"
 
-# Install workflow scripts and configuration files
-# Create directories
-mkdir -p "$INSTALLATION_DIRECTORY"/dockerfiles/workflow/taverna
-# Copy start script and config files to installation directory
-cp "$ACTUAL_DIR"/workflow/* "$INSTALLATION_DIRECTORY"
-
-# Copy start script and config files to installation directory
-cp "$ACTUAL_DIR"/workflow/workflow/* "$INSTALLATION_DIRECTORY"/dockerfiles/workflow
-
-# Copy external jar and config files to installation directory
-cp -r "$ACTUAL_DIR"/workflow/externalLibs "$INSTALLATION_DIRECTORY"/dockerfiles/workflow
-
-# Copy workflow to installation directory
-cp "$ACTUAL_DIR"/../taverna/Execute_OCR-D_workflow.t2flow "$INSTALLATION_DIRECTORY"/dockerfiles/workflow/taverna
-
 # Copy start script to installation directory
 cp "$ACTUAL_DIR"/startWorkflow.sh "$INSTALLATION_DIRECTORY"
 
