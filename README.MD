@@ -5,7 +5,7 @@ requirements). For executing workflow the taverna commandline tool is sufficient
 
 ## Requirements
 
-- [Java](https://java.com/download) 7 or higher 
+- [Java](https://java.com/download) 7 or higher (Ubuntu: 'sudo apt-get install openjdk-8-jdk')
 - [Git](https://git-scm.com/downloads)
 - Processors ([check GitHub to see how they are created](https://github.com/OCR-D/ocrd_all))
 
