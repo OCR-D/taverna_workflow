@@ -28,7 +28,7 @@ fi
 ####################################################
 mkdir -p "$INSTALLATION_DIRECTORY"/models/calamari/GT4HistOCR
 cd "$INSTALLATION_DIRECTORY"/models/calamari/GT4HistOCR
-wget https://file.spk-berlin.de:8443/calamari-models/GT4HistOCR/model.tar.xz
+wget https://ocr-d-repo.scc.kit.edu/models/calamari/GT4HistOCR/model.tar.xz
 tar xf model.tar.xz
 rm model.tar.xz
 
