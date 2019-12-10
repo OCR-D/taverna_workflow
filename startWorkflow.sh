@@ -7,7 +7,7 @@ ACTUAL_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 # Check environment for tesseract
 ###########################################################################
 if [ "$TESSDATA_PREFIX" = "" ]; then
-  export TESSDATA_PREFIX="ACTUAL_DIR"/models/tesseract/GT4HistOCR/
+  export TESSDATA_PREFIX="$ACTUAL_DIR"/models/tesseract/GT4HistOCR/
 fi
 
 # Define parameter file
