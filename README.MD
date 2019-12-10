@@ -42,7 +42,7 @@ user@localhost:~/git/taverna$bash installTaverna.sh ~/ocrd/taverna
 To check if the installation works fine you can start a first test.
 ```bash=bash
 user@localhost:~$cd ~/ocrd/taverna
-user@localhost:~/ocrd/taverna$bash startWorkflow parameters_all.txt
+user@localhost:~/ocrd/taverna$bash startWorkflow.sh parameters_all.txt
 [...]
 Outputs will be saved to the directory: /.../Execute_OCR_D_workfl_output
 # The processed workspace should look like this:
@@ -72,7 +72,7 @@ If you want to test this workflow with your own documents you have
 to pass the workspace directory with a mets.xml inside to the shell script.
 ```bash=bash
 user@localhost:~$cd ~/ocrd/taverna
-user@localhost:~/ocrd/taverna$bash startWorkflow parameters_all.txt /path/to/workspace/containing/mets
+user@localhost:~/ocrd/taverna$bash startWorkflow.sh parameters_all.txt /path/to/workspace/containing/mets
 ```
 
 ## Configure your own Workflow
@@ -160,7 +160,7 @@ user@localhost:~/ocrd/taverna$
 ### Execute your own Workflow
 If workflow is configured it can be started.
 ```bash=bash
-user@localhost:~/ocrd/taverna$bash startWorkflow my_parameters.txt /path/to/workspace/containing/mets
+user@localhost:~/ocrd/taverna$bash startWorkflow.sh my_parameters.txt /path/to/workspace/containing/mets
 ```
 
 ## More Information
