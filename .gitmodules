@@ -1,0 +1,4 @@
+[submodule "submodules/bagging"]
+	path = submodules/bagging
+	url = https://github.com/VolkerHartmann/bagging.git
+	branch = ocrd
