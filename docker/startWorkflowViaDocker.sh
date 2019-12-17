@@ -13,7 +13,7 @@ case "${1}" in
                 else 
                   echo Initialize taverna workflow
                   bash "$ACTUAL_DIR"/../installTaverna.sh /data
-                  echo "Now you can start workflow by executing 'docker run -v `pwd`:/data dockerimage process"
+                  echo "Now you can start workflow by executing 'docker run --network="host" -v `pwd`:/data dockerimage process"
                   chmod -R a+rwX /data
                fi
                 ;;
@@ -76,7 +76,7 @@ case "${1}" in
 		;;
 
 	*)
-                echo "Usage: docker run -v `pwd`:/data dockerimage {init|update|dump|version|testWorkflow|process}" >&2
+                echo "Usage: docker --network="host" run -v `pwd`:/data dockerimage {init|update|dump|version|testWorkflow|process}" >&2
                 echo "init         - intialize environment for taverna" >&2
                 echo "update       - update environment" >&2
                 echo "dump         - dump json of given processor" >&2

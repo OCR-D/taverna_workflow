@@ -34,13 +34,13 @@ user@localhost:~/ocrd/taverna$
 ```bash=bash
 user@localhost:~/ocrd/taverna$docker run -v 'pwd':/data ocrd/taverna init
 [...]
-Now you can start workflow by executing 'docker run -v /taverna/git:/data dockerimage process
+Now you can start workflow by executing 'docker run --network="host" -v /taverna/git:/data dockerimage process
 user@localhost:~/ocrd/taverna$
 ```
 ## First Test
 To check if the installation works fine you can start a first test.
 ```bash=bash
-user@localhost:~/ocrd/taverna$docker run -v 'pwd':/data ocrd/taverna testWorkflow
+user@localhost:~/ocrd/taverna$docker run --network="host" -v 'pwd':/data ocrd/taverna testWorkflow
 [...]
 Outputs will be saved to the directory: /taverna/git/Execute_OCR_D_workfl_output
 # The processed workspace should look like this:
@@ -144,7 +144,7 @@ user@localhost:~/ocrd/taverna$
 ### Execute your own Workflow
 If workflow is configured it can be started.
 ```bash=bash
-user@localhost:~/ocrd/taverna$docker run -v 'pwd':/data ocrd/taverna process my_parameters.txt relative/path/to/workspace/containing/mets
+user@localhost:~/ocrd/taverna$docker run --network="host" -v 'pwd':/data ocrd/taverna process my_parameters.txt relative/path/to/workspace/containing/mets
 ```
 
 
