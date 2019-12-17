@@ -1,17 +1,71 @@
 apply plugin: 'java'
 
+description = 'Tools for adding metadata to OCRD.ZIP'
+group = 'edu.kit.ocrd'
+version = '0.2.0'
+
+println "Building ${name} version: ${version}"
+
+jar {
+  enabled = true
+}
+
 repositories {
-  mavenCentral()
+  mavenLocal()
+  jcenter()
 }
 
 sourceCompatibility = 1.8
 
 dependencies {
-  compile("org.openprovenance.prov:prov-model:0.7.3")
-  compile("org.openprovenance.prov:prov-interop:0.7.3")                                            
+  implementation 'org.openprovenance.prov:prov-model:0.7.3'
+  implementation 'org.openprovenance.prov:prov-interop:0.7.3'                                            
+  implementation 'edu.kit.ocrd:bagging:0.2.0'
+  implementation 'net.lingala.zip4j:zip4j:2.2.7'
 }
 
 task copyDependencies(type: Copy) {
-   from configurations.compile   
-   into 'externalLibs'
+  dependsOn jar
+   from configurations.runtimeClasspath   
+   from jar
+   into 'installDocker/workflow/externalLibs'
+}
+
+/** Source code checkout of all git submodules related to the project. 
+ * Basically, only 'git submodule foreach git pull origin master' is executed.
+ */
+task checkoutDependencies(type:Exec){
+   commandLine 'git', 'submodule', 'foreach', 'git', 'pull' ,'origin', 'master'
+
+   standardOutput = new ByteArrayOutputStream()
+
+   ext.output = {
+      return standardOutput.toString()
+   }
+}
+
+/**Build the bagit library. 
+ * This dependeny is build after the service-base dependency has been built.
+ * 
+ */
+
+task buildBagitLibrary(type:Exec){
+      dependsOn checkoutDependencies
+
+  workingDir 'submodules/bagging'
+  commandLine './gradlew', '-Pgroup=edu.kit.ocrd', '-Pversion=0.2.0', 'build', 'install'
+
+   standardOutput = new ByteArrayOutputStream()
+
+   ext.output = {
+      return standardOutput.toString()
+   }
+}
+
+/**The default task for compiling the project has to be overwritten in order to build first 
+ * all dependencies. At this point, only task 'buildGenericMessageConsumer' is called as this
+ * task depends on task 'buildServiceBase', which has not to be called again.
+ */
+compileJava {
+  dependsOn buildBagitLibrary
 }

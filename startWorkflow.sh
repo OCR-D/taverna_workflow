@@ -51,6 +51,10 @@ if [ "$key" = "PREFIX_PROV" ]; then
   PREFIX_PROV=$value
   echo $key = $PREFIX_PROV
 fi
+if [ "$key" = "REPO_URL" ]; then
+  REPO_URL=$value
+  echo $key = $REPO_URL
+fi
 done < "$PARAMETER_FILE"
 
 # Overwrite METS and WORKING_DIR if second argument is available
@@ -63,4 +67,4 @@ if [ ! "$2" = "" ]; then
 fi
 
 # Start workflow
-bash "$ACTUAL_DIR/taverna-commandline-core-2.5.0/executeworkflow.sh" -inputvalue working_dir "$WORKING_DIR" -inputvalue workflow_configuration_file "$WORKFLOW_CONFIG_FILE" -inputvalue mets_file_url "$METS" -inputvalue unique_prefix_for_provenance "$PREFIX_PROV" "$ACTUAL_DIR"/workflow/taverna/Execute_OCR-D_workflow.t2flow 
+bash "$ACTUAL_DIR/taverna-commandline-core-2.5.0/executeworkflow.sh" -inputvalue working_dir "$WORKING_DIR" -inputvalue workflow_configuration_file "$WORKFLOW_CONFIG_FILE" -inputvalue mets_file_url "$METS" -inputvalue unique_prefix_for_provenance "$PREFIX_PROV" -inputvalue ingest_repo_url "$REPO_URL" "$ACTUAL_DIR"/workflow/taverna/Execute_OCR-D_workflow.t2flow 

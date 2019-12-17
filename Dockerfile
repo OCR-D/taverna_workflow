@@ -16,7 +16,7 @@ RUN set -e; \
         tesseract-ocr-script-frak \
         openjdk-8-jdk; \
     apt-get install -y \
-        wget unzip; \
+        wget curl unzip; \
     apt-get clean;
 
 ####################################################

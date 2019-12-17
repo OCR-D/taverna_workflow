@@ -19,9 +19,11 @@
 #       Default: file:///data/workflow/workflow_configuration.txt
 # PREFIX_PROV: unique prefix for provenance  
 #       Default: prov
+# REPO_URL: Ingest URL of the repository (remove parameter if not required)
+#       Default: http://localhost:8080/api/v1/metastore/bagit
 ########################################################################
 METS:file://{INSTALLATION_DIR}/workspace/example/data/mets.xml
 WORKING_DIR:{INSTALLATION_DIR}/workspace/example/data
 WORKFLOW_CONFIG_FILE:file://{INSTALLATION_DIR}/conf/workflow_configuration_all.txt
 PREFIX_PROV:prov
-
+REPO_URL:http://localhost:8080/api/v1/metastore/bagit
