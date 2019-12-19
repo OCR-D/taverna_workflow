@@ -142,8 +142,8 @@ String transformDateToString(Date date) {
 // Make entity of type 'ocrd:parameter-file'
 // ppn - PPN of document
 // startTime - begin of activity
-// filePath - Path to parameter file (optional)
-Entity makeParameterfile(String ppn, Date startTime, Path filePath) {
+// contentParameterFile - Content of parameter file (optional)
+Entity makeParameterfile(String ppn, Date startTime, String contentParameterFile) {
     Type parameterFileType = new Type();
     parameterFileType.setValue(qn(OCRD_PREFIX, "parameter-file"));
     String id = "parameterFile-" + ppn + "-" + transformDateToString(startTime);
@@ -151,10 +151,8 @@ Entity makeParameterfile(String ppn, Date startTime, Path filePath) {
     parameterFile.getType().add(parameterFileType);
     Value value = new Value();
     String content = "no Content";
-    try {
-      content = new String(Files.readAllBytes(filePath), "UTF-8");
-    } catch (IOException ex) {
-      Logger.getLogger("ocrd.GenerateProvenance").log(Level.SEVERE, null, ex);
+    if (contentParameterFile != null) {
+      content = contentParameterFile;
     }
     value.setValue(content);
     value.setType(pFactory.getName().XSD_STRING);
@@ -247,12 +245,12 @@ Activity makeWorkflow(String ppn, Date startTime, Date endTime) {
 // processorLabel - Label of the processor called (should contain version e.g. ocrd-kraken-bin-version1.0)
 // inputFileId - fileIds of all input files. (Array of arrays containing all fileIds of one groupID)
 // outputFileId - fileIds of all output files. (Array of arrays containing all fileIds of one groupID)
-// parameterFilePath - Path to parameter file (optional)
+// contentParameterFile - Content of parameter file (optional)
 // startWorkflow - start time of workflow
 // endWorkflow - end time of (optional)
 // startProcessor - start time of processor
 // endProcessor - end time of processor (optional)
-Document makeDocument(String ppn, String processorLabel, String[][] inputFileId, String[][] outputFileId, Path parameterFilePath, Date startWorkflow, Date endWorkflow, Date startProcessor, Date endProcessor) {
+Document makeDocument(String ppn, String processorLabel, String[][] inputFileId, String[][] outputFileId, String contentParameterFile, Date startWorkflow, Date endWorkflow, Date startProcessor, Date endProcessor) {
     Document document = pFactory.newDocument();
     List statementOrBundle;
     statementOrBundle = document.getStatementOrBundle();
@@ -332,8 +330,8 @@ Document makeDocument(String ppn, String processorLabel, String[][] inputFileId,
     statementOrBundle.add(wasGeneratedBy);
     
 
-    if (parameterFilePath != null) {
-      Entity parameterFile = makeParameterfile(ppn, startProcessor, parameterFilePath);
+    if (contentParameterFile != null) {
+      Entity parameterFile = makeParameterfile(ppn, startProcessor, contentParameterFile);
 
       Used used2 = new Used();
       used2.setActivity(processor.getId());
@@ -359,11 +357,21 @@ Document makeDocument(String ppn, String processorLabel, String[][] inputFileId,
     document.setNamespace(ns);
     return document;
   }
-Path parameterFilePath = null;
-if (pathParameterFile.trim().length() > 0) {
-	parameterFilePath = new File(pathParameterFile).toPath();
+String contentParameterFile = null;
+pathParameterFile =  pathParameterFile.trim();
+if (pathParameterFile.length() > 0) {
+  if (pathParameterFile.startsWith("{")) {
+    // it seems to be a JSON string
+    contentParameterFile = pathParameterFile;
+  } else {
+    try {
+      contentParameterFile = new String(Files.readAllBytes(new File(pathParameterFile).toPath()), "UTF-8");
+    } catch (IOException ex) {
+      Logger.getLogger("ocrd.GenerateProvenance").log(Level.SEVERE, null, ex);
+    }
+  }
 }
-Document document = makeDocument(ppn, processorDesc, new String[][]{inputFileArray}, new String[][]{outputFileArray}, parameterFilePath, startTimeWorkflowDate, endTimeWorkflowDate, 
+Document document = makeDocument(ppn, processorDesc, new String[][]{inputFileArray}, new String[][]{outputFileArray}, contentParameterFile, startTimeWorkflowDate, endTimeWorkflowDate, 
 startTimeProcessorDate, endTimeProcessorDate);
 InteropFramework intF = new InteropFramework();
 
