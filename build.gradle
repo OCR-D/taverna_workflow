@@ -28,7 +28,7 @@ task copyDependencies(type: Copy) {
   dependsOn jar
    from configurations.runtimeClasspath   
    from jar
-   into 'installDocker/workflow/externalLibs'
+   into 'externalLibs'
 }
 
 /** Source code checkout of all git submodules related to the project. 
