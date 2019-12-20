@@ -29,13 +29,30 @@ task copyDependencies(type: Copy) {
    from configurations.runtimeClasspath   
    from jar
    into 'externalLibs'
+   println "copy Dependencies to 'externalLibs'"
 }
 
 /** Source code checkout of all git submodules related to the project. 
  * Basically, only 'git submodule foreach git pull origin master' is executed.
  */
+task initSubmodules(type:Exec){
+   println "init submodules"
+   commandLine 'git', 'submodule', 'init'
+
+   standardOutput = new ByteArrayOutputStream()
+
+   ext.output = {
+      return standardOutput.toString()
+   }
+}
+/** Source code checkout of all git submodules related to the project. 
+ * Basically, only 'git submodule foreach git pull origin master' is executed.
+ *  commandLine 'git', 'submodule', 'foreach', 'git', 'pull' ,'origin', 'ocrd'
+ */
 task checkoutDependencies(type:Exec){
-   commandLine 'git', 'submodule', 'foreach', 'git', 'pull' ,'origin', 'master'
+      dependsOn initSubmodules
+   println "checkout submodules from git"
+   commandLine 'git', 'submodule', 'update'
 
    standardOutput = new ByteArrayOutputStream()
 
@@ -51,9 +68,10 @@ task checkoutDependencies(type:Exec){
 
 task buildBagitLibrary(type:Exec){
       dependsOn checkoutDependencies
+   println "build bagging library"
 
   workingDir 'submodules/bagging'
-  commandLine './gradlew', '-Pgroup=edu.kit.ocrd', '-Pversion=0.2.0', 'build', 'install'
+  commandLine './gradlew', '-x', 'check', '-Pgroup=edu.kit.ocrd', '-Pversion=0.2.0', 'build', 'install'
 
    standardOutput = new ByteArrayOutputStream()
 
