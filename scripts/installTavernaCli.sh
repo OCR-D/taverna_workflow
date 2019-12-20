@@ -45,7 +45,7 @@ rm -rf $TEMP_DIR
 ###########################################################################
 # add external libraries with gradle.
 cd "$ACTUAL_DIR"/..
-./gradlew copyDependencies
+./gradlew build copyDependencies
 mv  externalLibs/* "$INSTALLATION_DIRECTORY"/taverna-commandline-core-2.5.0/lib/
 
 
