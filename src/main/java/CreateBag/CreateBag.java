@@ -326,7 +326,6 @@ public class CreateBag {
    * @throws java.io.IOException Error reading/writing on disc.
    */
   public static void addTagDirectory(Bag bag, final File tagDirectory) throws NoSuchAlgorithmException, IOException {
-    Paths.get
     Path bagitRootPath = bag.getRootDir();
     if (tagDirectory != null) {
       LOGGER.trace("addTagDir '{}' to bag '{}'", tagDirectory.getPath(), bag.getRootDir().toString());
