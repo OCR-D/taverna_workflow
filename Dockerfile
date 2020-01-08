@@ -1,4 +1,4 @@
-FROM ocrd/all:latest
+FROM ocrd/all:maximum
 MAINTAINER OCR-D
 ENV DEBIAN_FRONTEND noninteractive
 
