@@ -32,5 +32,6 @@ wget https://ub-backup.bib.uni-mannheim.de/~stweil/ocrd-train/data/GT4HistOCR_50
 cp /usr/share/tesseract-ocr/4.00/tessdata/Fraktur.traineddata .
 wget 'https://github.com/tesseract-ocr/tessdata_best/raw/master/deu.traineddata'
 wget 'https://github.com/tesseract-ocr/tessdata_best/raw/master/eng.traineddata'
+wget 'https://github.com/tesseract-ocr/tessdata_best/raw/master/osd.traineddata'
 
 
