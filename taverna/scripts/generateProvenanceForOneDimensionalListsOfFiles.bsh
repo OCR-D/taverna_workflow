@@ -144,6 +144,7 @@ String transformDateToString(Date date) {
 // startTime - begin of activity
 // contentParameterFile - Content of parameter file (optional)
 Entity makeParameterfile(String ppn, Date startTime, String contentParameterFile) {
+    contentParameterFile = contentParameterFile.trim();
     Type parameterFileType = new Type();
     parameterFileType.setValue(qn(OCRD_PREFIX, "parameter-file"));
     String id = "parameterFile-" + ppn + "-" + transformDateToString(startTime);
@@ -164,6 +165,7 @@ Entity makeParameterfile(String ppn, Date startTime, String contentParameterFile
 // ppn - PPN of document
 // groupId - group ID of file.
 Entity makeReferencedMetsFile(String ppn, String groupId) {
+    groupId = groupId.trim();
     Type metsFileType = new Type();
     String id = ppn + "-" + groupId;
     metsFileType.setValue(qn(OCRD_PREFIX, "mets-referencedFileGroup"));
@@ -179,6 +181,7 @@ Entity makeReferencedMetsFile(String ppn, String groupId) {
 // ppn - PPN of document
 // filename - absolute path of METS file.
 Entity makeMetsFile(String ppn, String filename) {
+    filename = filename.trim();
     Type metsFileType = new Type();
     String metsFilename = FilenameUtils.getName(filename);
     String id = ppn + "-" + metsFilename;
@@ -199,6 +202,9 @@ Entity makeMetsFile(String ppn, String filename) {
 // endTime - end of activity
 // value - label of activity
 Activity makeActivity(String type, String ppn, Date startTime, Date endTime, String value) {
+    type  = type.trim();
+    ppn   = ppn.trim();
+    value = value.trim();
     Type activityType = new Type();
     activityType.setValue(qn(OCRD_PREFIX, type));
     String id = type + "-" + ppn + "-" + transformDateToString(startTime);
