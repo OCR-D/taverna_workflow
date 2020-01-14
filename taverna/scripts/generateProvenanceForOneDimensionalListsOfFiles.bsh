@@ -160,16 +160,16 @@ Entity makeParameterfile(String ppn, Date startTime, String contentParameterFile
     return parameterFile;
   }
 //*****************************************************************************************
-// Create entity of type 'ocrd:mets-referencedFile'
+// Create entity of type 'ocrd:mets-referencedFileGroup'
 // ppn - PPN of document
-// fileId - fileIds of file.
-Entity makeReferencedMetsFile(String ppn, String fileId) {
+// groupId - group ID of file.
+Entity makeReferencedMetsFile(String ppn, String groupId) {
     Type metsFileType = new Type();
-    String id = ppn + "-" + fileId;
-    metsFileType.setValue(qn(OCRD_PREFIX, "mets-referencedFile"));
+    String id = ppn + "-" + groupId;
+    metsFileType.setValue(qn(OCRD_PREFIX, "mets-referencedFileGroup"));
     Entity referencedMetsFile = pFactory.newEntity(qn(OCRD_PREFIX, id));
     referencedMetsFile.getType().add(metsFileType);
-    referencedMetsFile.setValue(pFactory.newValue(fileId,
+    referencedMetsFile.setValue(pFactory.newValue(groupId,
             pFactory.getName().XSD_STRING));
     return referencedMetsFile;
   }
