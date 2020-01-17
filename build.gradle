@@ -18,8 +18,8 @@ repositories {
 sourceCompatibility = 1.8
 
 dependencies {
-  implementation 'org.openprovenance.prov:prov-model:0.7.3'
-  implementation 'org.openprovenance.prov:prov-interop:0.7.3'                                            
+  implementation 'org.openprovenance.prov:prov-model:0.8.0'
+  implementation 'org.openprovenance.prov:prov-interop:0.8.0'                                            
   implementation 'edu.kit.ocrd:bagging:0.2.0'
   implementation 'net.lingala.zip4j:zip4j:2.2.7'
 }
