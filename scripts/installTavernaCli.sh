@@ -3,6 +3,24 @@
 # $INSTALLATION_DIR/workflow/taverna - taverna workflow
 #    Execute_OCR-D_workflow.t2flow
 
+# Test for commands used in this script and scripts called
+testForCommands="sha1sum unzip wget"
+
+for command in $testForCommands
+do 
+  $command --help >> /dev/null
+  if [ $? -ne 0 ]; then
+    echo "Error: command '$command' is not installed!"
+    exit 1
+  fi
+done
+# Separate test for 'java' due to parameter '--help' doesn't exist
+java -version
+if [ $? -ne 0 ]; then
+  echo "Error: command 'java' is not installed!"
+  exit 1
+fi
+
 # Determine directory of script. 
 ACTUAL_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
