@@ -2,7 +2,7 @@
 # Create/Update models of DFKI
 
 # Test for commands used in this script
-testForCommands="wget"
+testForCommands="wget unzip"
 
 for command in $testForCommands
 do 
@@ -36,9 +36,36 @@ if [ ! -d "$INSTALLATION_DIRECTORY" ]; then
 fi
 
 ####################################################
+#### segmentation
+####################################################
+####################################################
 #### Copy models for segmentation of DFKI
 ####################################################
 mkdir -p "$INSTALLATION_DIRECTORY"/models/dfki/segmentation
 cd "$INSTALLATION_DIRECTORY"/models/dfki/segmentation
 wget  -O block_segmentation_weights.h5 https://cloud.dfki.de/owncloud/index.php/s/dgACCYzytxnb7Ey/download
+
+####################################################
+#### dewarping
+####################################################
+mkdir -p "$INSTALLATION_DIRECTORY"/tmp/dfki
+mkdir -p "$INSTALLATION_DIRECTORY"/python/pix2pixHD/checkpoints
+####################################################
+#### Copy pix2pixHD
+####################################################
+cd "$INSTALLATION_DIRECTORY"/tmp/dfki
+wget https://github.com/NVIDIA/pix2pixHD/archive/master.zip
+unzip master.zip
+cd pix2pixHD-master/
+mv data models options util "$INSTALLATION_DIRECTORY"/python/pix2pixHD
+cd ..
+# clean up
+rm -rf master.zip pix2pixHD-master/
+####################################################
+#### Copy model for dewarping
+####################################################
+cd "$INSTALLATION_DIRECTORY"/python/pix2pixHD/checkpoints
+wget -O latest_net_G.pth https://cloud.dfki.de/owncloud/index.php/s/3zKza5sRfQB3ygy
+# Model has to be available in checkpoints and in models directory.
+cp latest_net_G.pth ../models
 
