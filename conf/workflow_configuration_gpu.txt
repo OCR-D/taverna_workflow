@@ -1,38 +1,67 @@
 ########################################################################
-# Configuration file defining OCR-D workflow.
+# Configuration file defining workflow using GPU
 ########################################################################
 # Each line contains one call of a module project.
 # The parameters are separated by '|'.
 # If a parameter consists of a list the values are separated by ','
-########################################################################
-# Dockerization
-########################################################################
-# If the workflow will be executed inside a docker container all local files
-# have to be located in a subdirectory of /path/to/docker/dockerfiles/workspace.
-# Afterwards all paths have to be replaced by '/data/workspace'.
-# E.g.: file:///path/to/docker/dockerfiles/workspace/workspace1 --> file:///data/workspace/workspace1
 ########################################################################
 # Description of the parameters:
 ########################################################################
 # 1. command - command to be executed
 # 2. input-file-grp - File group(s) used as input.
 # 3. output-file-grp - File group(s) used as output.
-# 4. group-id -  The mets:div[@TYPE='page']/@ID that contains the pointers to files representing a page. Effectively, only those files in the input file group that are referenced in these mets:div[@TYPE="page"] will be processed.
+# 4. group-id -  The mets:div[@TYPE='page']/@ID that contains the pointers to files representing a page. Effectively, only those files in the input file group that are referenced in these mets:div[@TYPE=\"page\"] will be processed.
 # 5. parameter - URL of parameter file in JSON format.
 # 6. log-level - Set the global maximum verbosity level. More verbose log entries will be ignored. (One of OFF, ERROR, WARN, INFO (default), DEBUG, TRACE).
 ########################################################################
 # Example:
 # ocrd-kraken-binarize|OCR-D-IMG|OCR-D-IMG-BIN-KRAKEN| |https://host/ocr-kraken-binarize-params.json|ERROR
 ########################################################################
-ocrd-cis-ocropy-binarize| OCR-D-IMG | OCR-D-BIN,OCR-D-IMG-BIN |  |   | ERROR
-ocrd-anybaseocr-crop|OCR-D-BIN | OCR-D-BIN-CROP,OCR-D-IMG-BIN-CROP| | | ERROR
-ocrd-cis-ocropy-deskew | OCR-D-BIN-CROP | OCR-D-BIN-CROP-DESKEW,OCR-D-IMG-BIN-CROP-DESKEW |  | {\"level-of-operation\":\"page\"} | ERROR
-ocrd-cis-ocropy-denoise | OCR-D-BIN-CROP-DESKEW | OCR-D-BIN-CROP-DESKEW-DENOISE,OCR-D-IMG-BIN-CROP-DESKEW-DENOISE |  | {\"level-of-operation\":\"page\"}  | ERROR
-ocrd-anybaseocr-dewarp  |OCR-D-BIN-CROP-DESKEW-DENOISE |OCR-D-BIN-CROP-DESKEW-DENOISE-DEWARP,OCR-D-IMG-BIN-CROP-DESKEW-DENOISE-DEWARP | |{\"model_name\":\"{INSTALLATION_DIR}/python/pix2pixHD/models\",\"pix2pixHD\":\"{INSTALLATION_DIR}/python/pix2pixHD/\"} | ERROR
-ocrd-cis-ocropy-segment | OCR-D-BIN-CROP-DESKEW-DENOISE-DEWARP | OCR-D-SEG-BLOCK |  | {\"level-of-operation\":\"page\"}  |  ERROR
-ocrd-tesserocr-binarize|OCR-D-SEG-BLOCK | OCR-D-SEG-BLOCK-BIN,OCR-D-IMG-SEG-BLOCK-BIN| | {\"operation_level\":\"region\"} | ERROR
-ocrd-cis-ocropy-deskew|OCR-D-SEG-BLOCK-BIN|OCR-D-SEG-BLOCK-BIN-DESKEW,OCR-D-IMG-SEG-BLOCK-BIN-DESKEW| | {\"level-of-operation\":\"region\"} |ERROR
-ocrd-cis-ocropy-clip | OCR-D-SEG-BLOCK-BIN-DESKEW | OCR-D-SEG-BLOCK-BIN-DESKEW-CLIP,OCR-D-IMG-SEG-BLOCK-BIN-DESKEW-CLIP |  | {\"level-of-operation\":\"region\"}  |  ERROR
-ocrd-cis-ocropy-segment | OCR-D-SEG-BLOCK-BIN-DESKEW-CLIP | OCR-D-SEG-LINE,OCR-D-IMG-SEG-LINE |  | {\"level-of-operation\":\"region\"}  |  ERROR
+#
+#
+#
+########################################################################
+# STEP 1  Binarize
+########################################################################
+ocrd-cis-ocropy-binarize | OCR-D-IMG | OCR-D-IMG-BIN,OCR-D-IMG-BIN-ALTERNATE |  |   | ERROR
+########################################################################
+# STEP 2  Crop
+########################################################################
+ocrd-cis-ocropy-deskew|OCR-D-IMG-BIN | OCR-D-IMG-CROP, OCR-D-IMG-CROP-ALTERNATE| |{\"level-of-operation\":\"page\"} | ERROR
+########################################################################
+# STEP 3  Deskew
+########################################################################
+ocrd-anybaseocr-crop | OCR-D-IMG-CROP | OCR-D-IMG-DESKEW,OCR-D-IMG-DESKEW-ALTERNATE |  |  | ERROR
+########################################################################
+# STEP 4  Denoise
+########################################################################
+ocrd-cis-ocropy-denoise | OCR-D-IMG-DESKEW | OCR-D-IMG-DENOISE,OCR-D-IMG-DENOISE-ALTERNATE |  | {\"level-of-operation\":\"page\"}  | ERROR
+########################################################################
+# STEP 5  Dewarp
+########################################################################
+ocrd-anybaseocr-dewarp  |OCR-D-IMG-DENOISE |OCR-D-IMG-DEWARP | |{\"model_name\":\"/home/hartmann-v/ocrd/taverna/python/pix2pixHD/models\",\"pix2pixHD\":\"/home/hartmann-v/ocrd/taverna/python/pix2pixHD/\"} | ERROR
+########################################################################
+# STEP 6  Segmentation
+########################################################################
+ocrd-cis-ocropy-segment | OCR-D-IMG-DEWARP | OCR-D-SEG-BLOCK |  | {\"level-of-operation\":\"page\"}  |  ERROR
+########################################################################
+# STEP 7  Binarize (block)
+########################################################################
+ocrd-tesserocr-binarize|OCR-D-SEG-BLOCK | OCR-D-SEG-BLOCK-BIN,OCR-D-SEG-BLOCK-BIN-ALTERNATE| | {\"operation_level\":\"region\"} | ERROR
+########################################################################
+# STEP 8  Deskew (block)
+########################################################################
+ocrd-cis-ocropy-deskew|OCR-D-SEG-BLOCK-BIN|OCR-D-SEG-BLOCK-DESKEW,OCR-D-SEG-BLOCK-DESKEW-ALTERNATE| | {\"level-of-operation\":\"region\"} |ERROR
+########################################################################
+# STEP 9  Clip
+########################################################################
+ocrd-cis-ocropy-clip | OCR-D-SEG-BLOCK-DESKEW | OCR-D-SEG-BLOCK-CLIP,OCR-D-SEG-BLOCK-CLIP-ALTERNATE |  | {\"level-of-operation\":\"region\"}  |  ERROR
+########################################################################
+# STEP 10  Segment (line)
+########################################################################
+ocrd-cis-ocropy-segment | OCR-D-SEG-BLOCK-CLIP | OCR-D-SEG-LINE |  | {\"level-of-operation\":\"region\"}  |  ERROR
+########################################################################
+# STEP 11  Recognition
+########################################################################
 ocrd-tesserocr-recognize|OCR-D-SEG-LINE | OCR-D-OCR-TESS | | {\"textequiv_level\":\"glyph\",\"overwrite_words\":true,\"model\":\"GT4HistOCR_50000000.997_191951\"}     |ERROR
 
