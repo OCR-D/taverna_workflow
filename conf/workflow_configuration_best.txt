@@ -1,0 +1,64 @@
+########################################################################
+# Configuration file defining OCR-D workflow.
+# Most accurate for at least 'simple' pages.
+########################################################################
+# Each line contains one call of a module project.
+# The parameters are separated by '|'.
+# If a parameter consists of a list the values are separated by ','
+########################################################################
+# Description of the parameters:
+########################################################################
+# 1. command - command to be executed
+# 2. input-file-grp - File group(s) used as input.
+# 3. output-file-grp - File group(s) used as output.
+# 4. group-id -  The mets:div[@TYPE='page']/@ID that contains the pointers to files representing a page. Effectively, only those files in the input file group that are referenced in these mets:div[@TYPE=\"page\"] will be processed.
+# 5. parameter - URL of parameter file in JSON format.
+# 6. log-level - Set the global maximum verbosity level. More verbose log entries will be ignored. (One of OFF, ERROR, WARN, INFO (default), DEBUG, TRACE).
+########################################################################
+# Example:
+# ocrd-kraken-binarize|OCR-D-IMG|OCR-D-IMG-BIN-KRAKEN| |https://host/ocr-kraken-binarize-params.json|ERROR
+########################################################################
+#
+#
+#
+########################################################################
+# STEP 1  Binarize
+########################################################################
+ocrd-olena-binarize | OCR-D-IMG | OCR-D-BIN,OCR-D-IMG-BIN |  | {\"impl\":\"sauvola-ms-split\"}  | ERROR
+########################################################################
+# STEP 2  Denoise
+########################################################################
+ocrd-cis-ocropy-denoise|OCR-D-BIN | OCR-D-BIN-DENOISE, OCR-D-IMG-BIN-DENOISE| |{\"level-of-operation\":\"page\"} | ERROR
+########################################################################
+# STEP 3  Deskew
+########################################################################
+ocrd-anybaseocr-deskew | OCR-D-BIN-DENOISE | OCR-D-IMG-BIN-DENOISE-DESKEW,OCR-D-IMG-BIN-DENOISE-DESKEW |  |  | ERROR
+########################################################################
+# STEP 4  Segment
+########################################################################
+ocrd-cis-ocropy-segment | OCR-D-IMG-BIN-DENOISE-DESKEW | OCR-D-SEG-BLOCK |  | {\"level-of-operation\":\"page\"}  | ERROR
+########################################################################
+# STEP 5  Deskew (block)
+########################################################################
+ocrd-cis-ocropy-deskew  |OCR-D-SEG-BLOCK |OCR-D-SEG-BLOCK-DESKEW, OCR-D-IMG-SEG-BLOCK-DESKEW| |{\"level-of-operation\":\"region\"} | ERROR
+########################################################################
+# STEP 6  Clip
+########################################################################
+ocrd-cis-ocropy-clip | OCR-D-SEG-BLOCK-DESKEW | OCR-D-SEG-BLOCK-DESKEW-CLIP,OCR-D-IMG-SEG-BLOCK-DESKEW-CLIP |  | {\"level-of-operation\":\"region\"}  |  ERROR
+########################################################################
+# STEP 9  Segment (line)
+########################################################################
+ocrd-cis-ocropy-segment | OCR-D-SEG-BLOCK-DESKEW-CLIP | OCR-D-SEG-LINE |  | {\"level-of-operation\":\"region\"}  |  ERROR
+########################################################################
+# STEP 9  Resegment (line)
+########################################################################
+ocrd-cis-ocropy-resegment | OCR-D-SEG-LINE | OCR-D-SEG-LINE-RESEG |  |  |  ERROR
+########################################################################
+# STEP 10  Dewarp (line)
+########################################################################
+ocrd-cis-ocropy-dewarp | OCR-D-SEG-LINE-RESEG | OCR-D-SEG-LINE-RESEG-DEWARP |  |  |  ERROR
+########################################################################
+# STEP 11  Recognition
+########################################################################
+ocrd-calamari-recognize |OCR-D-SEG-LINE-RESEG-DEWARP | OCR-D-OCR-CALA | | {\"checkpoint\":\"{INSTALLATION_DIR}/models/calamari/GT4HistOCR/*.ckpt.json\"}  |  ERROR
+
