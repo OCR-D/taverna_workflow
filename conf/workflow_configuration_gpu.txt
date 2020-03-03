@@ -39,7 +39,7 @@ ocrd-cis-ocropy-denoise | OCR-D-IMG-DESKEW | OCR-D-IMG-DENOISE,OCR-D-IMG-DENOISE
 ########################################################################
 # STEP 5  Dewarp
 ########################################################################
-ocrd-anybaseocr-dewarp  |OCR-D-IMG-DENOISE |OCR-D-IMG-DEWARP | |{\"model_name\":\"/home/hartmann-v/ocrd/taverna/python/pix2pixHD/models\",\"pix2pixHD\":\"/home/hartmann-v/ocrd/taverna/python/pix2pixHD/\"} | ERROR
+ocrd-anybaseocr-dewarp  |OCR-D-IMG-DENOISE |OCR-D-IMG-DEWARP | |{\"model_name\":\"{INSTALLATION_DIR}/python/pix2pixHD/models\",\"pix2pixHD\":\"{INSTALLATION_DIR}/python/pix2pixHD/\"} | ERROR
 ########################################################################
 # STEP 6  Segmentation
 ########################################################################
