@@ -1,5 +1,6 @@
 ########################################################################
-# Configuration file defining workflow using GPU
+# Configuration file defining OCR-D workflow.
+# Most accurate for at least 'simple' pages.
 ########################################################################
 # Each line contains one call of a module project.
 # The parameters are separated by '|'.
@@ -23,45 +24,41 @@
 ########################################################################
 # STEP 1  Binarize
 ########################################################################
-ocrd-cis-ocropy-binarize | OCR-D-IMG | OCR-D-IMG-BIN,OCR-D-IMG-BIN-ALTERNATE |  |   | ERROR
+ocrd-olena-binarize | OCR-D-IMG | OCR-D-BIN,OCR-D-IMG-BIN |  | {\"impl\":\"sauvola-ms-split\"}  | ERROR
 ########################################################################
-# STEP 2  Crop
+# STEP 2  Denoise
 ########################################################################
-ocrd-cis-ocropy-deskew|OCR-D-IMG-BIN | OCR-D-IMG-CROP, OCR-D-IMG-CROP-ALTERNATE| |{\"level-of-operation\":\"page\"} | ERROR
+ocrd-cis-ocropy-denoise|OCR-D-BIN | OCR-D-BIN-DENOISE, OCR-D-IMG-BIN-DENOISE| |{\"level-of-operation\":\"page\"} | ERROR
 ########################################################################
 # STEP 3  Deskew
 ########################################################################
-ocrd-anybaseocr-crop | OCR-D-IMG-CROP | OCR-D-IMG-DESKEW,OCR-D-IMG-DESKEW-ALTERNATE |  |  | ERROR
+ocrd-anybaseocr-deskew | OCR-D-BIN-DENOISE | OCR-D-BIN-DENOISE-DESKEW,OCR-D-IMG-BIN-DENOISE-DESKEW |  |  | ERROR
 ########################################################################
-# STEP 4  Denoise
+# STEP 4  Segment
 ########################################################################
-ocrd-cis-ocropy-denoise | OCR-D-IMG-DESKEW | OCR-D-IMG-DENOISE,OCR-D-IMG-DENOISE-ALTERNATE |  | {\"level-of-operation\":\"page\"}  | ERROR
+ocrd-cis-ocropy-segment | OCR-D-BIN-DENOISE-DESKEW | OCR-D-SEG-BLOCK |  | {\"level-of-operation\":\"page\"}  | ERROR
 ########################################################################
-# STEP 5  Dewarp
+# STEP 5  Deskew (block)
 ########################################################################
-ocrd-anybaseocr-dewarp  |OCR-D-IMG-DENOISE |OCR-D-IMG-DEWARP | |{\"model_name\":\"{INSTALLATION_DIR}/python/pix2pixHD/models\",\"pix2pixHD\":\"{INSTALLATION_DIR}/python/pix2pixHD/\"} | ERROR
+ocrd-cis-ocropy-deskew  |OCR-D-SEG-BLOCK |OCR-D-SEG-BLOCK-DESKEW, OCR-D-IMG-SEG-BLOCK-DESKEW| |{\"level-of-operation\":\"region\"} | ERROR
 ########################################################################
-# STEP 6  Segmentation
+# STEP 6  Clip
 ########################################################################
-ocrd-cis-ocropy-segment | OCR-D-IMG-DEWARP | OCR-D-SEG-BLOCK |  | {\"level-of-operation\":\"page\"}  |  ERROR
+ocrd-cis-ocropy-clip | OCR-D-SEG-BLOCK-DESKEW | OCR-D-SEG-BLOCK-DESKEW-CLIP,OCR-D-IMG-SEG-BLOCK-DESKEW-CLIP |  | {\"level-of-operation\":\"region\"}  |  ERROR
 ########################################################################
-# STEP 7  Binarize (block)
+# STEP 9  Segment (line)
 ########################################################################
-ocrd-tesserocr-binarize|OCR-D-SEG-BLOCK | OCR-D-SEG-BLOCK-BIN,OCR-D-SEG-BLOCK-BIN-ALTERNATE| | {\"operation_level\":\"region\"} | ERROR
+ocrd-cis-ocropy-segment | OCR-D-SEG-BLOCK-DESKEW-CLIP | OCR-D-SEG-LINE |  | {\"level-of-operation\":\"region\"}  |  ERROR
 ########################################################################
-# STEP 8  Deskew (block)
+# STEP 9  Resegment (line)
 ########################################################################
-ocrd-cis-ocropy-deskew|OCR-D-SEG-BLOCK-BIN|OCR-D-SEG-BLOCK-DESKEW,OCR-D-SEG-BLOCK-DESKEW-ALTERNATE| | {\"level-of-operation\":\"region\"} |ERROR
+ocrd-cis-ocropy-resegment | OCR-D-SEG-LINE | OCR-D-SEG-LINE-RESEG |  |  |  ERROR
 ########################################################################
-# STEP 9  Clip
+# STEP 10  Dewarp (line)
 ########################################################################
-ocrd-cis-ocropy-clip | OCR-D-SEG-BLOCK-DESKEW | OCR-D-SEG-BLOCK-CLIP,OCR-D-SEG-BLOCK-CLIP-ALTERNATE |  | {\"level-of-operation\":\"region\"}  |  ERROR
-########################################################################
-# STEP 10  Segment (line)
-########################################################################
-ocrd-cis-ocropy-segment | OCR-D-SEG-BLOCK-CLIP | OCR-D-SEG-LINE |  | {\"level-of-operation\":\"region\"}  |  ERROR
+ocrd-cis-ocropy-dewarp | OCR-D-SEG-LINE-RESEG | OCR-D-SEG-LINE-RESEG-DEWARP,OCR-D-IMG-SEG-LINE-RESEG-DEWARP  |  |  |  ERROR
 ########################################################################
 # STEP 11  Recognition
 ########################################################################
-ocrd-tesserocr-recognize|OCR-D-SEG-LINE | OCR-D-OCR-TESS | | {\"textequiv_level\":\"glyph\",\"overwrite_words\":true,\"model\":\"GT4HistOCR_50000000.997_191951\"}     |ERROR
+ocrd-calamari-recognize |OCR-D-SEG-LINE-RESEG-DEWARP | OCR-D-OCR-CALA | | {\"checkpoint\":\"{INSTALLATION_DIR}/models/calamari/GT4HistOCR/*.ckpt.json\"}  |  ERROR
 
