@@ -31,11 +31,11 @@ ocrd-cis-ocropy-denoise|OCR-D-BIN | OCR-D-BIN-DENOISE, OCR-D-IMG-BIN-DENOISE| |{
 ########################################################################
 # STEP 3  Deskew
 ########################################################################
-ocrd-anybaseocr-deskew | OCR-D-BIN-DENOISE | OCR-D-IMG-BIN-DENOISE-DESKEW,OCR-D-IMG-BIN-DENOISE-DESKEW |  |  | ERROR
+ocrd-anybaseocr-deskew | OCR-D-BIN-DENOISE | OCR-D-BIN-DENOISE-DESKEW,OCR-D-IMG-BIN-DENOISE-DESKEW |  |  | ERROR
 ########################################################################
 # STEP 4  Segment
 ########################################################################
-ocrd-tesserocr-segment-region | OCR-D-IMG-BIN-DENOISE-DESKEW | OCR-D-SEG-BLOCK |  |  | ERROR
+ocrd-tesserocr-segment-region | OCR-D-BIN-DENOISE-DESKEW | OCR-D-SEG-BLOCK |  |  | ERROR
 ########################################################################
 # STEP 5  Deskew (block)
 ########################################################################
@@ -47,7 +47,7 @@ ocrd-cis-ocropy-segment | OCR-D-SEG-BLOCK-DESKEW | OCR-D-SEG-LINE |  | {\"level-
 ########################################################################
 # STEP 7  Dewarp (line)
 ########################################################################
-ocrd-cis-ocropy-dewarp | OCR-D-SEG-LINE | OCR-D-SEG-LINE-DEWARP |  |  |  ERROR
+ocrd-cis-ocropy-dewarp | OCR-D-SEG-LINE | OCR-D-SEG-LINE-DEWARP,OCR-D-IMG-SEG-LINE-DEWARP |  |  |  ERROR
 ########################################################################
 # STEP 8  Recognition
 ########################################################################
