@@ -1,34 +1,175 @@
 ########################################################################
-# Configuration file defining OCR-D workflow.
+# Configuration file defining all possible steps in OCR-D workflow.
 ########################################################################
-# Each line contains one call of a module project.
-# The parameters are separated by '|'.
-# If a parameter consists of a list the values are separated by ','
+
 ########################################################################
-# Dockerization
 ########################################################################
-# If the workflow will be executed inside a docker container all local files
-# have to be located in a subdirectory of /path/to/docker/dockerfiles/workspace.
-# Afterwards all paths have to be replaced by '/data/workspace'.
-# E.g.: file:///path/to/docker/dockerfiles/workspace/workspace1 --> file:///data/workspace/workspace1
+#                          ####    ###    ####  #### 
+#                          #   #  #   #  #      #   
+#                          ####   #####  #  ##  #### 
+#                          #      #   #  #   #  #   
+#                          #      #   #   ###   #### 
 ########################################################################
-# Description of the parameters:
 ########################################################################
-# 1. command - command to be executed
-# 2. input-file-grp - File group(s) used as input.
-# 3. output-file-grp - File group(s) used as output.
-# 4. group-id -  The mets:div[@TYPE='page']/@ID that contains the pointers to files representing a page. Effectively, only those files in the input file group that are referenced in these mets:div[@TYPE="page"] will be processed.
-# 5. parameter - URL of parameter file in JSON format.
-# 6. log-level - Set the global maximum verbosity level. More verbose log entries will be ignored. (One of OFF, ERROR, WARN, INFO (default), DEBUG, TRACE).
+# STEP  1  Binarize
 ########################################################################
-# Example:
-# ocrd-kraken-binarize|OCR-D-IMG|OCR-D-IMG-BIN-KRAKEN| |https://host/ocr-kraken-binarize-params.json|ERROR
+ocrd-anybaseocr-binarize | OCR-D-IMG | TEST-BIN_00001,TEST-IMG-BIN_00001 |  |  | ERROR
+ocrd-cis-ocropy-binarize | OCR-D-IMG | TEST-BIN_00002,TEST-IMG-BIN_00002 |  |  | ERROR
+ocrd-olena-binarize      | OCR-D-IMG | TEST-BIN_00003,TEST-IMG-BIN_00003 |  | {\"impl\":\"sauvola-ms-split\"} | ERROR
+ocrd-olena-binarize      | OCR-D-IMG | TEST-BIN_00004,TEST-IMG-BIN_00004 |  | {\"impl\":\"wolf\"} | ERROR
 ########################################################################
-ocrd-cis-ocropy-binarize|OCR-D-IMG|OCR-D-IMG-BIN-OCROPY| | |ERROR
-ocrd-tesserocr-segment-region|OCR-D-IMG-BIN-OCROPY|OCR-D-SEG-REGION| | |ERROR
-ocrd-tesserocr-segment-line|OCR-D-SEG-REGION|OCR-D-SEG-LINE| | |ERROR
-ocrd-tesserocr-recognize|OCR-D-SEG-LINE|OCR-D-OCR-TESSEROCR-FRAKTUR|    | {INSTALLATION_DIR}/models/param-tess-fraktur.json     |ERROR
-ocrd-tesserocr-recognize|OCR-D-SEG-LINE|OCR-D-OCR-TESSEROCR-GT4HISTOCR| | {INSTALLATION_DIR}/models/param-tess-gt4hist.json     |ERROR
-ocrd-tesserocr-recognize|OCR-D-SEG-LINE|OCR-D-OCR-TESSEROCR-BOTH|       | {INSTALLATION_DIR}/models/param-tess-both.json        |ERROR
-ocrd-calamari-recognize |OCR-D-SEG-LINE|OCR-D-OCR-CALAMARI_GT4HIST|     | {INSTALLATION_DIR}/models/param-calamari-gt4hist.json |ERROR
+# STEP  2  Denoise
+########################################################################
+ocrd-cis-ocropy-denoise  | TEST-BIN_00001 | TEST-DENOISE_00001,TEST-IMG-DENOISE_00001 |  | {\"level-of-operation\":\"page\"} | ERROR
+########################################################################
+# STEP  3  Deskew
+########################################################################
+ocrd-anybaseocr-deskew   | TEST-BIN_00001     | TEST-DESKEW_00004,TEST-IMG-DESKEW_00004 |  |  | ERROR
+ocrd-tesserocr-deskew    | TEST-BIN_00001     | TEST-DESKEW_00005,TEST-IMG-DESKEW_00005 |  | {\"operation_level\":\"page\"} | ERROR
+ocrd-cis-ocropy-deskew   | TEST-BIN_00001     | TEST-DESKEW_00006,TEST-IMG-DESKEW_00006 |  | {\"level-of-operation\":\"page\"} | ERROR
+ocrd-anybaseocr-deskew   | TEST-DENOISE_00001 | TEST-DESKEW_00001,TEST-IMG-DESKEW_00001 |  |  | ERROR
+ocrd-tesserocr-deskew    | TEST-DENOISE_00001 | TEST-DESKEW_00002,TEST-IMG-DESKEW_00002 |  | {\"operation_level\":\"page\"} | ERROR
+ocrd-cis-ocropy-deskew   | TEST-DENOISE_00001 | TEST-DESKEW_00003,TEST-IMG-DESKEW_00003 |  | {\"level-of-operation\":\"page\"} | ERROR
+########################################################################
+# STEP  4  Dewarp (not recommended on page level)
+########################################################################
+ocrd-anybaseocr-dewarp   | TEST-BIN_00001 | TEST-DEWARP_00003,TEST-IMG-DEWARP_00003 |  | {\"model_name\":\"{INSTALLATION_DIR}/python/pix2pixHD/models\",\"pix2pixHD\":\"{INSTALLATION_DIR}/python/pix2pixHD/\"} | ERROR
+ocrd-anybaseocr-dewarp   | TEST-DENOISE_00001 | TEST-DEWARP_00002,TEST-IMG-DEWARP_00002 |  | {\"model_name\":\"{INSTALLATION_DIR}/python/pix2pixHD/models\",\"pix2pixHD\":\"{INSTALLATION_DIR}/python/pix2pixHD/\"} | ERROR
+ocrd-anybaseocr-dewarp   | TEST-DESKEW_00001 | TEST-DEWARP_00001,TEST-IMG-DEWARP_00001 |  | {\"model_name\":\"{INSTALLATION_DIR}/python/pix2pixHD/models\",\"pix2pixHD\":\"{INSTALLATION_DIR}/python/pix2pixHD/\"} | ERROR
+########################################################################
+# STEP  5  Crop
+########################################################################
+ocrd-anybaseocr-crop     | TEST-BIN_00001 | TEST-CROP_00004,TEST-IMG-CROP_00004 |  |  | ERROR
+ocrd-anybaseocr-crop     | TEST-DENOISE_00001 | TEST-CROP_00003,TEST-IMG-CROP_00003 |  |  | ERROR
+ocrd-anybaseocr-crop     | TEST-DESKEW_00001 | TEST-CROP_00002,TEST-IMG-CROP_00002 |  |  | ERROR
+ocrd-anybaseocr-crop     | TEST-DEWARP_00001 | TEST-CROP_00001,TEST-IMG-CROP_00001 |  |  | ERROR
+########################################################################
+# STEP  6  Segment
+########################################################################
+ocrd-tesserocr-segment-region      | OCR-D-IMG         | TEST-SEG-BLOCK_00009 |  |  | ERROR
+ocrd-anybaseocr-block-segmentation | OCR-D-IMG         | TEST-SEG-BLOCK_00010 |  | {\"block_segmentation_model\":\"{INSTALLATION_DIR}/python/mrcnn\",\"block_segmentation_weights\":\"{INSTALLATION_DIR}/models/dfki/segmentation/block_segmentation_weights.h5\"} | ERROR
+ocrd-cis-ocropy-segment            | OCR-D-IMG         | TEST-SEG-BLOCK_00011 |  | {\"level-of-operation\":\"page\"} | ERROR
+ocrd-pc-segmentation               | OCR-D-IMG         | TEST-SEG-BLOCK_00012 |  | {\"model\":\"{INSTALLATION_DIR}/models/jmu-wuerzburg/model.h5\"} | ERROR
+ocrd-tesserocr-segment-region      | TEST-BIN_00001    | TEST-SEG-BLOCK_00013 |  |  | ERROR
+ocrd-anybaseocr-block-segmentation | TEST-BIN_00001    | TEST-SEG-BLOCK_00014 |  | {\"block_segmentation_model\":\"{INSTALLATION_DIR}/python/mrcnn\",\"block_segmentation_weights\":\"{INSTALLATION_DIR}/models/dfki/segmentation/block_segmentation_weights.h5\"} | ERROR
+ocrd-cis-ocropy-segment            | TEST-BIN_00001    | TEST-SEG-BLOCK_00015 |  | {\"level-of-operation\":\"page\"} | ERROR
+ocrd-pc-segmentation               | TEST-BIN_00001    | TEST-SEG-BLOCK_00016 |  | {\"model\":\"{INSTALLATION_DIR}/models/jmu-wuerzburg/model.h5\"} | ERROR
+ocrd-tesserocr-segment-region      | TEST-DESKEW_00001 | TEST-SEG-BLOCK_00005 |  |  | ERROR
+ocrd-anybaseocr-block-segmentation | TEST-DESKEW_00001 | TEST-SEG-BLOCK_00006 |  | {\"block_segmentation_model\":\"{INSTALLATION_DIR}/python/mrcnn\",\"block_segmentation_weights\":\"{INSTALLATION_DIR}/models/dfki/segmentation/block_segmentation_weights.h5\"} | ERROR
+ocrd-cis-ocropy-segment            | TEST-DESKEW_00001 | TEST-SEG-BLOCK_00007 |  | {\"level-of-operation\":\"page\"} | ERROR
+ocrd-pc-segmentation               | TEST-DESKEW_00001 | TEST-SEG-BLOCK_00008 |  | {\"model\":\"{INSTALLATION_DIR}/models/jmu-wuerzburg/model.h5\"} | ERROR
+ocrd-tesserocr-segment-region      | TEST-DEWARP_00001 | TEST-SEG-BLOCK_00001 |  |  | ERROR
+ocrd-anybaseocr-block-segmentation | TEST-DEWARP_00001 | TEST-SEG-BLOCK_00002 |  | {\"block_segmentation_model\":\"{INSTALLATION_DIR}/python/mrcnn\",\"block_segmentation_weights\":\"{INSTALLATION_DIR}/models/dfki/segmentation/block_segmentation_weights.h5\"} | ERROR
+ocrd-cis-ocropy-segment            | TEST-DEWARP_00001 | TEST-SEG-BLOCK_00003 |  | {\"level-of-operation\":\"page\"} | ERROR
+ocrd-pc-segmentation               | TEST-DEWARP_00001 | TEST-SEG-BLOCK_00004 |  | {\"model\":\"{INSTALLATION_DIR}/models/jmu-wuerzburg/model.h5\"} | ERROR
+########################################################################
+########################################################################
+#                      ####   #      ###    ###  #  #
+#                      #   #  #     #   #  #     # #
+#                      ####   #     #   #  #     ##
+#                      #   #  #     #   #  #     # #
+#                      ####   ####   ###    ###  #  #
+########################################################################
+########################################################################
+# STEP  7  Binarize
+########################################################################
+ocrd-tesserocr-binarize | TEST-SEG-BLOCK_00001 | TEST-SEG-BLOCK-BIN_00001,TEST-IMG-SEG-BLOCK-BIN_00001 |  | {\"operation_level\":\"region\"} | ERROR
+########################################################################
+# STEP  7b  Dewarp
+########################################################################
+ocrd-anybaseocr-dewarp | TEST-SEG-BLOCK_00001     | TEST-SEG-BLOCK-DEWARP_00002 |  | {\"operation_level\":\"region\",\"model_name\":\"{INSTALLATION_DIR}/python/pix2pixHD/models\",\"pix2pixHD\":\"{INSTALLATION_DIR}/python/pix2pixHD/\"} | ERROR
+ocrd-anybaseocr-dewarp | TEST-SEG-BLOCK-BIN_00001 | TEST-SEG-BLOCK-DEWARP_00001 |  | {\"operation_level\":\"region\",\"model_name\":\"{INSTALLATION_DIR}/python/pix2pixHD/models\",\"pix2pixHD\":\"{INSTALLATION_DIR}/python/pix2pixHD/\"} | ERROR
+########################################################################
+# STEP  8  Deskew
+########################################################################
+ocrd-cis-ocropy-deskew | TEST-SEG-BLOCK_00001        | TEST-SEG-BLOCK-DESKEW_00003,TEST-IMG-SEG-BLOCK-DESKEW_00003 |  | {\"level-of-operation\":\"region\"} | ERROR
+ocrd-cis-ocropy-deskew | TEST-SEG-BLOCK-BIN_00001    | TEST-SEG-BLOCK-DESKEW_00002,TEST-IMG-SEG-BLOCK-DESKEW_00002 |  | {\"level-of-operation\":\"region\"} | ERROR
+ocrd-cis-ocropy-deskew | TEST-SEG-BLOCK-DEWARP_00001 | TEST-SEG-BLOCK-DESKEW_00001,TEST-IMG-SEG-BLOCK-DESKEW_00001 |  | {\"level-of-operation\":\"region\"} | ERROR
+########################################################################
+# STEP  9  CLIP
+########################################################################
+ocrd-cis-ocropy-clip | TEST-SEG-BLOCK_00001        | TEST-SEG-BLOCK-CLIP_00004,TEST-IMG-SEG-BLOCK-CLIP_00004 |  | {\"level-of-operation\":\"region\"} | ERROR
+ocrd-cis-ocropy-clip | TEST-SEG-BLOCK-BIN_00001    | TEST-SEG-BLOCK-CLIP_00003,TEST-IMG-SEG-BLOCK-CLIP_00003 |  | {\"level-of-operation\":\"region\"} | ERROR
+ocrd-cis-ocropy-clip | TEST-SEG-BLOCK-DESKEW_00001 | TEST-SEG-BLOCK-CLIP_00001,TEST-IMG-SEG-BLOCK-CLIP_00001 |  | {\"level-of-operation\":\"region\"} | ERROR
+ocrd-cis-ocropy-clip | TEST-SEG-BLOCK-DEWARP_00001 | TEST-SEG-BLOCK-CLIP_00002,TEST-IMG-SEG-BLOCK-CLIP_00002 |  | {\"level-of-operation\":\"region\"} | ERROR
+########################################################################
+# STEP 10  Segment
+########################################################################
+ocrd-tesserocr-segment-line | TEST-SEG-BLOCK_00001        | TEST-SEG-LINE_00009 |  |  | ERROR
+ocrd-cis-ocropy-segment     | TEST-SEG-BLOCK_00001        | TEST-SEG-LINE_00010 |  | {\"level-of-operation\":\"region\"} | ERROR
+ocrd-tesserocr-segment-line | TEST-SEG-BLOCK-BIN_00001    | TEST-SEG-LINE_00007 |  |  | ERROR
+ocrd-cis-ocropy-segment     | TEST-SEG-BLOCK-BIN_00001    | TEST-SEG-LINE_00008 |  | {\"level-of-operation\":\"region\"} | ERROR
+ocrd-tesserocr-segment-line | TEST-SEG-BLOCK-DEWARP_00001 | TEST-SEG-LINE_00005 |  |  | ERROR
+ocrd-cis-ocropy-segment     | TEST-SEG-BLOCK-DEWARP_00001 | TEST-SEG-LINE_00006 |  | {\"level-of-operation\":\"region\"} | ERROR
+ocrd-tesserocr-segment-line | TEST-SEG-BLOCK-DESKEW_00001 | TEST-SEG-LINE_00003 |  |  | ERROR
+ocrd-cis-ocropy-segment     | TEST-SEG-BLOCK-DESKEW_00001 | TEST-SEG-LINE_00004 |  | {\"level-of-operation\":\"region\"} | ERROR
+ocrd-tesserocr-segment-line | TEST-SEG-BLOCK-CLIP_00001   | TEST-SEG-LINE_00001 |  |  | ERROR
+ocrd-cis-ocropy-segment     | TEST-SEG-BLOCK-CLIP_00001   | TEST-SEG-LINE_00002 |  | {\"level-of-operation\":\"region\"} | ERROR
+########################################################################
+########################################################################
+#                          #     ###  #   #  ####
+#                          #      #   ##  #  #
+#                          #      #   # # #  ####
+#                          #      #   #  ##  #
+#                          ####  ###  #   #  ####
+########################################################################
+########################################################################
+# STEP 11  Clip / Resegment /Repair
+########################################################################
+ocrd-cis-ocropy-clip      | TEST-SEG-LINE_00001 | TEST-SEG-LINE-CLIP_00001,TEST-IMG-SEG-LINE-CLIP_00001 |  | {\"level-of-operation\":\"line\"} | ERROR
+ocrd-cis-ocropy-resegment | TEST-SEG-LINE_00001 | TEST-SEG-LINE-CLIP_00002,TEST-IMG-SEG-LINE-CLIP_00001 |  |  | ERROR
+ocrd-segment-repair       | TEST-SEG-LINE_00001 | TEST-SEG-LINE-CLIP_00003 |  | {\"sanitize\":true} | ERROR
+########################################################################
+# STEP 11  Dewarp
+########################################################################
+ocrd-anybaseocr-dewarp | TEST-SEG-LINE_00001      | TEST-SEG-LINE-DEWARP_00003,TEST-IMG-SEG-LINE-DEWARP_00003 |  | {\"operation_level\":\"line\",\"model_name\":\"{INSTALLATION_DIR}/python/pix2pixHD/models","pix2pixHD":"{INSTALLATION_DIR}/python/pix2pixHD/"} | ERROR
+ocrd-cis-ocropy-dewarp | TEST-SEG-LINE_00001      | TEST-SEG-LINE-DEWARP_00004,TEST-IMG-SEG-LINE-DEWARP_00004 |  |  | ERROR
+ocrd-anybaseocr-dewarp | TEST-SEG-LINE-CLIP_00001 | TEST-SEG-LINE-DEWARP_00001,TEST-IMG-SEG-LINE-DEWARP_00001 |  | {\"operation_level\":\"line\",\"model_name\":\"{INSTALLATION_DIR}/python/pix2pixHD/models","pix2pixHD":"{INSTALLATION_DIR}/python/pix2pixHD/"} | ERROR
+ocrd-cis-ocropy-dewarp | TEST-SEG-LINE-CLIP_00001 | TEST-SEG-LINE-DEWARP_00002,TEST-IMG-SEG-LINE-DEWARP_00002 |  |  | ERROR
+########################################################################
+########################################################################
+#                           ###    ####  ###
+#                          #   #   #     #  #
+#                          #   #   #     ### 
+#                          #   #   #     # # 
+#                           ###    ####  #  #
+########################################################################
+########################################################################
+# STEP 12  OCR
+########################################################################
+#ocrd-tesserocr-recognize |TEST-SEG-LINE-DEWARP_00002  | TEST-OCR-TESS_00002 |  | {\"textequiv_level\":\"glyph\",\"overwrite_words\":true,\"model\":\"Fraktur\"}  |  ERROR
+ocrd-tesserocr-recognize | TEST-SEG-LINE-DEWARP_00001 | TEST-OCR-TESS_00001 |  | {\"textequiv_level\":\"glyph\",\"overwrite_words\":true,\"model\":\"GT4HistOCR_50000000.997_191951\"} | ERROR
+ocrd-calamari-recognize  | TEST-SEG-LINE-DEWARP_00001 | TEST-OCR-CALA_00001 |  | {\"checkpoint\":\"{INSTALLATION_DIR}/models/calamari/GT4HistOCR/*.ckpt.json\"} | ERROR
+########################################################################
+# STEP 13  Align
+########################################################################
+ocrd-cis-align | TEST-OCR-CALA_00001,TEST-OCR-TESS_00001 | TEST-OCR-ALIGN_00001 |  |  | ERROR
+########################################################################
+# STEP 14  Post correction
+########################################################################
+ocrd-cor-asv-ann-process | TEST-OCR-TESS_00001  | TEST-COR-ASV_00001 |  | {\"textequiv_level\":\"line\",\"model_file\":\"{INSTALLATION_DIR}/models/cor-asv/gt4Hist.h5\"} | ERROR
+ocrd-cor-asv-ann-process | TEST-OCR-CALA_00001  | TEST-COR-ASV_00003 |  | {\"textequiv_level\":\"line\",\"model_file\":\"{INSTALLATION_DIR}/models/cor-asv/gt4Hist.h5\"} | ERROR
+ocrd-cor-asv-ann-process | TEST-OCR-ALIGN_00001 | TEST-COR-ASV_00002 |  | {\"textequiv_level\":\"line\",\"model_file\":\"{INSTALLATION_DIR}/models/cor-asv/gt4Hist.h5\"} | ERROR
+#ocrd-cis-post-correct.sh | TEST-OCR-TESS_00001  | TEST-COR-CIS_00001 |  | {\"textequiv_level\":\"line\",\"model_file\":\"{INSTALLATION_DIR}/models/cor-asv/gt4Hist.h5\"} | ERROR
+#ocrd-cis-post-correct.sh | TEST-OCR-CALA_00001  | TEST-COR-CIS_00003 |  | {\"textequiv_level\":\"line\",\"model_file\":\"{INSTALLATION_DIR}/models/cor-asv/gt4Hist.h5\"} | ERROR
+#ocrd-cis-post-correct.sh | TEST-OCR-ALIGN_00001 | TEST-COR-CIS_00002 |  | {\"textequiv_level\":\"line\",\"model_file\":\"{INSTALLATION_DIR}/models/cor-asv/gt4Hist.h5\"} | ERROR
+########################################################################
+########################################################################
+#              ##   #  #   ##   #    #   #  #####  ####
+#             #  #  ## #  #  #  #     # #      #   #
+#             ####  # ##  ####  #      #      #    ####
+#             #  #  # ##  #  #  #      #     #     #
+#             #  #  #  #  #  #  ###    #    #####  ####
+########################################################################
+########################################################################
+# STEP 15  Analyze
+########################################################################
+ocrd-dinglehopper | TEST-OCR-TESS_00001,OCR-D-GT-SEG-BLOCK | TEST-OCR-EVAL_00004 |  |  | 
+#ocrd-dinglehopper | TEST-OCR-TESS_00001,OCR-D-GT-SEG-PAGE  | TEST-OCR-EVAL_00005 |  |  | 
+ocrd-dinglehopper | TEST-OCR-CALA_00001,OCR-D-GT-SEG-BLOCK | TEST-OCR-EVAL_00006 |  |  | 
+#ocrd-dinglehopper | TEST-OCR-CALA_00001,OCR-D-GT-SEG-PAGE  | TEST-OCR-EVAL_00007 |  |  | 
+ocrd-dinglehopper | TEST-COR-ASV_00001,OCR-D-GT-SEG-BLOCK  | TEST-OCR-EVAL_00001 |  |  | 
+#ocrd-dinglehopper | TEST-COR-ASV_00001,OCR-D-GT-SEG-PAGE   | TEST-OCR-EVAL_00002 |  |  | 
+ocrd-dinglehopper | TEST-COR-CIS_00001,OCR-D-GT-SEG-BLOCK  | TEST-OCR-EVAL_00003 |  |  | 
+#ocrd-dinglehopper | TEST-OCR-CIS_00001,OCR-D-GT-SEG-PAGE   | TEST-OCR-EVAL_00008 |  |  | 
 
