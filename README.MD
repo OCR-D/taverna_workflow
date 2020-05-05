@@ -76,7 +76,7 @@ user@localhost:~/ocrd/taverna$bash startWorkflow.sh parameters_all.txt /path/to/
 ```
 
 ## Configure your own Workflow
-Before a workflow can be started, it must be configured first.
+Before a [workflow](https://ocr-d.de/en/workflows) can be started, it must be configured first.
 ```bash=bash
 # Make a copy of a parameters and a workflow configuration
 user@localhost:~/ocrd/taverna$cp conf/parameters_all.txt conf/my_parameters.txt
@@ -86,7 +86,7 @@ Now adapt the configuration files due to your needs.
 (See examples inside the files)
 
 :information_source: Make sure that all processors used by the workflow are installed.
-At the end start workflow by executing 
+
 
 ### Test Processors
 For a fast test if a processor is available try the following command:
@@ -165,6 +165,7 @@ user@localhost:~/ocrd/taverna$bash startWorkflow.sh my_parameters.txt /path/to/w
 
 ## More Information
 
+* [Workflow for OCR-D](https://ocr-d.de/en/workflows)
 * [Taverna](https://taverna.incubator.apache.org/)
 * [Taverna Commandline Tool](http://www.taverna.org.uk/download/command-line-tool/)
 
