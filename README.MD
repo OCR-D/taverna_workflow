@@ -42,7 +42,7 @@ user@localhost:~/git/taverna$bash installTaverna.sh ~/ocrd/taverna
 To check if the installation works fine you can start a first test.
 ```bash=bash
 user@localhost:~$cd ~/ocrd/taverna
-user@localhost:~/ocrd/taverna$bash startWorkflow.sh parameters_all.txt
+user@localhost:~/ocrd/taverna$bash startWorkflow.sh parameters.txt
 [...]
 Outputs will be saved to the directory: /.../Execute_OCR_D_workfl_output
 # The processed workspace should look like this:
@@ -75,8 +75,18 @@ user@localhost:~$cd ~/ocrd/taverna
 user@localhost:~/ocrd/taverna$bash startWorkflow.sh parameters_all.txt /path/to/workspace/containing/mets
 ```
 
+## Use predefined Workflow
+Taverna comes with 2 predefined workflows. 
+1. parameters_best.txt: Workflow expected to produce best results 
+2. parameters_fast.txt: Workflow expected to produce good results even on slower machines.
+```bash=bash
+user@localhost:~$cd ~/ocrd/taverna
+user@localhost:~/ocrd/taverna$bash startWorkflow.sh parameters_best.txt /path/to/workspace/containing/mets
+```
+
 ## Configure your own Workflow
 Before a [workflow](https://ocr-d.de/en/workflows) can be started, it must be configured first.
+You may use the predefined workflows as a starting point.
 ```bash=bash
 # Make a copy of a parameters and a workflow configuration
 user@localhost:~/ocrd/taverna$cp conf/parameters_all.txt conf/my_parameters.txt

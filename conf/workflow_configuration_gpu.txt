@@ -4,7 +4,7 @@
 # You should take a look at:
 # https://ocr-d.de/en/workflows
 ########################################################################
-# Each line contains one call of a module project.
+# Each line contains one processor.
 # The parameters are separated by '|'.
 # If a parameter consists of a list the values are separated by ','
 ########################################################################
@@ -59,7 +59,7 @@ ocrd-cis-ocropy-deskew  | OCR-D-PAGE-DENOISE     | OCR-D-PAGE-DESKEW,OCR-D-IMG-P
 ########################################################################
 # STEP  6/7  Dewarping (GPU needed!) or page segmentation
 ########################################################################
-ocrd-anybaseocr-dewarp  |TEST-PAGE-DESKEW  | TEST-PAGE-DEWARP,TEST-IMG-PAGE-DEWARP | |{\"model_name\":\"{INSTALLATION_DIR}/python/pix2pixHD/models\",\"pix2pixHD\":\"{INSTALLATION_DIR}/python/pix2pixHD/\"} | ERROR
+ocrd-anybaseocr-dewarp  |OCR-D-PAGE-DESKEW  | OCR-D-PAGE-DEWARP,OCR-D-IMG-PAGE-DEWARP | |{\"model_name\":\"{INSTALLATION_DIR}/python/pix2pixHD/models\",\"pix2pixHD\":\"{INSTALLATION_DIR}/python/pix2pixHD/\"} | ERROR
 
 ########################################################################
 # STEP  7  Page segmentation (in case of dewarp step before)

@@ -5,7 +5,7 @@
 # You should take a look at:
 # https://ocr-d.de/en/workflows
 ########################################################################
-# Each line contains one call of a module project.
+# Each line contains one processor.
 # The parameters are separated by '|'.
 # If a parameter consists of a list the values are separated by ','
 ########################################################################
@@ -15,7 +15,7 @@
 # 2. input-file-grp - File group(s) used as input.
 # 3. output-file-grp - File group(s) used as output.
 # 4. group-id -  The mets:div[@TYPE='page']/@ID that contains the pointers to files representing a page. Effectively, only those files in the input file group that are referenced in these mets:div[@TYPE=\"page\"] will be processed.
-# 5. parameter - URL of parameter file in JSON format.
+# 5. parameter - URL of parameter file or JSON format (avoid spaces).
 # 6. log-level - Set the global maximum verbosity level. More verbose log entries will be ignored. (One of OFF, ERROR, WARN, INFO (default), DEBUG, TRACE).
 ########################################################################
 # Example:
@@ -60,7 +60,8 @@ ocrd-cis-ocropy-deskew  | OCR-D-PAGE-DENOISE     | OCR-D-PAGE-DESKEW,OCR-D-IMG-P
 ########################################################################
 # STEP  6/7  Dewarping (GPU needed!) or page segmentation
 ########################################################################
-ocrd-tesserocr-segment-region      | OCR-D-PAGE-DESKEW       | OCR-D-SEG-REGION | | | ERROR
+ocrd-tesserocr-segment-region | OCR-D-PAGE-DESKEW     | OCR-D-SEG-REGION-TESS | | | ERROR
+ocrd-segment-repair           | OCR-D-SEG-REGION-TESS | OCR-D-SEG-REGION      | | {\"plausibilize\":true}  |  ERROR
 
 ########################################################################
 ########################################################################
@@ -101,7 +102,7 @@ ocrd-cis-ocropy-segment     | OCR-D-SEG-REGION-CLIP   | OCR-D-SEG-LINE | | {\"le
 ########################################################################
 # STEP 12  Line correction (one of clip / resegment / repair)
 ########################################################################
-ocrd-cis-ocropy-clip      | OCR-D-SEG-LINE | OCR-D-SEG-LINE-CLIP,OCR-D-SEG-LINE-CLIP-ALTERNATE |  | {\"level-of-operation\":\"line\"}  |  ERROR
+ocrd-segment-repair       | OCR-D-SEG-LINE | OCR-D-SEG-LINE-CLIP |  | {\"sanitize\":true}  |  ERROR
 
 ########################################################################
 # STEP 11  Dewarping (on line level)
@@ -123,4 +124,4 @@ ocrd-tesserocr-recognize|OCR-D-SEG-LINE-DEWARP | OCR-D-OCR-TESS | | {\"textequiv
 ########################################################################
 # STEP 12b  Text recognition (calamari)
 ########################################################################
-ocrd-calamari-recognize |OCR-D-SEG-LINE-DEWARP | OCR-D-OCR-CALA | | {\"checkpoint\":\"{INSTALLATION_DIR}/models/calamari/GT4HistOCR/*.ckpt.json\"}  |  ERROR
+#ocrd-calamari-recognize |OCR-D-SEG-LINE-DEWARP | OCR-D-OCR-CALA | | {\"checkpoint\":\"{INSTALLATION_DIR}/models/calamari/GT4HistOCR/*.ckpt.json\"}  |  ERROR

@@ -8,7 +8,7 @@
 # You should take a look at:
 # https://ocr-d.de/en/workflows
 ########################################################################
-# Each line contains one call of a module project.
+# Each line contains one processor.
 # The parameters are separated by '|'.
 # If a parameter consists of a list the values are separated by ','
 ########################################################################
@@ -18,7 +18,7 @@
 # 2. input-file-grp - File group(s) used as input.
 # 3. output-file-grp - File group(s) used as output.
 # 4. group-id -  The mets:div[@TYPE='page']/@ID that contains the pointers to files representing a page. Effectively, only those files in the input file group that are referenced in these mets:div[@TYPE=\"page\"] will be processed.
-# 5. parameter - URL of parameter file in JSON format.
+# 5. parameter - URL of parameter file or JSON format (avoid spaces).
 # 6. log-level - Set the global maximum verbosity level. More verbose log entries will be ignored. (One of OFF, ERROR, WARN, INFO (default), DEBUG, TRACE).
 ########################################################################
 # Example:
@@ -58,12 +58,13 @@ ocrd-cis-ocropy-denoise   | OCR-D-PAGE-BIN2     | OCR-D-PAGE-DENOISE,OCR-D-IMG-P
 ########################################################################
 # STEP  5  Deskewing
 ########################################################################
-ocrd-cis-ocropy-deskew  | OCR-D-PAGE-DENOISE     | OCR-D-PAGE-DESKEW,OCR-D-IMG-PAGE-DESKEW | | {\"level-of-operation\":\"page\"} | ERROR
+ocrd-tesserocr-deskew  | OCR-D-PAGE-DENOISE     | OCR-D-PAGE-DESKEW,OCR-D-IMG-PAGE-DESKEW | | {\"operation_level\":\"page\"} | ERROR
 
 ########################################################################
 # STEP  6/7  Dewarping (GPU needed!) or page segmentation
 ########################################################################
-ocrd-tesserocr-segment-region      | OCR-D-PAGE-DESKEW       | OCR-D-SEG-REGION | | | ERROR
+ocrd-tesserocr-segment-region | OCR-D-PAGE-DESKEW     | OCR-D-SEG-REGION-TESS | | | ERROR
+ocrd-segment-repair           | OCR-D-SEG-REGION-TESS | OCR-D-SEG-REGION      | | {\"plausibilize\":true}  |  ERROR
 
 ########################################################################
 ########################################################################
@@ -76,12 +77,12 @@ ocrd-tesserocr-segment-region      | OCR-D-PAGE-DESKEW       | OCR-D-SEG-REGION 
 ########################################################################
 # STEP  8  Binarization
 ########################################################################
-ocrd-olena-binarize      | OCR-D-SEG-REGION | OCR-D-SEG-REGION-BIN,OCR-D-IMG-SEG-REGION-BIN | | {\"impl\":\"kim\"} | ERROR
+# No binarization to speedup workflow
 
 ########################################################################
 # STEP  9  Deskewing
 ########################################################################
-ocrd-cis-ocropy-deskew |OCR-D-SEG-REGION-BIN    |OCR-D-SEG-REGION-DESKEW,OCR-D-IMG-SEG-REGION-DESKEW | | {\"level-of-operation\":\"region\"} |ERROR
+ocrd-cis-ocropy-deskew |OCR-D-SEG-REGION    |OCR-D-SEG-REGION-DESKEW,OCR-D-IMG-SEG-REGION-DESKEW | | {\"level-of-operation\":\"region\"} |ERROR
 
 ########################################################################
 # STEP  10  Clipping (optional) or line segmentation

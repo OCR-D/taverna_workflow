@@ -48,7 +48,7 @@ case "${1}" in
 	testWorkflow)
                 echo Test workflow with all algorithms
                 echo This may take a while...
-		bash /data/startWorkflow.sh parameters_all.txt
+		bash /data/startWorkflow.sh parameters.txt
                 chmod -R a+rwX /data
                 ;;
 
@@ -81,7 +81,7 @@ case "${1}" in
                 echo "update       - update environment" >&2
                 echo "dump         - dump json of given processor" >&2
                 echo "version      - print version of given processor" >&2
-                echo "testWorkflow - process workflow with all processors" >&2
+                echo "testWorkflow - process workflow with some processors" >&2
                 echo "process      - process workflow with selected parameter file" >&2
                 exit 1
  		;;
