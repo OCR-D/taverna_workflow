@@ -121,7 +121,18 @@ ocrd-cis-ocropy-dewarp  | OCR-D-SEG-LINE-CLIP | OCR-D-SEG-LINE-DEWARP,OCR-D-IMG-
 # STEP 12a  Text recognition (tesseract)
 ########################################################################
 ocrd-tesserocr-recognize|OCR-D-SEG-LINE-DEWARP | OCR-D-OCR-TESS | | {\"textequiv_level\":\"glyph\",\"overwrite_words\":true,\"model\":\"GT4HistOCR_50000000.997_191951\"}     |ERROR
+
 ########################################################################
 # STEP 12b  Text recognition (calamari)
 ########################################################################
-#ocrd-calamari-recognize |OCR-D-SEG-LINE-DEWARP | OCR-D-OCR-CALA | | {\"checkpoint\":\"{INSTALLATION_DIR}/models/calamari/GT4HistOCR/*.ckpt.json\"}  |  ERROR
+ocrd-calamari-recognize |OCR-D-SEG-LINE-DEWARP | OCR-D-OCR-CALA | | {\"checkpoint\":\"{INSTALLATION_DIR}/models/calamari/GT4HistOCR/*.ckpt.json\"}  |  ERROR
+
+########################################################################
+# STEP 13  Text alignment (optional)
+########################################################################
+ocrd-cis-align | OCR-D-OCR-CALA,OCR-D-OCR-TESS | OCR-D-OCR-ALIGN | | | ERROR
+
+########################################################################
+# STEP 14  Post correction (optional)
+########################################################################
+ocrd-cis-postcorrect     | OCR-D-OCR-ALIGN | OCR-D-COR-CIS |  | {\"profilerPath\":\"{INSTALLATION_DIR}/models/cis/bin/profiler.bash\",\"profilerConfig\":\"ignored\",\"nOCR\":2,\"model\":\"{

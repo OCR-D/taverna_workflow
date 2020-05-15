@@ -230,9 +230,9 @@ ocrd-calamari-recognize |OCR-D-SEG-LINE-DEWARP | OCR-D-OCR-CALA | | {\"checkpoin
 ##ocrd-cor-asv-ann-process | OCR-D-OCR-TESS  | OCR-D-COR-ASV |  | {\"textequiv_level\":\"line\",\"model_file\":\"{INSTALLATION_DIR}/models/cor-asv/gt4Hist.h5\"}  |  ERROR
 #ocrd-cor-asv-ann-process | OCR-D-OCR-CALA  | OCR-D-COR-ASV |  | {\"textequiv_level\":\"line\",\"model_file\":\"{INSTALLATION_DIR}/models/cor-asv/gt4Hist.h5\"}  |  ERROR
 #ocrd-cor-asv-ann-process | OCR-D-OCR-ALIGN | OCR-D-COR-ASV |  | {\"textequiv_level\":\"line\",\"model_file\":\"{INSTALLATION_DIR}/models/cor-asv/gt4Hist.h5\"}  |  ERROR
-#ocrd-cis-post-correct.sh | OCR-D-OCR-TESS  | OCR-D-COR-CIS |  | {\"textequiv_level\":\"line\",\"model_file\":\"{INSTALLATION_DIR}/models/cor-asv/gt4Hist.h5\"}  |  ERROR
-#ocrd-cis-post-correct.sh | OCR-D-OCR-CALA  | OCR-D-COR-CIS |  | {\"textequiv_level\":\"line\",\"model_file\":\"{INSTALLATION_DIR}/models/cor-asv/gt4Hist.h5\"}  |  ERROR
-#ocrd-cis-post-correct.sh | OCR-D-OCR-ALIGN | OCR-D-COR-CIS |  | {\"textequiv_level\":\"line\",\"model_file\":\"{INSTALLATION_DIR}/models/cor-asv/gt4Hist.h5\"}  |  ERROR
+#ocrd-cis-postcorrect     | OCR-D-OCR-TESS  | OCR-D-COR-CIS |  | {\"profilerPath\":\"{INSTALLATION_DIR}/models/cis/bin/profiler.bash\",\"profilerConfig\":\"ignored\",\"nOCR\":1,\"model\":\"{INSTALLATION_DIR}/models/cis/model.zip\"} | ERROR
+#ocrd-cis-postcorrect     | OCR-D-OCR-CALA  | OCR-D-COR-CIS |  | {\"profilerPath\":\"{INSTALLATION_DIR}/models/cis/bin/profiler.bash\",\"profilerConfig\":\"ignored\",\"nOCR\":1,\"model\":\"{INSTALLATION_DIR}/models/cis/model.zip\"} | ERROR
+#ocrd-cis-postcorrect     | OCR-D-OCR-ALIGN | OCR-D-COR-CIS |  | {\"profilerPath\":\"{INSTALLATION_DIR}/models/cis/bin/profiler.bash\",\"profilerConfig\":\"ignored\",\"nOCR\":2,\"model\":\"{INSTALLATION_DIR}/models/cis/model.zip\"} | ERROR
 ########################################################################
 ########################################################################
 #              ##   #  #   ##   #    #   #  #####  ####

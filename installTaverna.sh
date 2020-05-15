@@ -93,6 +93,9 @@ bash scripts/updateDfkiModels.sh "$INSTALLATION_DIRECTORY"
 # Download and 'install' model file for pixel classification of JMU Würzburg
 bash scripts/updatePixelClassifierModels.sh "$INSTALLATION_DIRECTORY"
 
+# Download and 'install' model file and 'profiler' of CIS München
+bash scripts/updateCisModels.sh "$INSTALLATION_DIRECTORY"
+
 # Copy start script to installation directory
 cp "$ACTUAL_DIR"/startWorkflow.sh "$INSTALLATION_DIRECTORY"
 
