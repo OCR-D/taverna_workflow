@@ -74,7 +74,7 @@ ocrd-segment-repair           | OCR-D-SEG-REGION-TESS | OCR-D-SEG-REGION      | 
 ########################################################################
 # STEP  8  Binarization
 ########################################################################
-ocrd-olena-binarize      | OCR-D-SEG-REGION | OCR-D-SEG-REGION-BIN,OCR-D-IMG-SEG-REGION-BIN | | {\"impl\":\"kim\"} | ERROR
+ocrd-dummy               | OCR-D-SEG-REGION | OCR-D-SEG-REGION-BIN | | | ERROR
 
 ########################################################################
 # STEP  9  Deskewing
