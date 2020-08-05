@@ -1,34 +1,273 @@
 ########################################################################
-# Configuration file defining OCR-D workflow.
+# Configuration file defining all possible steps in OCR-D workflow.
+# First line of each (mandatory) step holds the recommended processor.
+# This configiration may be not up-to-date
+# You should take a look at:
+# https://ocr-d.de/en/workflows
 ########################################################################
-# Each line contains one call of a module project.
+# Each line contains one processor.
 # The parameters are separated by '|'.
 # If a parameter consists of a list the values are separated by ','
-########################################################################
-# Dockerization
-########################################################################
-# If the workflow will be executed inside a docker container all local files
-# have to be located in a subdirectory of /path/to/docker/dockerfiles/workspace.
-# Afterwards all paths have to be replaced by '/data/workspace'.
-# E.g.: file:///path/to/docker/dockerfiles/workspace/workspace1 --> file:///data/workspace/workspace1
 ########################################################################
 # Description of the parameters:
 ########################################################################
 # 1. command - command to be executed
 # 2. input-file-grp - File group(s) used as input.
 # 3. output-file-grp - File group(s) used as output.
-# 4. group-id -  The mets:div[@TYPE='page']/@ID that contains the pointers to files representing a page. Effectively, only those files in the input file group that are referenced in these mets:div[@TYPE="page"] will be processed.
-# 5. parameter - URL of parameter file in JSON format.
+# 4. group-id -  The mets:div[@TYPE='page']/@ID that contains the pointers to files representing a page. Effectively, only those files in the input file group that are referenced in these mets:div[@TYPE=\"page\"] will be processed.
+# 5. parameter - URL of parameter file or JSON format (avoid spaces).
 # 6. log-level - Set the global maximum verbosity level. More verbose log entries will be ignored. (One of OFF, ERROR, WARN, INFO (default), DEBUG, TRACE).
 ########################################################################
 # Example:
 # ocrd-kraken-binarize|OCR-D-IMG|OCR-D-IMG-BIN-KRAKEN| |https://host/ocr-kraken-binarize-params.json|ERROR
 ########################################################################
-ocrd-cis-ocropy-binarize|OCR-D-IMG|OCR-D-IMG-BIN-OCROPY| | |ERROR
-ocrd-tesserocr-segment-region|OCR-D-IMG-BIN-OCROPY|OCR-D-SEG-REGION| | |ERROR
-ocrd-tesserocr-segment-line|OCR-D-SEG-REGION|OCR-D-SEG-LINE| | |ERROR
-ocrd-tesserocr-recognize|OCR-D-SEG-LINE|OCR-D-OCR-TESSEROCR-FRAKTUR|    | {INSTALLATION_DIR}/models/param-tess-fraktur.json     |ERROR
-ocrd-tesserocr-recognize|OCR-D-SEG-LINE|OCR-D-OCR-TESSEROCR-GT4HISTOCR| | {INSTALLATION_DIR}/models/param-tess-gt4hist.json     |ERROR
-ocrd-tesserocr-recognize|OCR-D-SEG-LINE|OCR-D-OCR-TESSEROCR-BOTH|       | {INSTALLATION_DIR}/models/param-tess-both.json        |ERROR
-ocrd-calamari-recognize |OCR-D-SEG-LINE|OCR-D-OCR-CALAMARI_GT4HIST|     | {INSTALLATION_DIR}/models/param-calamari-gt4hist.json |ERROR
+
+########################################################################
+########################################################################
+#                          ####    ###    ####  #### 
+#                          #   #  #   #  #      #   
+#                          ####   #####  #  ##  #### 
+#                          #      #   #  #   #  #   
+#                          #      #   #   ###   #### 
+########################################################################
+########################################################################
+# STEP  1  Binarization
+########################################################################
+# recommended
+ocrd-olena-binarize      | OCR-D-IMG | OCR-D-PAGE-BIN,OCR-D-IMG-PAGE-BIN | | {\"impl\":\"sauvola\"} | ERROR
+
+# alternatively
+#ocrd-anybaseocr-binarize | OCR-D-IMG | OCR-D-PAGE-BIN,OCR-D-IMG-PAGE-BIN | | {\"operation_level\":\"page\"} | ERROR
+#ocrd-cis-ocropy-binarize | OCR-D-IMG | OCR-D-PAGE-BIN,OCR-D-IMG-PAGE-BIN | | {\"method\":\"none\",\"level-of-operation\":\"page\"} | ERROR
+#ocrd-cis-ocropy-binarize | OCR-D-IMG | OCR-D-PAGE-BIN,OCR-D-IMG-PAGE-BIN | | {\"method\":\"global\",\"level-of-operation\":\"page\"} | ERROR
+#ocrd-cis-ocropy-binarize | OCR-D-IMG | OCR-D-PAGE-BIN,OCR-D-IMG-PAGE-BIN | | {\"method\":\"otsu\",\"level-of-operation\":\"page\"} | ERROR
+#ocrd-cis-ocropy-binarize | OCR-D-IMG | OCR-D-PAGE-BIN,OCR-D-IMG-PAGE-BIN | | {\"method\":\"gauss-otsu\",\"level-of-operation\":\"page\"} | ERROR
+#ocrd-cis-ocropy-binarize | OCR-D-IMG | OCR-D-PAGE-BIN,OCR-D-IMG-PAGE-BIN | | {\"method\":\"ocropy\",\"level-of-operation\":\"page\"} | ERROR
+#ocrd-olena-binarize      | OCR-D-IMG | OCR-D-PAGE-BIN,OCR-D-IMG-PAGE-BIN | | {\"impl\":\"wolf\"} | ERROR
+#ocrd-olena-binarize      | OCR-D-IMG | OCR-D-PAGE-BIN,OCR-D-IMG-PAGE-BIN | | {\"impl\":\"sauvola-ms\"} | ERROR
+#ocrd-olena-binarize      | OCR-D-IMG | OCR-D-PAGE-BIN,OCR-D-IMG-PAGE-BIN | | {\"impl\":\"sauvola-ms-split\"} | ERROR
+#ocrd-olena-binarize      | OCR-D-IMG | OCR-D-PAGE-BIN,OCR-D-IMG-PAGE-BIN | | {\"impl\":\"sauvola-ms-fg\"} | ERROR
+#ocrd-olena-binarize      | OCR-D-IMG | OCR-D-PAGE-BIN,OCR-D-IMG-PAGE-BIN | | {\"impl\":\"kim\"} | ERROR
+#ocrd-olena-binarize      | OCR-D-IMG | OCR-D-PAGE-BIN,OCR-D-IMG-PAGE-BIN | | {\"impl\":\"niblack\"} | ERROR
+#ocrd-olena-binarize      | OCR-D-IMG | OCR-D-PAGE-BIN,OCR-D-IMG-PAGE-BIN | | {\"impl\":\"singh\"} | ERROR
+#ocrd-olena-binarize      | OCR-D-IMG | OCR-D-PAGE-BIN,OCR-D-IMG-PAGE-BIN | | {\"impl\":\"otsu\"} | ERROR
+#ocrd-dummy               | OCR-D-IMG | OCR-D-PAGE-BIN                   | | | ERROR
+########################################################################
+# STEP  2  Cropping
+########################################################################
+# recommended
+ocrd-anybaseocr-crop | OCR-D-PAGE-BIN     | OCR-D-PAGE-CROP,OCR-D-IMG-PAGE-CROP| | {\"operation_level\":\"page\"} | ERROR
+
+# alternatively
+# no alternative available yet!
+########################################################################
+# STEP  3  Binarization again (optional) or denoising
+########################################################################
+# recommended
+ocrd-olena-binarize      | OCR-D-PAGE-CROP | OCR-D-PAGE-BIN2,OCR-D-IMG-PAGE-BIN2 | | {\"impl\":\"kim\"} | ERROR
+
+# alternatively other binarization
+#ocrd-anybaseocr-binarize | OCR-D-PAGE-CROP | OCR-D-PAGE-BIN2,OCR-D-IMG-PAGE-BIN2 | | {\"operation_level\":\"page\"} | ERROR
+#ocrd-cis-ocropy-binarize | OCR-D-PAGE-CROP | OCR-D-PAGE-BIN2,OCR-D-IMG-PAGE-BIN2 | | {\"method\":\"none\",\"level-of-operation\":\"page\"} | ERROR
+#ocrd-cis-ocropy-binarize | OCR-D-PAGE-CROP | OCR-D-PAGE-BIN2,OCR-D-IMG-PAGE-BIN2 | | {\"method\":\"global\",\"level-of-operation\":\"page\"} | ERROR
+#ocrd-cis-ocropy-binarize | OCR-D-PAGE-CROP | OCR-D-PAGE-BIN2,OCR-D-IMG-PAGE-BIN2 | | {\"method\":\"otsu\",\"level-of-operation\":\"page\"} | ERROR
+#ocrd-cis-ocropy-binarize | OCR-D-PAGE-CROP | OCR-D-PAGE-BIN2,OCR-D-IMG-PAGE-BIN2 | | {\"method\":\"gauss-otsu\",\"level-of-operation\":\"page\"} | ERROR
+#ocrd-cis-ocropy-binarize | OCR-D-PAGE-CROP | OCR-D-PAGE-BIN2,OCR-D-IMG-PAGE-BIN2 | | {\"method\":\"ocropy\",\"level-of-operation\":\"page\"} | ERROR
+#ocrd-olena-binarize      | OCR-D-PAGE-CROP | OCR-D-PAGE-BIN2,OCR-D-IMG-PAGE-BIN2 | | {\"impl\":\"sauvola-ms-split\"} | ERROR
+#ocrd-olena-binarize      | OCR-D-PAGE-CROP | OCR-D-PAGE-BIN2,OCR-D-IMG-PAGE-BIN2 | | {\"impl\":\"wolf\"} | ERROR
+#ocrd-olena-binarize      | OCR-D-PAGE-CROP | OCR-D-PAGE-BIN2,OCR-D-IMG-PAGE-BIN2 | | {\"impl\":\"sauvola\"} | ERROR
+#ocrd-olena-binarize      | OCR-D-PAGE-CROP | OCR-D-PAGE-BIN2,OCR-D-IMG-PAGE-BIN2 | | {\"impl\":\"sauvola-ms\"} | ERROR
+#ocrd-olena-binarize      | OCR-D-PAGE-CROP | OCR-D-PAGE-BIN2,OCR-D-IMG-PAGE-BIN2 | | {\"impl\":\"sauvola-ms-fg\"} | ERROR
+#ocrd-olena-binarize      | OCR-D-PAGE-CROP | OCR-D-PAGE-BIN2,OCR-D-IMG-PAGE-BIN2 | | {\"impl\":\"niblack\"} | ERROR
+#ocrd-olena-binarize      | OCR-D-PAGE-CROP | OCR-D-PAGE-BIN2,OCR-D-IMG-PAGE-BIN2 | | {\"impl\":\"singh\"} | ERROR
+#ocrd-olena-binarize      | OCR-D-PAGE-CROP | OCR-D-PAGE-BIN2,OCR-D-IMG-PAGE-BIN2 | | {\"impl\":\"otsu\"} | ERROR
+#ocrd-dummy               | OCR-D-PAGE-CROP | OCR-D-PAGE-BIN2 | | | ERROR
+#######################################################################
+# STEP  4  Denoising 
+########################################################################
+ocrd-cis-ocropy-denoise   | OCR-D-PAGE-BIN2     | OCR-D-PAGE-DENOISE,OCR-D-IMG-PAGE-DENOISE | | {\"level-of-operation\":\"page\"}  | ERROR
+
+# alternatively
+#ocrd-dummy               | OCR-D-PAGE-BIN2     | OCR-D-PAGE-DENOISE | | | ERROR
+########################################################################
+# STEP  5  Deskewing
+########################################################################
+# recommended
+ocrd-cis-ocropy-deskew  | OCR-D-PAGE-DENOISE     | OCR-D-PAGE-DESKEW,OCR-D-IMG-PAGE-DESKEW | | {\"level-of-operation\":\"page\"} | ERROR
+# alternatively
+
+#ocrd-anybaseocr-deskew | OCR-D-PAGE-DENOISE     | OCR-D-PAGE-DESKEW,OCR-D-IMG-PAGE-DESKEW | | {\"operation_level\":\"page\"} | ERROR
+#ocrd-tesserocr-deskew  | OCR-D-PAGE-DENOISE     | OCR-D-PAGE-DESKEW,OCR-D-IMG-PAGE-DESKEW | | {\"operation_level\":\"page\"} | ERROR
+#ocrd-dummy             | OCR-D-PAGE-DENOISE     | OCR-D-PAGE-DESKEW | | | ERROR
+########################################################################
+# STEP  6/7  Dewarping (GPU needed!) or page segmentation
+########################################################################
+ocrd-dummy               | OCR-D-PAGE-DESKEW  | OCR-D-PAGE-DEWARP | | | ERROR
+# alternatively (recommended for heavily warped documents only)
+#ocrd-anybaseocr-dewarp  |OCR-D-PAGE-DESKEW  | OCR-D-PAGE-DEWARP,OCR-D-IMG-PAGE-DEWARP | |{\"model_name\":\"${TAVERNA_INSTALL_DIR}/python/pix2pixHD/models\",\"pix2pixHD\":\"${TAVERNA_INSTALL_DIR}/python/pix2
+pixHD/\"} | ERROR
+########################################################################
+# STEP  7  Page segmentation (in case of dewarp step before)
+########################################################################
+# only recommended if dewarp is neccessary (both processors)
+ocrd-tesserocr-segment-region      | OCR-D-PAGE-DEWARP       | OCR-D-SEG-REGION-TESS | | | ERROR
+ocrd-segment-repair            | OCR-D-SEG-REGION-TESS | OCR-D-SEG-REGION |  | {\"plausibilize\":true}  |  ERROR
+
+# alternatively
+#ocrd-cis-ocropy-segment            | OCR-D-PAGE-DEWARP       | OCR-D-SEG-REGION | | {\"level-of-operation\":\"page\"}  |  ERROR
+#ocrd-pc-segmentation               | OCR-D-PAGE-DEWARP       | OCR-D-SEG-REGION | | {\"model\":\"${TAVERNA_INSTALL_DIR}/models/jmu-wuerzburg/model.h5\"}  |  ERROR
+#ocrd-dummy                         | OCR-D-PAGE-DEWARP       | OCR-D-SEG-REGION | | | ERROR
+########################################################################
+########################################################################
+#          ####    ####    ###    ###    ###    #   #  
+#          #   #   #      #        #    #   #   ##  #  
+#          ####    ###    #  ##    #    #   #   # # #
+#          #   #   #      #   #    #    #   #   #  ##   
+#          #    #  ####    ###    ###    ###    #   # 
+########################################################################
+########################################################################
+# STEP  8  Binarization
+########################################################################
+# recommended
+ocrd-dummy               | OCR-D-SEG-REGION | OCR-D-SEG-REGION-BIN | | | ERROR
+
+# alternatively
+#ocrd-tesserocr-binarize  | OCR-D-SEG-REGION | OCR-D-SEG-REGION-BIN,OCR-D-IMG-SEG-REGION-BIN | | {\"operation_level\":\"region\"} | ERROR
+#ocrd-anybaseocr-binarize | OCR-D-SEG-REGION | OCR-D-SEG-REGION-BIN,OCR-D-IMG-SEG-REGION-BIN | | {\"operation_level\":\"region\"} | ERROR
+#ocrd-cis-ocropy-binarize | OCR-D-SEG-REGION | OCR-D-SEG-REGION-BIN,OCR-D-IMG-SEG-REGION-BIN | | {\"method\":\"otsu\",\"level-of-operation\":\"region\"} | ERROR
+#ocrd-cis-ocropy-binarize | OCR-D-SEG-REGION | OCR-D-SEG-REGION-BIN,OCR-D-IMG-SEG-REGION-BIN | | {\"method\":\"none\",\"level-of-operation\":\"region\"} | ERROR
+#ocrd-cis-ocropy-binarize | OCR-D-SEG-REGION | OCR-D-SEG-REGION-BIN,OCR-D-IMG-SEG-REGION-BIN | | {\"method\":\"global\",\"level-of-operation\":\"region\"} | ERROR
+#ocrd-cis-ocropy-binarize | OCR-D-SEG-REGION | OCR-D-SEG-REGION-BIN,OCR-D-IMG-SEG-REGION-BIN | | {\"method\":\"gauss-otsu\",\"level-of-operation\":\"region\"} | ERROR
+#ocrd-cis-ocropy-binarize | OCR-D-SEG-REGION | OCR-D-SEG-REGION-BIN,OCR-D-IMG-SEG-REGION-BIN | | {\"method\":\"ocropy\",\"level-of-operation\":\"region\"} | ERROR
+########################################################################
+# STEP  9  Deskewing
+########################################################################
+# recommended
+ocrd-cis-ocropy-deskew |OCR-D-SEG-REGION-BIN    |OCR-D-SEG-REGION-DESKEW,OCR-D-IMG-SEG-REGION-DESKEW | | {\"level-of-operation\":\"region\"} |ERROR
+
+# alternatively
+# no alternative available yet 
+#ocrd-dummy            |OCR-D-SEG-REGION-BIN    |OCR-D-SEG-REGION-DESKEW | | | ERROR
+########################################################################
+# STEP  10  Clipping (optional) or line segmentation
+########################################################################
+# recommended
+ocrd-cis-ocropy-clip | OCR-D-SEG-REGION-DESKEW | OCR-D-SEG-REGION-CLIP,OCR-D-IMG-SEG-REGION-CLIP |  | {\"level-of-operation\":\"region\"}  |  ERROR
+
+# alternatively
+#ocrd-dummy           | OCR-D-SEG-REGION-DESKEW | OCR-D-SEG-REGION-CLIP | | | ERROR
+########################################################################
+# STEP 11  Line segmentation 
+########################################################################
+# recommended
+ocrd-cis-ocropy-segment     | OCR-D-SEG-REGION-CLIP   | OCR-D-SEG-LINE | | {\"level-of-operation\":\"region\"}  |  ERROR
+
+# alternatively
+#ocrd-tesserocr-segment-line | OCR-D-SEG-REGION-CLIP   | OCR-D-SEG-LINE | | |ERROR
+#ocrd-dummy                  | OCR-D-SEG-REGION-CLIP | OCR-D-SEG-LINE | | | ERROR
+########################################################################
+########################################################################
+#                          #     ###  #   #  ####
+#                          #      #   ##  #  #
+#                          #      #   # # #  ####
+#                          #      #   #  ##  #
+#                          ####  ###  #   #  ####
+########################################################################
+########################################################################
+# STEP 12  Line correction (one of clip / resegment / repair)
+########################################################################
+# recommended
+ocrd-cis-ocropy-clip      | OCR-D-SEG-LINE | OCR-D-SEG-LINE-CLIP,OCR-D-SEG-LINE-CLIP-ALTERNATE |  | {\"level-of-operation\":\"line\"}  |  ERROR
+
+# alternatively
+#ocrd-cis-ocropy-resegment | OCR-D-SEG-LINE | OCR-D-SEG-LINE-CLIP,OCR-D-IMG-SEG-LINE-CLIP |  |   |  ERROR
+#ocrd-segment-repair       | OCR-D-SEG-LINE | OCR-D-SEG-LINE-CLIP |  | {\"sanitize\":true}  |  ERROR
+#ocrd-dummy                | OCR-D-SEG-LINE | OCR-D-SEG-LINE-CLIP | | | ERROR
+########################################################################
+# STEP 11  Dewarping (on line level)
+########################################################################
+# recommended
+ocrd-cis-ocropy-dewarp  | OCR-D-SEG-LINE-CLIP | OCR-D-SEG-LINE-DEWARP,OCR-D-IMG-SEG-LINE-DEWARP |  |   |  ERROR
+
+# alternatively
+# no result produced
+#ocrd-anybaseocr-dewarp  | OCR-D-SEG-LINE      | OCR-D-SEG-LINE-DEWARP,OCR-D-IMG-SEG-LINE-DEWARP |  |{\"operation_level\":\"line\",\"model_name\":\"${TAVERNA_INSTALL_DIR}/python/pix2pixHD/models","pix2pixHD"
+:"${TAVERNA_INSTALL_DIR}/python/pix2pixHD/"}   |  ERROR
+#ocrd-dummy              | OCR-D-SEG-LINE      | OCR-D-SEG-LINE-DEWARP | | | ERROR
+########################################################################
+########################################################################
+#                           ###    ####  ###
+#                          #   #   #     #  #
+#                          #   #   #     ### 
+#                          #   #   #     # # 
+#                           ###    ####  #  #
+########################################################################
+########################################################################
+# STEP 12a  Text recognition (tesseract)
+########################################################################
+# recommended
+ocrd-tesserocr-recognize|OCR-D-SEG-LINE-DEWARP | OCR-D-OCR-TESS | | {\"textequiv_level\":\"glyph\",\"overwrite_words\":true,\"model\":\"GT4HistOCR_50000000.997_191951\"}     |ERROR
+# alternatively
+#ocrd-tesserocr-recognize|OCR-D-SEG-LINE-DEWARP | OCR-D-OCR-TESS | | {\"textequiv_level\":\"glyph\",\"overwrite_words\":true,\"model\":\"Fraktur\"}  |  ERROR
+#ocrd-dummy              |OCR-D-SEG-LINE-DEWARP | OCR-D-OCR-TESS | | | | ERROR
+########################################################################
+# STEP 12b  Text recognition (calamari)
+########################################################################
+# recommended
+ocrd-calamari-recognize |OCR-D-SEG-LINE-DEWARP | OCR-D-OCR-CALA | | {\"checkpoint\":\"${TAVERNA_INSTALL_DIR}/models/calamari/GT4HistOCR/*.ckpt.json\"}  |  ERROR
+# alternatively
+#ocrd-dummy              |OCR-D-SEG-LINE-DEWARP | OCR-D-OCR-CALA | | | | ERROR
+
+########################################################################
+########################################################################
+# Following postprocessing steps 13,14 are optional. 
+# For evaluation step 15 is needed.
+########################################################################
+########################################################################
+
+########################################################################
+# STEP 13  Align (optional)
+########################################################################
+# optional
+#ocrd-cis-align | OCR-D-OCR-CALA,OCR-D-OCR-TESS | OCR-D-OCR-ALIGN | | | ERROR
+########################################################################
+# STEP 14  Post correction (optional)
+########################################################################
+# optional
+# Test if aligned data produces better results than postcorrection of 
+# single OCR.
+#ocrd-cor-asv-ann-process | OCR-D-OCR-TESS  | OCR-D-COR-ASV |  | {\"textequiv_level\":\"line\",\"model_file\":\"${TAVERNA_INSTALL_DIR}/models/cor-asv/gt4Hist.h5\"}  |  ERROR
+#ocrd-cor-asv-ann-process | OCR-D-OCR-CALA  | OCR-D-COR-ASV |  | {\"textequiv_level\":\"line\",\"model_file\":\"${TAVERNA_INSTALL_DIR}/models/cor-asv/gt4Hist.h5\"}  |  ERROR
+#ocrd-cor-asv-ann-process | OCR-D-OCR-ALIGN | OCR-D-COR-ASV |  | {\"textequiv_level\":\"line\",\"model_file\":\"${TAVERNA_INSTALL_DIR}/models/cor-asv/gt4Hist.h5\"}  |  ERROR
+
+# Test if aligned data produces better results than postcorrection of 
+# single OCR.
+#ocrd-cis-postcorrect      | OCR-D-OCR-TESS  | OCR-D-COR-CIS |  | {\"profilerPath\":\"${TAVERNA_INSTALL_DIR}/models/cis/bin/profiler.bash\",\"profilerConfig\":\"ignored\",\"nOCR\":1,\"model\":\"${TAVERNA_IN
+STALL_DIR}/models/cis/model.zip\"}  |  ERROR
+#ocrd-cis-postcorrect      | OCR-D-OCR-CALA  | OCR-D-COR-CIS |  | {\"profilerPath\":\"${TAVERNA_INSTALL_DIR}/models/cis/bin/profiler.bash\",\"profilerConfig\":\"ignored\",\"nOCR\":1,\"model\":\"${TAVERNA_IN
+STALL_DIR}/models/cis/model.zip\"}  |  ERROR
+#ocrd-cis-postcorrect      | OCR-D-OCR-ALIGN | OCR-D-COR-CIS |  | {\"profilerPath\":\"${TAVERNA_INSTALL_DIR}/models/cis/bin/profiler.bash\",\"profilerConfig\":\"ignored\",\"nOCR\":2,\"model\":\"${TAVERNA_IN
+STALL_DIR}/models/cis/model.zip\"}  |  ERROR
+########################################################################
+########################################################################
+#              ##   #  #   ##   #    #   #  #####  ####
+#             #  #  ## #  #  #  #     # #      #   #
+#             ####  # ##  ####  #      #      #    ####
+#             #  #  # ##  #  #  #      #     #     #
+#             #  #  #  #  #  #  ###    #    #####  ####
+########################################################################
+########################################################################
+# STEP 15  Analyze (optional and only if GT is available)
+########################################################################
+# optional (Please check for correct groupID of GT)
+ocrd-dinglehopper | OCR-D-OCR-TESS,OCR-D-GT-SEG-BLOCK | OCR-D-OCR-EVAL| | | 
+ocrd-dinglehopper | OCR-D-OCR-CALA,OCR-D-GT-SEG-BLOCK | OCR-D-OCR-EVAL| | | 
+#ocrd-dinglehopper | OCR-D-COR-ASV,OCR-D-GT-SEG-BLOCK  | OCR-D-OCR-EVAL| | | 
+#ocrd-dinglehopper | OCR-D-COR-CIS,OCR-D-GT-SEG-BLOCK  | OCR-D-OCR-EVAL| | | 
+
+# GT in groupID OCR-D-GT-SEG-PAGE
+#ocrd-dinglehopper | OCR-D-OCR-TESS,OCR-D-GT-SEG-PAGE  | OCR-D-OCR-EVAL| | | 
+#ocrd-dinglehopper | OCR-D-OCR-CALA,OCR-D-GT-SEG-PAGE  | OCR-D-OCR-EVAL| | | 
+#ocrd-dinglehopper | OCR-D-COR-ASV,OCR-D-GT-SEG-PAGE   | OCR-D-OCR-EVAL| | | 
+#ocrd-dinglehopper | OCR-D-OCR-CIS,OCR-D-GT-SEG-PAGE   | OCR-D-OCR-EVAL| | | 
 

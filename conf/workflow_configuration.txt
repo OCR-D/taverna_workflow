@@ -18,14 +18,17 @@
 # 2. input-file-grp - File group(s) used as input.
 # 3. output-file-grp - File group(s) used as output.
 # 4. group-id -  The mets:div[@TYPE='page']/@ID that contains the pointers to files representing a page. Effectively, only those files in the input file group that are referenced in these mets:div[@TYPE="page"] will be processed.
-# 5. parameter - URL of parameter file in JSON format.
+# 5. parameter - URL of parameter file or JSON format (avoid spaces).
 # 6. log-level - Set the global maximum verbosity level. More verbose log entries will be ignored. (One of OFF, ERROR, WARN, INFO (default), DEBUG, TRACE).
 ########################################################################
 # Example:
 # ocrd-kraken-binarize|OCR-D-IMG|OCR-D-IMG-BIN-KRAKEN| |https://host/ocr-kraken-binarize-params.json|ERROR
 ########################################################################
-ocrd-cis-ocropy-binarize|OCR-D-IMG|OCR-D-IMG-BIN-OCROPY| | |ERROR
-ocrd-tesserocr-segment-region|OCR-D-IMG-BIN-OCROPY|OCR-D-SEG-REGION| | |ERROR
-ocrd-tesserocr-segment-line|OCR-D-SEG-REGION|OCR-D-SEG-LINE| | |ERROR
-ocrd-tesserocr-recognize|OCR-D-SEG-LINE|OCR-D-OCR-TESSEROCR-FRAKTUR| | {INSTALLATION_DIR}/models/param-tess-fraktur.json |ERROR
+ocrd-cis-ocropy-binarize      | OCR-D-IMG            | OCR-D-IMG-BIN-OCROPY,OCR-D-IMG-BIN-OCROPY | | |ERROR
+ocrd-tesserocr-segment-region | OCR-D-IMG-BIN-OCROPY | OCR-D-SEG-REGION               | | |ERROR
+ocrd-tesserocr-segment-line   | OCR-D-SEG-REGION     | OCR-D-SEG-LINE                 | | |ERROR
+ocrd-tesserocr-recognize      | OCR-D-SEG-LINE       | OCR-D-OCR-TESSEROCR-FRAKTUR    | | {\"textequiv_level\":\"glyph\",\"overwrite_words\":true,\"model\":\"Fraktur\"} |ERROR
+ocrd-tesserocr-recognize      | OCR-D-SEG-LINE       | OCR-D-OCR-TESSEROCR-GT4HISTOCR | | {\"textequiv_level\":\"glyph\",\"overwrite_words\":true,\"model\":\"GT4HistOCR_50000000.997_191951\"} |ERROR
+ocrd-tesserocr-recognize      | OCR-D-SEG-LINE       | OCR-D-OCR-TESSEROCR-BOTH       | | {\"textequiv_level\":\"glyph\",\"overwrite_words\":true,\"model\":\"Fraktur+GT4HistOCR_50000000.997_191951\"} |ERROR
+ocrd-calamari-recognize       | OCR-D-SEG-LINE       | OCR-D-OCR-CALAMARI_GT4HIST     | | {\"checkpoint\":\"{INSTALLATION_DIR}/models/calamari/GT4HistOCR/*.ckpt.json\"}  |  ERROR
 

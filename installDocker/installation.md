@@ -67,7 +67,7 @@ The subdirectory 'metadata' contains the provenance of the workflow all
 intermediate mets files and the stdout and stderr output of all executed processors.
 
 ## Create your own workflow
-See instructions in ../README.md.
+See instructions in [README.md](../README.md#configure-your-own-workflow).
 
 :information_source: All provided paths inside the parameter and workflow configuration files have to be 'dockerized'. For executing scripts relative paths are also possible. 
 
@@ -152,4 +152,5 @@ user@localhost:~/ocrd/taverna$docker run --network="host" -v 'pwd':/data ocrd/ta
 ## More Information
 
 * [Docker](https://www.docker.com/)
+* [Workflow for OCR-D](https://ocr-d.de/en/workflows)
 
