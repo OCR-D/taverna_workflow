@@ -24,9 +24,7 @@
 # Example:
 # ocrd-kraken-binarize|OCR-D-IMG|OCR-D-IMG-BIN-KRAKEN| |https://host/ocr-kraken-binarize-params.json|ERROR
 ########################################################################
-#
-#
-#
+
 ########################################################################
 ########################################################################
 #                          ####    ###    ####  #### 
@@ -38,61 +36,70 @@
 ########################################################################
 # STEP  1  Binarization
 ########################################################################
-ocrd-olena-binarize      | OCR-D-IMG | OCR-D-PAGE-BIN,OCR-D-IMG-PAGE-BIN | | {\"impl\":\"sauvola\"} | ERROR
+ocrd-cis-ocropy-binarize | OCR-D-IMG | OCR-D-PAGE-BIN | | {\"method\":\"ocropy\",\"level-of-operation\":\"page\"} | ERROR
 
-########################################################################
+########################################################################  
 # STEP  2  Cropping
 ########################################################################
-ocrd-anybaseocr-crop | OCR-D-PAGE-BIN     | OCR-D-PAGE-CROP,OCR-D-IMG-PAGE-CROP| | {\"operation_level\":\"page\"} | ERROR
+ocrd-anybaseocr-crop | OCR-D-PAGE-BIN     | OCR-D-PAGE-CROP | | {\"operation_level\":\"page\"} | ERROR
 
 ########################################################################
 # STEP  3  Binarization again (optional) or denoising
 ########################################################################
-ocrd-olena-binarize      | OCR-D-PAGE-CROP | OCR-D-PAGE-BIN2,OCR-D-IMG-PAGE-BIN2 | | {\"impl\":\"kim\"} | ERROR
+ocrd-skimage-binarize    | OCR-D-PAGE-CROP | OCR-D-PAGE-BIN2 | | {\"method\":\"li\",\"level-of-operation\":\"page\"} | ERROR
 
 #######################################################################
-# STEP  4  Denoising (in case of additional binarization step before)
+# STEP  4  Denoising 
 ########################################################################
-ocrd-cis-ocropy-denoise   | OCR-D-PAGE-BIN2     | OCR-D-PAGE-DENOISE,OCR-D-IMG-PAGE-DENOISE |  | {\"level-of-operation\":\"page\"}  | ERROR
+ocrd-cis-ocropy-denoise   | OCR-D-PAGE-BIN2     | OCR-D-PAGE-DENOISE | | {\"level-of-operation\":\"page\"}  | ERROR
 
 ########################################################################
 # STEP  5  Deskewing
 ########################################################################
-ocrd-tesserocr-deskew  | OCR-D-PAGE-DENOISE     | OCR-D-PAGE-DESKEW,OCR-D-IMG-PAGE-DESKEW | | {\"operation_level\":\"page\"} | ERROR
+ocrd-tesserocr-deskew  | OCR-D-PAGE-DENOISE     | OCR-D-PAGE-DESKEW | | {\"operation_level\":\"page\"} | ERROR
 
 ########################################################################
 # STEP  6/7  Dewarping (GPU needed!) or page segmentation
 ########################################################################
-ocrd-tesserocr-segment-region | OCR-D-PAGE-DESKEW     | OCR-D-SEG-REGION-TESS | | | ERROR
-ocrd-segment-repair           | OCR-D-SEG-REGION-TESS | OCR-D-SEG-REGION      | | {\"plausibilize\":true}  |  ERROR
+# skipped
 
+########################################################################
+# STEP  7  Page segmentation (in case of dewarp step before)
+########################################################################
+ocrd-tesserocr-segment-region      | OCR-D-PAGE-DEWARP       | OCR-D-SEG-REGION-TESS | | | ERROR
+ocrd-segment-repair            | OCR-D-SEG-REGION-TESS | OCR-D-SEG-REGION-BIN |  | {\"plausibilize\":true}  |  ERROR
 ########################################################################
 ########################################################################
 #          ####    ####    ###    ###    ###    #   #  
 #          #   #   #      #        #    #   #   ##  #  
-#          ####    ####   #  ##    #    #   #   # # #   
+#          ####    ###    #  ##    #    #   #   # # #
 #          #   #   #      #   #    #    #   #   #  ##   
 #          #    #  ####    ###    ###    ###    #   # 
 ########################################################################
 ########################################################################
 # STEP  8  Binarization
 ########################################################################
-# No binarization to speedup workflow
+# skipped
 
 ########################################################################
 # STEP  9  Deskewing
 ########################################################################
-ocrd-cis-ocropy-deskew |OCR-D-SEG-REGION    |OCR-D-SEG-REGION-DESKEW,OCR-D-IMG-SEG-REGION-DESKEW | | {\"level-of-operation\":\"region\"} |ERROR
+ocrd-tesserocr-deskew |OCR-D-SEG-REGION-BIN    |OCR-D-SEG-REGION-DESKEW | | {\"operation_level\":\"region\"} |ERROR
 
 ########################################################################
 # STEP  10  Clipping (optional) or line segmentation
 ########################################################################
-ocrd-cis-ocropy-clip | OCR-D-SEG-REGION-DESKEW | OCR-D-SEG-REGION-CLIP,OCR-D-IMG-SEG-REGION-CLIP |  | {\"level-of-operation\":\"region\"}  |  ERROR
+ocrd-cis-ocropy-clip | OCR-D-SEG-REGION-DESKEW | OCR-D-SEG-REGION-CLIP |  | {\"level-of-operation\":\"region\"}  |  ERROR
 
 ########################################################################
-# STEP 11  Line segmentation (in case of clipping step in beforehand)
+# STEP 11  Line segmentation 
 ########################################################################
-ocrd-tesserocr-segment-line | OCR-D-SEG-REGION-CLIP  | OCR-D-SEG-LINE | | |  ERROR
+ocrd-tesserocr-segment-line | OCR-D-SEG-REGION-CLIP   | OCR-D-SEG-LINE-CLIP | | |ERROR
+
+########################################################################
+# STEP 12  Line correction (one of clip / resegment / repair)
+########################################################################
+# skipped
 
 ########################################################################
 ########################################################################
@@ -103,14 +110,10 @@ ocrd-tesserocr-segment-line | OCR-D-SEG-REGION-CLIP  | OCR-D-SEG-LINE | | |  ERR
 #                          ####  ###  #   #  ####
 ########################################################################
 ########################################################################
-# STEP 12  Line correction (one of clip / resegment / repair)
 ########################################################################
-ocrd-cis-ocropy-clip      | OCR-D-SEG-LINE | OCR-D-SEG-LINE-CLIP,OCR-D-SEG-LINE-CLIP-ALTERNATE |  | {\"level-of-operation\":\"line\"}  |  ERROR
-
+# STEP 13  Dewarping (on line level)
 ########################################################################
-# STEP 11  Dewarping (on line level)
-########################################################################
-ocrd-cis-ocropy-dewarp  | OCR-D-SEG-LINE-CLIP | OCR-D-SEG-LINE-DEWARP,OCR-D-IMG-SEG-LINE-DEWARP |  |   |  ERROR
+ocrd-cis-ocropy-dewarp  | OCR-D-SEG-LINE-CLIP | OCR-D-SEG-LINE-DEWARP |  |   |  ERROR
 
 ########################################################################
 ########################################################################
@@ -121,6 +124,6 @@ ocrd-cis-ocropy-dewarp  | OCR-D-SEG-LINE-CLIP | OCR-D-SEG-LINE-DEWARP,OCR-D-IMG-
 #                           ###    ####  #  #
 ########################################################################
 ########################################################################
-# STEP 12a  Text recognition (tesseract)
+# STEP 14  Text recognition (tesseract)
 ########################################################################
 ocrd-tesserocr-recognize|OCR-D-SEG-LINE-DEWARP | OCR-D-OCR-TESS | | {\"textequiv_level\":\"glyph\",\"overwrite_words\":true,\"model\":\"GT4HistOCR_50000000.997_191951\"}     |ERROR
